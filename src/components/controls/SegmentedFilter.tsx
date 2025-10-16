@@ -1,16 +1,25 @@
 'use client';
 import * as React from 'react';
 
-type Props = {
-  segments: string[];
-  value: string;
-  onChange: (v: string) => void;
+export type SegmentedFilterProps<T extends string> = {
+  segments: readonly T[];
+  value: T;
+  onChange: (v: T) => void;
   'aria-label'?: string;
 };
 
-export default function SegmentedFilter({ segments, value, onChange, 'aria-label': ariaLabel }: Props) {
+export default function SegmentedFilter<T extends string>({
+  segments,
+  value,
+  onChange,
+  'aria-label': ariaLabel,
+}: SegmentedFilterProps<T>) {
   return (
-    <div role="tablist" aria-label={ariaLabel} style={{ display: 'inline-flex', background: 'var(--ui-200)', borderRadius: 10, padding: 4, gap: 4 }}>
+    <div
+      role="tablist"
+      aria-label={ariaLabel}
+      style={{ display: 'inline-flex', background: 'var(--ui-200)', borderRadius: 10, padding: 4, gap: 4 }}
+    >
       {segments.map((s) => {
         const selected = s === value;
         return (
