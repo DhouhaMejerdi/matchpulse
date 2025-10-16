@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import '../styles/globals.scss';
+import SiteHeader from "@/components/layout/SiteHeader";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,13 +34,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <header
-          className="container"
-          style={{ height: 64, display: 'flex', alignItems: 'center' }}
-        >
-          <strong>MatchPulse</strong>
-        </header>
-
+        <SiteHeader />
         <main className="container">{children}</main>
 
         <footer className="container" style={{ padding: '24px 0' }}>
