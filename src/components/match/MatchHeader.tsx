@@ -1,0 +1,99 @@
+'use client';
+
+import * as React from 'react';
+import Image from 'next/image';
+
+type TeamMini = { id: string; name: string; crest: string };
+
+export type MatchHeaderProps = {
+  home: TeamMini;
+  away: TeamMini;
+  score?: { home: number; away: number } | null;
+  status: 'LIVE' | 'UPCOMING' | 'FT' | 'HT';
+  league: string;
+  kickoff?: string | null; // ISO
+  venue?: string | null;
+};
+
+function fmtKickoff(iso?: string | null) {
+  if (!iso) return '—';
+  const d = new Date(iso);
+  return new Intl.DateTimeFormat(undefined, {
+    weekday: 'short',
+    hour: '2-digit',
+    minute: '2-digit',
+  }).format(d);
+}
+
+export default function MatchHeader({
+  home, away, score, status, league, kickoff, venue,
+}: MatchHeaderProps) {
+  const isLive = status === 'LIVE';
+
+  return (
+    <header className="card match-header" style={{ padding: 16, marginTop: 8, marginBottom: 16 }}>
+      {/* Screen-reader page title */}
+      <h1 className="sr-only">
+        {home.name} vs {away.name}
+      </h1>
+
+      <div className="match-title">
+        <div className="match-title__team">
+          <Image
+            src={home.crest}
+            alt=""
+            width={20}
+            height={20}
+            sizes="20px"
+            unoptimized
+            aria-hidden
+            className="match-title__crest"
+          />
+          <span>{home.name}</span>
+        </div>
+
+        <div
+          className="match-title__score"
+          aria-live={isLive ? 'polite' : 'off'}
+          aria-atomic="true"
+        >
+          {score ? `${score.home} — ${score.away}` : 'vs'}
+        </div>
+
+        <div className="match-title__team" style={{ justifyContent: 'flex-end' }}>
+          <span>{away.name}</span>
+          <Image
+            src={away.crest}
+            alt=""
+            width={20}
+            height={20}
+            sizes="20px"
+            unoptimized
+            aria-hidden
+            className="match-title__crest"
+          />
+        </div>
+      </div>
+
+      <div className="match-sub" role="group" aria-label="Match details">
+        <span className={`status status--${status.toLowerCase()}`}>
+          {isLive && <span aria-hidden className="live-dot" />} {status}
+        </span>
+
+        <span aria-hidden>•</span>
+
+        <time dateTime={kickoff ?? undefined}>{fmtKickoff(kickoff)}</time>
+
+        <span aria-hidden>•</span>
+        <span>{league}</span>
+
+        {venue ? (
+          <>
+            <span aria-hidden>•</span>
+            <span>{venue}</span>
+          </>
+        ) : null}
+      </div>
+    </header>
+  );
+}
