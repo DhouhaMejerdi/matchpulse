@@ -1,4 +1,5 @@
 @import './tokens.css';
+@import './components/_card.scss';
 
 /* Modern base reset */
 *, *::before, *::after { box-sizing: border-box; }
@@ -33,5 +34,6 @@ button, input, select, textarea { font: inherit; }
 .card { 
   background: var(--surface-0); 
   border-radius: var(--r-lg); 
-  box-shadow: var(--shadow-sm); 
+  box-shadow: var(--shadow-sm);
+  padding: var(--s-4); 
 }

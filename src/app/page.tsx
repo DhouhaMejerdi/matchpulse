@@ -4,6 +4,7 @@ import * as React from 'react';
 import SegmentedFilter from '@/components/controls/SegmentedFilter';
 import { useFixtures } from '@/lib/hooks/useFixtures';
 import type { FilterTab } from '@/lib/types/ui';
+import FixtureList from '@/components/match/FixtureList';
 
 const FILTER_SEGMENTS: readonly FilterTab[] = ['All', 'Live', 'Upcoming', 'Results'];
 
@@ -18,7 +19,7 @@ export default function HomePage() {
   }, []);
 
   const { data, isLoading, error } = useFixtures(dateKey); // <- include `error`
-  const total = data?.length ?? 0;
+  const matches = data ?? [];
 
   return (
     <section style={{ padding: '24px 0' }}>
@@ -31,13 +32,13 @@ export default function HomePage() {
         aria-label="Fixture filter"
       />
 
-      <div className="card" style={{ padding: 16, marginTop: 16 }}>
+      <div style={{ marginTop: 16 }}>
         {error ? (
-          <p className="p">Could not load fixtures.</p>
+          <div className="card" style={{ padding: 16 }}><p className="p">Could not load fixtures.</p></div>
         ) : isLoading ? (
-          <p className="p">Loading fixtures…</p>
+          <div className="card" style={{ padding: 16 }}><p className="p">Loading fixtures…</p></div>
         ) : (
-          <p className="p">{total} matches found for today.</p>
+          <FixtureList matches={matches} filter={tab} />
         )}
       </div>
     </section>
