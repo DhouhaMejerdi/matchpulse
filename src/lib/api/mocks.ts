@@ -1,8 +1,10 @@
 import { Match, Team } from './types';
 
+const crest = (name: string) => `/api/crest?name=${encodeURIComponent(name)}&size=32`;
+
 export const mockTeams: Record<string, Team> = {
-  't-1': { id: 't-1', name: 'Arsenal', crest: '/crests/ars.svg', league: 'Premier League', form: ['W','W','D','L','W'], stats: { gf: 18, ga: 9, pts: 23 } },
-  't-2': { id: 't-2', name: 'Chelsea', crest: '/crests/che.svg', league: 'Premier League', form: ['L','W','W','D','L'], stats: { gf: 12, ga: 14, pts: 15 } },
+  't-1': { id: 't-1', name: 'Arsenal', crest: crest('Arsenal'), league: 'Premier League', form: ['W','W','D','L','W'], stats: { gf: 18, ga: 9, pts: 23 } },
+  't-2': { id: 't-2', name: 'Chelsea', crest: crest('Chelsea'), league: 'Premier League', form: ['L','W','W','D','L'], stats: { gf: 12, ga: 14, pts: 15 } },
 };
 
 export function generateFixtures(dateISO: string): Match[] {

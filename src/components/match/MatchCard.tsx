@@ -1,5 +1,6 @@
 'use client';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export type MatchCardProps = {
   id: string;
@@ -40,12 +41,13 @@ export default function MatchCard(props: MatchCardProps) {
       <div className="row">
         {/* Home */}
         <div className="team team--home">
-          <img
+          <Image
             src={home.crest}
             width={28}
             height={28}
             alt={`${home.name} crest`}
             onError={(e) => ((e.currentTarget as HTMLImageElement).style.visibility = 'hidden')}
+            unoptimized
           />
           <span className="team__name">{home.name}</span>
         </div>
@@ -64,12 +66,13 @@ export default function MatchCard(props: MatchCardProps) {
         {/* Away */}
         <div className="team team--away">
           <span className="team__name team__name--right">{away.name}</span>
-          <img
+          <Image
             src={away.crest}
             width={28}
             height={28}
             alt={`${away.name} crest`}
             onError={(e) => ((e.currentTarget as HTMLImageElement).style.visibility = 'hidden')}
+            unoptimized
           />
         </div>
       </div>
