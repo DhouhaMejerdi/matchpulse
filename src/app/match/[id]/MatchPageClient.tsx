@@ -16,12 +16,6 @@ const MATCH_TABS = [
   { value: 'highlights', label: 'Highlights' },
 ] as const;
 
-function fmtKickoff(iso?: string) {
-  if (!iso) return '—';
-  const d = new Date(iso);
-  return new Intl.DateTimeFormat(undefined, { weekday: 'short', hour: '2-digit', minute: '2-digit' }).format(d);
-}
-
 export default function MatchPageClient({ id }: { id: string }) {
   const { data: match, isLoading, error } = useMatch(id);
   const [tab, setTab] = React.useState<MatchTab>('timeline');
