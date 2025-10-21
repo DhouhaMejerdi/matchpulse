@@ -15,7 +15,7 @@ export type Match = {
   id: string;
   league: string;
   kickoff: string; // ISO
-  status: 'LIVE' | 'UPCOMING' | 'FT' | 'HT';
+  status: 'LIVE' | 'UPCOMING' | 'FT' | 'HT' | 'POSTPONED' | 'CANCELED' | 'DELAYED' | 'ET' | 'PEN';
   teams: { home: TeamMini; away: TeamMini };
   score?: Score;
   events?: MatchEvent[];
