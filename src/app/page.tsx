@@ -46,15 +46,6 @@ export default function HomePage() {
   const goNext = () => setOffsetDays((n) => n + 1); // ⬅️ next day
   const goToday = () => setOffsetDays(0);           // ⬅️ (optional quick reset)
 
-  // 1) Add this handler inside HomePage (below goPrev/goNext/goToday)
-  const onToolbarKeyDown = React.useCallback(
-    (e: React.KeyboardEvent<HTMLDivElement>) => {
-      if (e.key === 'ArrowLeft') { e.preventDefault(); goPrev(); }
-      if (e.key === 'ArrowRight') { e.preventDefault(); goNext(); }
-    },
-    [goPrev, goNext]
-  );
-
   return (
     <section style={{ padding: '24px 0' }}>
       {/* ⬇️ Hero row: title + date switcher */}
