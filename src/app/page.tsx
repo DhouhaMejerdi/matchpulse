@@ -54,7 +54,7 @@ export default function HomePage() {
       >
         <h1 className="h1" style={{ marginBottom: 8 }}>Today’s Matches</h1>
 
-        <div aria-label="Change date" role="group" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+        <div aria-label="Change date" role="toolbar" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <button
             type="button"
             onClick={goPrev}
@@ -66,7 +66,7 @@ export default function HomePage() {
           </button>
 
           {/* Human-readable label */}
-          <strong className="small" aria-live="polite" style={{ minWidth: 120, textAlign: 'center' }}>
+          <strong className="small" aria-live="polite" aria-atomic="true" style={{ minWidth: 120, textAlign: 'center' }}>
             {humanLabel}
           </strong>
 
