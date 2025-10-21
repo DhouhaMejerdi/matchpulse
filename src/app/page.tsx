@@ -6,6 +6,7 @@ import { useFixtures } from '@/lib/hooks/useFixtures';
 import type { FilterTab } from '@/lib/types/ui';
 import FixtureList from '@/components/match/FixtureList';
 import DateToolbar from '@/components/layout/DateToolbar';
+import LeaguePicker from '@/components/controls/LeaguePicker';
 
 const FILTER_SEGMENTS: readonly FilterTab[] = ['All', 'Live', 'Upcoming', 'Results'];
 
@@ -29,6 +30,7 @@ function formatHuman(dateKey: string, locale?: string): string {
 
 export default function HomePage() {
   const [tab, setTab] = React.useState<FilterTab>('All');
+  const [league, setLeague] = React.useState<string | null>(null);
 
   /** ⬇️ New: track day offset from “today” (0 = today) */
   const [offsetDays, setOffsetDays] = React.useState(0);
@@ -41,6 +43,12 @@ export default function HomePage() {
 
   const { data, isLoading, error } = useFixtures(dateKey); // <- include `error`
   const matches = data ?? [];
+
+  // derive unique leagues from the fetched data
+  const leagueOptions = React.useMemo(
+    () => Array.from(new Set(matches.map(m => m.league))).sort(),
+    [matches]
+  );
 
   const goPrev = () => setOffsetDays((n) => n - 1); // ⬅️ previous day
   const goNext = () => setOffsetDays((n) => n + 1); // ⬅️ next day
@@ -76,6 +84,10 @@ export default function HomePage() {
           idPrefix={tabIdPrefix}          
         />
 
+        {/* NEW: League Picker, not yet hooked to list filtering */}
+        <LeaguePicker leagues={leagueOptions} value={league} onChange={setLeague} label="League" />
+      </div>
+      
         <div 
           id={fixtureRegionId}
           role="region"
@@ -91,7 +103,6 @@ export default function HomePage() {
             <FixtureList matches={matches} filter={tab} />
           )}
         </div>
-      </div>
     </section>
   );
 }
