@@ -46,6 +46,7 @@ export default function HomePage() {
   const goNext = () => setOffsetDays((n) => n + 1); // ⬅️ next day
   const goToday = () => setOffsetDays(0);           // ⬅️ (optional quick reset)
 
+  const fixtureRegionId = 'fixtures-region';
   return (
     <section style={{ padding: '24px 0' }}>
       {/* ⬇️ Hero row: title + date switcher */}
@@ -63,21 +64,30 @@ export default function HomePage() {
         />
       </div>
 
-      <SegmentedFilter<FilterTab>
-        segments={FILTER_SEGMENTS}
-        value={tab}
-        onChange={setTab}
-        aria-label="Fixture filter"
-      />
+      {/* NEW: keep layout consistent + expose a landmark for SR users */}
+      <div className="container" style={{ marginTop: 12 }}>
+        <SegmentedFilter<FilterTab>
+          segments={FILTER_SEGMENTS}
+          value={tab}
+          onChange={setTab}
+          aria-label="Fixture filter"
+          /* next step: aria-controls={fixtureRegionId} (once SegmentedFilter supports it) */
+        />
 
-      <div style={{ marginTop: 16 }}>
-        {error ? (
-          <div className="card" style={{ padding: 16 }}><p className="p">Could not load fixtures.</p></div>
-        ) : isLoading ? (
-          <div className="card" style={{ padding: 16 }}><p className="p">Loading fixtures…</p></div>
-        ) : (
-          <FixtureList matches={matches} filter={tab} />
-        )}
+        <div 
+          id={fixtureRegionId}
+          role="region"
+          aria-label="Fixtures for selected date and filter"
+          style={{ marginTop: 16 }}
+        >
+          {error ? (
+            <div className="card" style={{ padding: 16 }}><p className="p">Could not load fixtures.</p></div>
+          ) : isLoading ? (
+            <div className="card" style={{ padding: 16 }}><p className="p">Loading fixtures…</p></div>
+          ) : (
+            <FixtureList matches={matches} filter={tab} />
+          )}
+        </div>
       </div>
     </section>
   );
