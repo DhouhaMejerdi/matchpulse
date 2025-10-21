@@ -51,18 +51,10 @@ export default function HomePage() {
     [matches]
   );
 
-  const filteredMatches = React.useMemo(() => {
+  const filteredByLeague = React.useMemo(() => {
     if (!matches.length) return [];
-    return matches.filter((m) => {
-      const leagueMatch = !league || m.league === league;           // ⬅️ league filter
-      const tabMatch =
-        tab === 'All' ||
-        (tab === 'Live' && m.status === 'LIVE') ||
-        (tab === 'Upcoming' && m.status === 'UPCOMING') ||
-        (tab === 'Results' && (m.status === 'FT' || m.status === 'HT'));
-      return leagueMatch && tabMatch;
-    });
-  }, [matches, league, tab]);
+    return !league ? matches : matches.filter((m) => m.league === league);
+  }, [matches, league]);
 
   const emptyHint = React.useMemo(() => {
   const tips: string[] = [];
@@ -125,13 +117,13 @@ export default function HomePage() {
           <div className="card" style={{ padding: 16 }}>
             <p className="p">Loading fixtures…</p>
           </div>
-        ) : filteredMatches.length === 0 ? (
+        ) : filteredByLeague.length === 0 ? (
           <EmptyState
             title="No matches for this filter."
             hint={emptyHint}
           />
         ) : (
-          <FixtureList matches={filteredMatches} filter={tab} />
+          <FixtureList matches={filteredByLeague} filter={tab} />
         )}
       </div>
     </section>
