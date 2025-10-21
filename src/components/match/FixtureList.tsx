@@ -7,11 +7,11 @@ import type { FilterTab } from '@/lib/types/ui';
 function byFilter(m: Match, filter: FilterTab) {
   switch (filter) {
     case 'Live':
-      return m.status === 'LIVE';
+      return m.status === 'LIVE' || m.status === 'HT' || m.status === 'ET' || m.status === 'PEN';
     case 'Upcoming':
-      return m.status === 'UPCOMING';
+      return m.status === 'UPCOMING' || m.status === 'DELAYED' || m.status === 'POSTPONED';
     case 'Results':
-      return m.status === 'FT';
+      return m.status === 'FT'; // keep strict; or include canceled if you prefer
     default:
       return true;
   }

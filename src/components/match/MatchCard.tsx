@@ -1,14 +1,15 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
+import type { Match, Score } from '@/lib/api/types';
 
 export type MatchCardProps = {
   id: string;
   home: { name: string; crest: string };
   away: { name: string; crest: string };
-  status: 'LIVE' | 'UPCOMING' | 'FT' | 'HT';
+  status: Match['status'];
   kickoff: string; // ISO
-  score?: { home: number; away: number };
+  score?: Score;
   league: string;
 };
 
