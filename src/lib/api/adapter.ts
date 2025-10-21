@@ -10,14 +10,21 @@ export async function getFixtures(dateISO: string): Promise<Match[]> {
 
 export async function getMatch(id: string): Promise<Match | null> {
   await delay(120);
-  // naive search in generated set for today + ±1 day
+
+  // Parse deterministic pattern: m-<day>-<n>
+  const m = id.match(/^m-(\d+)-/);
   const now = new Date();
-  const candidates = [
-    ...generateFixtures(now.toISOString()),
-    ...generateFixtures(new Date(now.getTime() - 86400000).toISOString()),
-    ...generateFixtures(new Date(now.getTime() + 86400000).toISOString()),
-  ];
-  return candidates.find((m) => m.id === id) ?? null;
+  const y = now.getUTCFullYear();
+  const mth = now.getUTCMonth();
+  const day = m ? Number(m[1]) : now.getUTCDate(); // fallback to today if pattern missing
+
+  // Build ISO at UTC midnight for that day
+  const dayISO = new Date(Date.UTC(y, mth, day)).toISOString();
+
+  const fixtures = generateFixtures(dayISO);
+  const match = fixtures.find((fx) => fx.id === id) ?? null;
+
+  return match;
 }
 
 export async function getTeam(id: string): Promise<Team | null> {
