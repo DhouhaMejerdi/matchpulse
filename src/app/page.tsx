@@ -5,6 +5,7 @@ import SegmentedFilter from '@/components/controls/SegmentedFilter';
 import { useFixtures } from '@/lib/hooks/useFixtures';
 import type { FilterTab } from '@/lib/types/ui';
 import FixtureList from '@/components/match/FixtureList';
+import DateToolbar from '@/components/layout/DateToolbar';
 
 const FILTER_SEGMENTS: readonly FilterTab[] = ['All', 'Live', 'Upcoming', 'Results'];
 
@@ -63,44 +64,12 @@ export default function HomePage() {
       >
         <h1 className="h1" style={{ marginBottom: 8 }}>Today’s Matches</h1>
 
-        <div aria-label="Change date" role="toolbar" aria-keyshortcuts="ArrowLeft, ArrowRight" tabIndex={0} onKeyDown={onToolbarKeyDown} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <button
-            type="button"
-            onClick={goPrev}
-            aria-label="Previous day"
-            title="Previous day"
-            style={{ padding: '6px 10px', borderRadius: 8 }}
-          >
-            ←
-          </button>
-
-          {/* Human-readable label */}
-          <strong className="small" aria-live="polite" aria-atomic="true" style={{ minWidth: 120, textAlign: 'center' }}>
-            {humanLabel}
-          </strong>
-
-          <button
-            type="button"
-            onClick={goNext}
-            aria-label="Next day"
-            title="Next day"
-            style={{ padding: '6px 10px', borderRadius: 8 }}
-          >
-            →
-          </button>
-
-          {/* Optional tiny “Today” reset; comment out if you don’t want it visible */}
-          <button
-            type="button"
-            onClick={goToday}
-            aria-label="Go to today"
-            title="Go to today"
-            className="small"
-            style={{ padding: '6px 10px', borderRadius: 8 }}
-          >
-            Today
-          </button>
-        </div>
+        <DateToolbar
+          label={humanLabel}
+          onPrev={goPrev}
+          onNext={goNext}
+          onToday={goToday}
+        />
       </div>
 
       <SegmentedFilter<FilterTab>
