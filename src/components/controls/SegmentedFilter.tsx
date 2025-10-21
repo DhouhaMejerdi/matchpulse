@@ -6,7 +6,10 @@ export type SegmentedFilterProps<T extends string> = {
   value: T;
   onChange: (v: T) => void;
   'aria-label'?: string;
-  // Step 2 (later): ariaControlsId?: string; // to wire the results region
+  /** NEW: region id that this tablist controls (e.g., "fixtures-region") */
+  ariaControlsId?: string;
+  /** NEW: stable id prefix for tabs (e.g., "filter-tab") */
+  idPrefix?: string;
 };
 
 export default function SegmentedFilter<T extends string>({
@@ -14,6 +17,8 @@ export default function SegmentedFilter<T extends string>({
   value,
   onChange,
   'aria-label': ariaLabel,
+  ariaControlsId,
+  idPrefix = 'seg',
 }: SegmentedFilterProps<T>) {
   const btnRefs = React.useRef<Array<HTMLButtonElement | null>>([]);
 
@@ -59,14 +64,18 @@ export default function SegmentedFilter<T extends string>({
     >
       {segments.map((s, i) => {
         const selected = s === value;
+        const tabId = `${idPrefix}-${String(s)}`; // stable id per tab
+
         return (
           <button
             key={s}
+            id={tabId}
             ref={(el) => {
               btnRefs.current[i] = el;
             }}
             role="tab"
             aria-selected={selected}
+            aria-controls={ariaControlsId}
             tabIndex={selected ? 0 : -1}           // ⬅️ roving tabindex
             onClick={() => onChange(s)}
             onKeyDown={(e) => onKeyDown(e, i)}     // ⬅️ keyboard nav

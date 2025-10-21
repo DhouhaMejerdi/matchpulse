@@ -47,6 +47,7 @@ export default function HomePage() {
   const goToday = () => setOffsetDays(0);           // ⬅️ (optional quick reset)
 
   const fixtureRegionId = 'fixtures-region';
+  const tabIdPrefix = 'filter-tab';
   return (
     <section style={{ padding: '24px 0' }}>
       {/* ⬇️ Hero row: title + date switcher */}
@@ -71,13 +72,15 @@ export default function HomePage() {
           value={tab}
           onChange={setTab}
           aria-label="Fixture filter"
-          /* next step: aria-controls={fixtureRegionId} (once SegmentedFilter supports it) */
+          ariaControlsId={fixtureRegionId}
+          idPrefix={tabIdPrefix}          
         />
 
         <div 
           id={fixtureRegionId}
           role="region"
           aria-label="Fixtures for selected date and filter"
+          aria-labelledby={`${tabIdPrefix}-${tab}`}  // NEW: reference active tab id
           style={{ marginTop: 16 }}
         >
           {error ? (
