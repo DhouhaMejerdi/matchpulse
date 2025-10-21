@@ -7,6 +7,7 @@ import type { FilterTab } from '@/lib/types/ui';
 import FixtureList from '@/components/match/FixtureList';
 import DateToolbar from '@/components/layout/DateToolbar';
 import LeaguePicker from '@/components/controls/LeaguePicker';
+import EmptyState from '@/components/shared/EmptyState';
 
 const FILTER_SEGMENTS: readonly FilterTab[] = ['All', 'Live', 'Upcoming', 'Results'];
 
@@ -63,6 +64,14 @@ export default function HomePage() {
     });
   }, [matches, league, tab]);
 
+  const emptyHint = React.useMemo(() => {
+  const tips: string[] = [];
+  if (league) tips.push('Clear the league filter');
+  if (tab !== 'All') tips.push('switch to “All”');
+  if (!tips.length) tips.push('pick another date');
+    return `Try to ${tips.join(' or ')}.`;
+  }, [league, tab]);
+
   const goPrev = () => setOffsetDays((n) => n - 1); // ⬅️ previous day
   const goNext = () => setOffsetDays((n) => n + 1); // ⬅️ next day
   const goToday = () => setOffsetDays(0);           // ⬅️ (optional quick reset)
@@ -101,21 +110,30 @@ export default function HomePage() {
         <LeaguePicker leagues={leagueOptions} value={league} onChange={setLeague} label="League" />
       </div>
       
-        <div 
-          id={fixtureRegionId}
-          role="region"
-          aria-label="Fixtures for selected date and filter"
-          aria-labelledby={`${tabIdPrefix}-${tab}`}  // NEW: reference active tab id
-          style={{ marginTop: 16 }}
-        >
-          {error ? (
-            <div className="card" style={{ padding: 16 }}><p className="p">Could not load fixtures.</p></div>
-          ) : isLoading ? (
-            <div className="card" style={{ padding: 16 }}><p className="p">Loading fixtures…</p></div>
-          ) : (
-            <FixtureList matches={filteredMatches} filter={tab} />
-          )}
-        </div>
+      <div
+        id={fixtureRegionId}
+        role="region"
+        aria-label="Fixtures for selected date and filter"
+        aria-labelledby={`${tabIdPrefix}-${tab}`}
+        style={{ marginTop: 16 }}
+      >
+        {error ? (
+          <div className="card" style={{ padding: 16 }}>
+            <p className="p">Could not load fixtures.</p>
+          </div>
+        ) : isLoading ? (
+          <div className="card" style={{ padding: 16 }}>
+            <p className="p">Loading fixtures…</p>
+          </div>
+        ) : filteredMatches.length === 0 ? (
+          <EmptyState
+            title="No matches for this filter."
+            hint={emptyHint}
+          />
+        ) : (
+          <FixtureList matches={filteredMatches} filter={tab} />
+        )}
+      </div>
     </section>
   );
 }
