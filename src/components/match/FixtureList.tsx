@@ -20,20 +20,25 @@ function byFilter(m: Match, filter: FilterTab) {
 export default function FixtureList({
   matches,
   filter,
+  league,                 // ⬅️ NEW (optional) to build a better hint
 }: {
   matches: Match[];
   filter: FilterTab;
+  league?: string | null;
 }) {
   const filtered = matches.filter((m) => byFilter(m, filter));
 
   if (filtered.length === 0) {
-    return (
-      <EmptyState
-        title="No matches"
-        hint="Try a different filter or date."
-      />
-    );
-    }
+    const hint = (() => {
+      const tips: string[] = [];
+      if (league) tips.push('clear the league filter');
+      if (filter !== 'All') tips.push('switch to “All”');
+      tips.push('pick another date');
+      return `Try to ${tips.slice(0, 2).join(' or ')}.`;
+    })();
+
+    return <EmptyState title="No matches for this filter." hint={hint} />;
+  }
 
   return (
     <div className="fixture-list">

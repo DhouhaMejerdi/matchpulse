@@ -117,13 +117,8 @@ export default function HomePage() {
           <div className="card" style={{ padding: 16 }}>
             <p className="p">Loading fixtures…</p>
           </div>
-        ) : filteredByLeague.length === 0 ? (
-          <EmptyState
-            title="No matches for this filter."
-            hint={emptyHint}
-          />
         ) : (
-          <FixtureList matches={filteredByLeague} filter={tab} />
+          <FixtureList matches={filteredByLeague} filter={tab} league={league} />
         )}
       </div>
     </section>
