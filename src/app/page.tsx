@@ -50,6 +50,19 @@ export default function HomePage() {
     [matches]
   );
 
+  const filteredMatches = React.useMemo(() => {
+    if (!matches.length) return [];
+    return matches.filter((m) => {
+      const leagueMatch = !league || m.league === league;           // ⬅️ league filter
+      const tabMatch =
+        tab === 'All' ||
+        (tab === 'Live' && m.status === 'LIVE') ||
+        (tab === 'Upcoming' && m.status === 'UPCOMING') ||
+        (tab === 'Results' && (m.status === 'FT' || m.status === 'HT'));
+      return leagueMatch && tabMatch;
+    });
+  }, [matches, league, tab]);
+
   const goPrev = () => setOffsetDays((n) => n - 1); // ⬅️ previous day
   const goNext = () => setOffsetDays((n) => n + 1); // ⬅️ next day
   const goToday = () => setOffsetDays(0);           // ⬅️ (optional quick reset)
@@ -100,7 +113,7 @@ export default function HomePage() {
           ) : isLoading ? (
             <div className="card" style={{ padding: 16 }}><p className="p">Loading fixtures…</p></div>
           ) : (
-            <FixtureList matches={matches} filter={tab} />
+            <FixtureList matches={filteredMatches} filter={tab} />
           )}
         </div>
     </section>
