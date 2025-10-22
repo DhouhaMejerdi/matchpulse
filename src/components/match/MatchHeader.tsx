@@ -2,9 +2,8 @@
 
 import * as React from 'react';
 import Image from 'next/image';
-import type { Match } from '@/lib/api/types';
-
-type TeamMini = { id: string; name: string; crest: string };
+import type { Match, TeamMini } from '@/lib/api/types';
+import { STATUS_LABELS } from '@/lib/utils/statusMap';
 
 export type MatchHeaderProps = {
   home: TeamMini;
@@ -23,6 +22,7 @@ function fmtKickoff(iso?: string | null) {
     weekday: 'short',
     hour: '2-digit',
     minute: '2-digit',
+    timeZoneName: 'short',
   }).format(d);
 }
 
@@ -30,6 +30,7 @@ export default function MatchHeader({
   home, away, score, status, league, kickoff, venue,
 }: MatchHeaderProps) {
   const isLive = status === 'LIVE';
+  const statusLabel = STATUS_LABELS[status] ?? status;
 
   return (
     <header className="card match-header" style={{ padding: 16, marginTop: 8, marginBottom: 16 }}>
@@ -78,12 +79,32 @@ export default function MatchHeader({
 
       <div className="match-sub" role="group" aria-label="Match details">
         <span className={`status status--${status.toLowerCase()}`}>
-          {isLive && <span aria-hidden className="live-dot" />} {status}
+          {/* motion-safe live dot */}
+          {isLive && (
+            <span
+              aria-hidden
+              className="live-dot"
+              style={{
+                display: 'inline-block',
+                width: 8,
+                height: 8,
+                borderRadius: '999px',
+                background: 'var(--red-500)',
+                marginRight: 6,
+                // prefers-reduced-motion: no animation
+                animation: 'pulse 1.4s ease-in-out infinite',
+                '@media (prefers-reduced-motion: reduce)': { animation: 'none' } as any,
+              }}
+            />
+          )}
+          {statusLabel}
         </span>
 
         <span aria-hidden>•</span>
 
-        <time dateTime={kickoff ?? undefined}>{fmtKickoff(kickoff)}</time>
+        <time dateTime={kickoff ?? undefined} title={kickoff ?? undefined}>
+          {fmtKickoff(kickoff)}
+        </time>
 
         <span aria-hidden>•</span>
         <span>{league}</span>
