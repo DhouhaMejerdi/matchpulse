@@ -1,0 +1,18 @@
+.tabs {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  height: 40px;
+}
+.tab {
+  padding: 8px 12px;
+  border-radius: var(--r-sm);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--ink-900);
+}
+.tab[aria-selected="true"] {
+  background: var(--ui-200);
+  box-shadow: var(--shadow-sm);
+}

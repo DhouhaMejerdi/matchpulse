@@ -1,0 +1,113 @@
+/* Shared status pill for cards AND header */
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--ui-200);
+}
+
+/* Shared live dot with motion-safe pulse */
+.live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--brand-500); /* or var(--red-500) */
+  display: inline-block;
+  margin-right: 6px;
+  animation: pulse 1.2s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .live-dot { animation: none !important; }
+}
+
+/* ----- Per-status colors (token-based) ----- */
+
+/* In-play statuses */
+.status--ht,
+.status--et,
+.status--pen {
+  color: var(--surface-0);
+}
+
+.status--ht   { background: var(--warning-500); color: var(--ink-900); } /* 🟡 halftime */
+.status--et   { background: var(--accent-blue-500); }  /* 🔵 after extra time */
+.status--pen  { background: var(--danger-500); }       /* 🔴 penalties */
+
+/* Upcoming / delayed */
+.status--upcoming  { background: var(--ui-200); color: var(--ink-900); }
+.status--delayed   { background: var(--warning-500); color: var(--ink-900); }
+.status--postponed { background: var(--muted-600); color: var(--surface-0); }
+
+/* Finished / canceled */
+.status--ft        { background: var(--muted-600); color: var(--surface-0); }
+.status--canceled  { background: var(--ui-200); color: var(--ink-900); }
+
+
+.match-card {
+  display: grid;
+  gap: var(--s-3);
+  padding: var(--s-4);
+  background: var(--surface-0);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-sm);
+  text-decoration: none;
+  color: inherit;
+
+  &:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+
+  .row {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: var(--s-3);
+  }
+
+  .team {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .team--away {
+    justify-content: flex-end;
+  }
+  .team__name {
+    font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .team__name--right { text-align: right; }
+
+  .score {
+    display: grid; place-items: center;
+    .score__val { font-weight: 700; font-size: var(--text-lg); }
+  }
+
+  .meta {
+    display: flex; align-items: center; gap: 8px;
+    color: var(--muted-600);
+  }
+}
+
+.fixture-list {
+  display: grid;
+  gap: 12px;
+}
+
+@keyframes pulse {
+  0% { opacity: .6; transform: scale(.9); }
+  50% { opacity: 1; transform: scale(1); }
+  100% { opacity: .6; transform: scale(.9); }
+}
+
+@media (min-width: 768px) {
+  .fixture-list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (min-width: 1024px) {
+  .fixture-list {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
