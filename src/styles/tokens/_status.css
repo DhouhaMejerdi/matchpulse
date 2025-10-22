@@ -1,0 +1,14 @@
+:root {
+  --status-live: #FF4D4F;        /* urgent live */
+  --status-upcoming: #17B26A;    /* scheduled future */
+  --status-ht: #F59E0B;          /* half-time */
+  --status-ft: #5B6475;          /* full-time */
+  --status-aet: #3B82F6;         /* after extra time */
+  --status-pens: #EF4444;        /* penalty shootout */
+  --status-delayed: #EAB308;     /* delayed start */
+  --status-suspended: #FB923C;   /* paused indefinitely */
+  --status-abandoned: #DC2626;   /* abandoned */
+  --status-postponed: #FB923C;   /* rescheduled */
+  --status-canceled: #B91C1C;    /* officially canceled */
+  --status-tbd: #5B6475;         /* unknown / placeholder */
+}
