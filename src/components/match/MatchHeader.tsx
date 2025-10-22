@@ -32,6 +32,17 @@ export default function MatchHeader({
   const isLive = status === 'LIVE';
   const statusLabel = STATUS_LABELS[status] ?? status;
 
+  // NEW: map league name → chip modifier (same logic as MatchCard)
+  const leagueMod = React.useMemo(() => {
+    const s = (league || '').toLowerCase();
+    if (s.includes('premier')) return 'premier';
+    if (s.includes('champions')) return 'ucl';
+    if (s.includes('la liga')) return 'liga';
+    if (s.includes('serie a')) return 'serie';
+    if (s.includes('friendly')) return 'friendly';
+    return 'generic';
+  }, [league]);
+
   return (
     <header className="card match-header" style={{ padding: 16, marginTop: 8, marginBottom: 16 }}>
       {/* Screen-reader page title */}
@@ -90,7 +101,10 @@ export default function MatchHeader({
         </time>
 
         <span aria-hidden>•</span>
-        <span>{league}</span>
+        {/* NEW: league chip with modifier + title */}
+        <span className={`league-chip league-chip--${leagueMod}`} title={league}>
+          {league}
+        </span>
 
         {venue ? (
           <>
