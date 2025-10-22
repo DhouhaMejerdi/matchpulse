@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Match, Score } from '@/lib/api/types';
+import { STATUS_LABELS } from '@/lib/utils/statusMap';
 
 export type MatchCardProps = {
   id: string;
@@ -29,6 +30,7 @@ export default function MatchCard(props: MatchCardProps) {
   const { id, home, away, status, kickoff, score, league } = props;
 
   const isLive = status === 'LIVE';
+  const statusLabel = STATUS_LABELS[status] ?? status;
   const srLabel = `Open match ${home.name} versus ${away.name} ${
     isLive ? 'live' : ''
   } at ${formatKickoff(kickoff)}`;
@@ -39,6 +41,7 @@ export default function MatchCard(props: MatchCardProps) {
       className="match-card"
       aria-label={srLabel}
     >
+      {/* ─── Teams + Score Row ─── */}
       <div className="row">
         {/* Home */}
         <div className="team team--home">
@@ -78,9 +81,10 @@ export default function MatchCard(props: MatchCardProps) {
         </div>
       </div>
 
+      {/* ─── Meta Row ─── */}
       <div className="meta">
         <span className={`status status--${status.toLowerCase()}`}>
-          {isLive && <span aria-hidden className="live-dot" />} {status}
+          {isLive && <span aria-hidden className="live-dot" />} {statusLabel}
         </span>
         <span>• {formatKickoff(kickoff)}</span>
         <span className="league-chip">{league}</span>

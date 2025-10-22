@@ -24,6 +24,29 @@
   .live-dot { animation: none !important; }
 }
 
+/* ----- Per-status colors (token-based) ----- */
+
+/* In-play statuses */
+.status--ht,
+.status--et,
+.status--pen {
+  color: var(--surface-0);
+}
+
+.status--ht   { background: var(--warning-500); color: var(--ink-900); } /* 🟡 halftime */
+.status--et   { background: var(--accent-blue-500); }  /* 🔵 after extra time */
+.status--pen  { background: var(--danger-500); }       /* 🔴 penalties */
+
+/* Upcoming / delayed */
+.status--upcoming  { background: var(--ui-200); color: var(--ink-900); }
+.status--delayed   { background: var(--warning-500); color: var(--ink-900); }
+.status--postponed { background: var(--muted-600); color: var(--surface-0); }
+
+/* Finished / canceled */
+.status--ft        { background: var(--muted-600); color: var(--surface-0); }
+.status--canceled  { background: var(--ui-200); color: var(--ink-900); }
+
+
 .match-card {
   display: grid;
   gap: var(--s-3);
