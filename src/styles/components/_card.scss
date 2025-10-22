@@ -1,3 +1,26 @@
+/* Base league chip */
+.league-chip {
+  display: inline-block;
+  padding: 5px 8px;
+  border-radius: var(--r-sm);
+  font-weight: 600;
+  font-size: var(--text-xs);
+  line-height: 1;
+  white-space: nowrap;
+  background: var(--ui-200);
+  color: var(--ink-900);
+}
+
+/* Token-based identities */
+.league-chip--premier  { background: var(--accent-blue-500); color: var(--surface-0); }
+.league-chip--ucl      { background: var(--brand-500);       color: var(--surface-0); }
+.league-chip--liga     { background: var(--warning-500);     color: var(--ink-900);   }
+.league-chip--serie    { background: var(--success-500);     color: var(--surface-0); }
+.league-chip--friendly { background: var(--muted-600);       color: var(--surface-0); }
+
+/* Generic / fallback */
+.league-chip--generic  { background: var(--ui-200);          color: var(--ink-900);   }
+
 /* Shared status pill for cards AND header */
 .status {
   display: inline-flex;

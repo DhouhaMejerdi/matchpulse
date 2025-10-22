@@ -1,4 +1,6 @@
 'use client';
+
+import * as React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Match, Score } from '@/lib/api/types';
@@ -31,6 +33,18 @@ export default function MatchCard(props: MatchCardProps) {
 
   const isLive = status === 'LIVE';
   const statusLabel = STATUS_LABELS[status] ?? status;
+
+  // NEW: map league name → chip modifier
+  const leagueMod = React.useMemo(() => {
+    const s = (league || '').toLowerCase();
+    if (s.includes('premier')) return 'premier';
+    if (s.includes('champions')) return 'ucl';
+    if (s.includes('la liga')) return 'liga';
+    if (s.includes('serie a')) return 'serie';
+    if (s.includes('friendly')) return 'friendly';
+    return 'generic';
+  }, [league]);
+
   const srLabel = `Open match ${home.name} versus ${away.name} ${
     isLive ? 'live' : ''
   } at ${formatKickoff(kickoff)}`;
@@ -87,7 +101,11 @@ export default function MatchCard(props: MatchCardProps) {
           {isLive && <span aria-hidden className="live-dot" />} {statusLabel}
         </span>
         <span>• {formatKickoff(kickoff)}</span>
-        <span className="league-chip">{league}</span>
+
+        {/* NEW: league chip with modifier */}
+        <span className={`league-chip league-chip--${leagueMod}`} title={league}>
+          {league}
+        </span>
       </div>
     </Link>
   );
