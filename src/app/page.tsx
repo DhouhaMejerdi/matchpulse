@@ -7,7 +7,6 @@ import type { FilterTab } from '@/lib/types/ui';
 import FixtureList from '@/components/match/FixtureList';
 import DateToolbar from '@/components/layout/DateToolbar';
 import LeaguePicker from '@/components/controls/LeaguePicker';
-import EmptyState from '@/components/shared/EmptyState';
 
 const FILTER_SEGMENTS: readonly FilterTab[] = ['All', 'Live', 'Upcoming', 'Results'];
 
@@ -43,7 +42,7 @@ export default function HomePage() {
   const humanLabel = React.useMemo(() => formatHuman(dateKey), [dateKey]);
 
   const { data, isLoading, error } = useFixtures(dateKey); // <- include `error`
-  const matches = data ?? [];
+  const matches = React.useMemo(() => data ?? [], [data]);
 
   // derive unique leagues from the fetched data
   const leagueOptions = React.useMemo(
@@ -55,14 +54,6 @@ export default function HomePage() {
     if (!matches.length) return [];
     return !league ? matches : matches.filter((m) => m.league === league);
   }, [matches, league]);
-
-  const emptyHint = React.useMemo(() => {
-  const tips: string[] = [];
-  if (league) tips.push('Clear the league filter');
-  if (tab !== 'All') tips.push('switch to “All”');
-  if (!tips.length) tips.push('pick another date');
-    return `Try to ${tips.join(' or ')}.`;
-  }, [league, tab]);
 
   const goPrev = () => setOffsetDays((n) => n - 1); // ⬅️ previous day
   const goNext = () => setOffsetDays((n) => n + 1); // ⬅️ next day

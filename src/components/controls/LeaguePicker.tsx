@@ -161,7 +161,7 @@ export default function LeaguePicker({ leagues, value, onChange, label = 'League
             }}
           >
             {filtered.length === 0 && (
-              <li className="small" aria-disabled="true" style={{ padding: '6px 10px', opacity: 0.6 }}>
+              <li className="small" aria-hidden="true" style={{ padding: '6px 10px', opacity: 0.6 }}>
                 No leagues
               </li>
             )}

@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import Image from 'next/image';
+import type { Match } from '@/lib/api/types';
 
 type TeamMini = { id: string; name: string; crest: string };
 
@@ -9,7 +10,7 @@ export type MatchHeaderProps = {
   home: TeamMini;
   away: TeamMini;
   score?: { home: number; away: number } | null;
-  status: 'LIVE' | 'UPCOMING' | 'FT' | 'HT';
+  status: Match['status'];
   league: string;
   kickoff?: string | null; // ISO
   venue?: string | null;
