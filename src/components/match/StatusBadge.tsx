@@ -3,8 +3,17 @@ import React from 'react';
 import { STATUS_MAP, type StatusCode } from '@/lib/status/statusMap';
 
 function normalizeStatus(code?: string | null): StatusCode {
-  // Normalize to uppercase and fall back to 'TBD'
-  const key = (code ?? '').toUpperCase() as StatusCode;
+  const raw = (code ?? '').toUpperCase();
+
+  // ✅ Accept common feed aliases
+  const ALIASES: Record<string, StatusCode> = {
+    ET: 'AET',
+    AET: 'AET',
+    PEN: 'PENS',
+    PENS: 'PENS',
+  };
+
+  const key = (ALIASES[raw] ?? raw) as StatusCode;
   return (key && (key in STATUS_MAP)) ? key : 'TBD';
 }
 
