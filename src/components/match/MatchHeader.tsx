@@ -79,27 +79,10 @@ export default function MatchHeader({
 
       <div className="match-sub" role="group" aria-label="Match details">
         <span className={`status status--${status.toLowerCase()}`}>
-          {/* motion-safe live dot */}
-          {isLive && (
-            <span
-              aria-hidden
-              className="live-dot"
-              style={{
-                display: 'inline-block',
-                width: 8,
-                height: 8,
-                borderRadius: '999px',
-                background: 'var(--red-500)',
-                marginRight: 6,
-                // prefers-reduced-motion: no animation
-                animation: 'pulse 1.4s ease-in-out infinite',
-                '@media (prefers-reduced-motion: reduce)': { animation: 'none' } as any,
-              }}
-            />
-          )}
+          {isLive && <span aria-hidden className="live-dot" />}
           {statusLabel}
         </span>
-
+        
         <span aria-hidden>•</span>
 
         <time dateTime={kickoff ?? undefined} title={kickoff ?? undefined}>

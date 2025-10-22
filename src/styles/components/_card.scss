@@ -1,3 +1,29 @@
+/* Shared status pill for cards AND header */
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--ui-200);
+}
+
+/* Shared live dot with motion-safe pulse */
+.live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--brand-500); /* or var(--red-500) */
+  display: inline-block;
+  margin-right: 6px;
+  animation: pulse 1.2s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .live-dot { animation: none !important; }
+}
+
 .match-card {
   display: grid;
   gap: var(--s-3);
@@ -38,16 +64,6 @@
   .meta {
     display: flex; align-items: center; gap: 8px;
     color: var(--muted-600);
-  }
-
-  .status {
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 2px 8px; border-radius: 999px; background: var(--ui-200);
-  }
-
-  .live-dot {
-    width: 8px; height: 8px; border-radius: 50%; background: var(--brand-500);
-    animation: pulse 1.2s ease-in-out infinite;
   }
 }
 
