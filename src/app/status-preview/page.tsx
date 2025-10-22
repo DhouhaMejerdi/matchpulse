@@ -2,6 +2,7 @@
 import React from 'react';
 import StatusBadge from '@/components/match/StatusBadge';
 import { STATUS_MAP, type StatusCode } from '@/lib/status/statusMap';
+import LiveMeta from '@/components/match/LiveMeta';
 
 export default function StatusPreviewPage() {
   const codes = Object.keys(STATUS_MAP) as StatusCode[];
@@ -24,6 +25,12 @@ export default function StatusPreviewPage() {
         {codes.map((code) => (
           <li key={code}>
             <StatusBadge code={code} />{' '}
+            {code === 'LIVE' && (
+            <span style={{ marginLeft: 12, opacity: 0.9 }}>
+                {/* demo only */}
+                <em><LiveMeta minute={23} /></em>
+            </span>
+            )}
             <span style={{ marginLeft: '0.5rem', color: 'var(--muted-600, #5b6475)' }}>
               {STATUS_MAP[code].description ?? 'Preview'}
             </span>

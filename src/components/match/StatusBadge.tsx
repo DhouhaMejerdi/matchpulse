@@ -22,8 +22,12 @@ export default function StatusBadge({ code }: { code: StatusCode }) {
   } as const;
 
   return (
-    <span style={style} aria-label={`Status: ${status.label}`}>
-      {status.label}
+    <span
+    className={`status-badge status-badge--${code.toLowerCase()}`}
+    style={style}
+    aria-label={`Status: ${status.label}`}
+    >
+    {status.label}
     </span>
   );
 }
