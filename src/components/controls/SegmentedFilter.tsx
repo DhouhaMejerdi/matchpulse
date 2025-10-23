@@ -57,11 +57,7 @@ export default function SegmentedFilter<T extends string>({
   };
 
   return (
-    <div
-      role="tablist"
-      aria-label={ariaLabel}
-      style={{ display: 'inline-flex', background: 'var(--ui-200)', borderRadius: 10, padding: 4, gap: 4 }}
-    >
+    <div role="tablist" className="segmented" aria-label={ariaLabel}>
       {segments.map((s, i) => {
         const selected = s === value;
         const tabId = `${idPrefix}-${String(s)}`; // stable id per tab
@@ -79,15 +75,7 @@ export default function SegmentedFilter<T extends string>({
             tabIndex={selected ? 0 : -1}           // ⬅️ roving tabindex
             onClick={() => onChange(s)}
             onKeyDown={(e) => onKeyDown(e, i)}     // ⬅️ keyboard nav
-            className="small"
-            style={{
-              padding: '6px 10px',
-              borderRadius: 8,
-              border: 'none',
-              background: selected ? 'var(--surface-0)' : 'transparent',
-              boxShadow: selected ? 'var(--shadow-sm)' : 'none',
-              cursor: 'pointer',
-            }}
+            className="segmented__item small"
           >
             {s}
           </button>

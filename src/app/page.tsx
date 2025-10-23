@@ -76,23 +76,26 @@ export default function HomePage() {
           onNext={goNext}
           onToday={goToday}
         />
-      </div>
+      </div> 
 
       {/* NEW: keep layout consistent + expose a landmark for SR users */}
-      <div className="container" style={{ marginTop: 12 }}>
-        <SegmentedFilter<FilterTab>
-          segments={FILTER_SEGMENTS}
-          value={tab}
-          onChange={setTab}
-          aria-label="Fixture filter"
-          ariaControlsId={fixtureRegionId}
-          idPrefix={tabIdPrefix}          
-        />
+      <div role="toolbar" aria-label="Fixture filters" className="controls-bar controls-bar--sticky">
+          <SegmentedFilter<FilterTab>
+            segments={FILTER_SEGMENTS}
+            value={tab}
+            onChange={setTab}
+            aria-label="Fixture status"
+            ariaControlsId={fixtureRegionId}
+            idPrefix={tabIdPrefix}          
+          />
 
-        {/* NEW: League Picker, not yet hooked to list filtering */}
-        <LeaguePicker leagues={leagueOptions} value={league} onChange={setLeague} label="League" />
+          <div className="controls-bar__end">
+            {/* Add more right-side controls here later if needed */}
+            <LeaguePicker className="league-picker"leagues={leagueOptions} value={league} onChange={setLeague} label="League" />
+          </div>
       </div>
-      
+
+ 
       <div
         id={fixtureRegionId}
         role="region"

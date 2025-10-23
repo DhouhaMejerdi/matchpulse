@@ -1,9 +1,12 @@
-@import './tokens.css';
 @import './components/_card.scss';
 @import './components/_tabs.scss';
 @import './components/_timeline.scss';
 @import './components/match-header';
+@import './components/_controls.scss';
+
+@import './tokens.css';
 @import "./tokens/_status.css";
+@import './tokens/_controls.css'; /* ⬅️ shared controls palette */
 
 /* Modern base reset */
 *, *::before, *::after { box-sizing: border-box; }

@@ -6,9 +6,10 @@ type Props = {
   value: string | null;              // selected league or null (All)
   onChange: (league: string | null) => void;
   label?: string;                    // e.g. "League"
+  className?: string; // ⬅️ NEW: allow external classes
 };
 
-export default function LeaguePicker({ leagues, value, onChange, label = 'League' }: Props) {
+export default function LeaguePicker({ leagues, value, onChange, label = 'League', className }: Props) {
   const [open, setOpen] = React.useState(false);
   const [query, setQuery] = React.useState('');
   const [activeIndex, setActiveIndex] = React.useState(0);
@@ -86,31 +87,25 @@ export default function LeaguePicker({ leagues, value, onChange, label = 'League
   const selectedLabel = value ?? 'All leagues';
 
   return (
-    <div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+    <div className={['league-picker', className].filter(Boolean).join(' ')}>
       {/* Selected pill + Clear */}
-      <span className="small" aria-live="polite" aria-atomic="true">
+      <span className="league-picker__label small" aria-live="polite" aria-atomic="true">
         {selectedLabel}
       </span>
+
       {value && (
         <button
           type="button"
           onClick={() => select(null)}
-          className="small"
+          className="league-picker__clear small"
           aria-label="Clear league filter"
-          style={{
-            padding: '6px 10px',
-            borderRadius: 8,
-            border: 'none',
-            background: 'var(--ui-200)',
-            cursor: 'pointer',
-          }}
         >
           Clear
         </button>
       )}
 
       {/* Combobox input */}
-      <div style={{ position: 'relative' }}>
+      <div className="league-picker__field">
         <input
           ref={inputRef}
           type="text"
@@ -127,15 +122,7 @@ export default function LeaguePicker({ leagues, value, onChange, label = 'League
             setActiveIndex(0);
           }}
           onKeyDown={onKeyDown}
-          className="small"
-          style={{
-            padding: '6px 10px',
-            borderRadius: 8,
-            border: '1px solid transparent',
-            background: 'var(--surface-0)',
-            boxShadow: 'var(--shadow-sm)',
-            minWidth: 180,
-          }}
+          className="league-picker__input small"
         />
         {/* Popup list */}
         {open && (
@@ -144,24 +131,10 @@ export default function LeaguePicker({ leagues, value, onChange, label = 'League
             id={listboxId}
             role="listbox"
             aria-label={`${label} options`}
-            style={{
-              position: 'absolute',
-              top: 'calc(100% + 4px)',
-              left: 0,
-              zIndex: 20,
-              background: 'var(--surface-0)',
-              borderRadius: 10,
-              boxShadow: 'var(--shadow-md)',
-              padding: 4,
-              margin: 0,
-              listStyle: 'none',
-              maxHeight: 220,
-              overflowY: 'auto',
-              minWidth: 220,
-            }}
+            className="league-picker__popover"
           >
             {filtered.length === 0 && (
-              <li className="small" aria-hidden="true" style={{ padding: '6px 10px', opacity: 0.6 }}>
+              <li className="league-picker__empty small" aria-hidden="true">
                 No leagues
               </li>
             )}
@@ -177,13 +150,7 @@ export default function LeaguePicker({ leagues, value, onChange, label = 'League
                   onMouseDown={(e) => e.preventDefault()} // prevent input blur before click
                   onClick={() => select(league)}
                   onMouseEnter={() => setActiveIndex(idx)}
-                  className="small"
-                  style={{
-                    padding: '6px 10px',
-                    borderRadius: 8,
-                    background: active ? 'var(--ui-200)' : 'transparent',
-                    cursor: 'pointer',
-                  }}
+                  className={`league-picker__option small${active ? ' is-active' : ''}${selected ? ' is-selected' : ''}`}
                 >
                   {league}
                 </li>

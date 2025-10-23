@@ -1,0 +1,33 @@
+:root {
+  /* Containers */
+  --control-bg: color-mix(in srgb, var(--ink-900), white 9%);     /* group bg */
+  --control-item-bg: transparent;
+  --control-item-hover: color-mix(in srgb, var(--ui-200), black 8%);
+  --control-item-selected: var(--ui-200);
+  --control-item-border: transparent;
+
+  /* Text */
+  --control-text: var(--ink-700);
+  --control-text-muted: color-mix(in srgb, var(--muted-600), white 10%);
+  --control-text-selected: var(--ink-900);
+
+  /* Focus ring */
+  --control-focus: var(--brand-500);
+
+  /* Radii & spacing */
+  --control-radius: 12px;
+  --control-pad: 4px;
+  --control-item-pad-y: 6px;
+  --control-item-pad-x: 12px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --control-bg: color-mix(in srgb, var(--surface-2), black 6%);
+    --control-item-hover: color-mix(in srgb, var(--ui-200), black 35%);
+    --control-item-selected: color-mix(in srgb, var(--ui-200), black 20%);
+    --control-text: #cfd6e4; /* ↑ contrast vs background */
+    --control-text-muted: #9aa3b2;
+    --control-text-selected: #eaf0ff;
+  }
+}
