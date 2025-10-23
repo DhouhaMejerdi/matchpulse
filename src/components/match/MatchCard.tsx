@@ -112,6 +112,8 @@ export default function MatchCard(props: MatchCardProps) {
         
         <span className="meta__item">{formatKickoff(kickoff)}</span>
 
+        <span aria-hidden className="meta__item"></span>
+
         {/* NEW: league chip with modifier */}
         <span className={`league-chip league-chip--${leagueMod}`} title={league}>
           {league}

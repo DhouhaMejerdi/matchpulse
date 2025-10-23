@@ -3,13 +3,16 @@
 import * as React from 'react';
 import Image from 'next/image';
 import type { Match, TeamMini } from '@/lib/api/types';
-import { STATUS_LABELS } from '@/lib/utils/statusMap';
+// ✅ Use the same centralized UI bits as MatchCard
+import StatusBadge from '@/components/match/StatusBadge';
+import LiveMeta from '@/components/match/LiveMeta';
+import type { StatusCode } from '@/lib/status/codes';
 
 export type MatchHeaderProps = {
   home: TeamMini;
   away: TeamMini;
   score?: { home: number; away: number } | null;
-  status: Match['status'];
+  status: Match['status']; // canonical or alias; StatusBadge will normalize
   league: string;
   kickoff?: string | null; // ISO
   venue?: string | null;
@@ -30,9 +33,8 @@ export default function MatchHeader({
   home, away, score, status, league, kickoff, venue,
 }: MatchHeaderProps) {
   const isLive = status === 'LIVE';
-  const statusLabel = STATUS_LABELS[status] ?? status;
 
-  // NEW: map league name → chip modifier (same logic as MatchCard)
+  // Same league chip logic as MatchCard (keeps UI consistent)
   const leagueMod = React.useMemo(() => {
     const s = (league || '').toLowerCase();
     if (s.includes('premier')) return 'premier';
@@ -50,6 +52,7 @@ export default function MatchHeader({
         {home.name} vs {away.name}
       </h1>
 
+      {/* ─── Teams + Score Row ─── */}
       <div className="match-title">
         <div className="match-title__team">
           <Image
@@ -88,11 +91,19 @@ export default function MatchHeader({
         </div>
       </div>
 
+      {/* ─── Meta Row ─── */}
       <div className="match-sub" role="group" aria-label="Match details">
-        <span className={`status status--${status.toLowerCase()}`}>
-          {isLive && <span aria-hidden className="live-dot" />}
-          {statusLabel}
+        {/* ✅ Unified, token-driven status badge */}
+        <span className="meta__item">
+          <StatusBadge code={(status as StatusCode) ?? 'TBD'} />
         </span>
+
+        {/* Optional live minute (same pattern as MatchCard demo) */}
+        {isLive && (
+          <span className="meta__item">
+            <em><LiveMeta minute={23} /></em>
+          </span>
+        )}
         
         <span aria-hidden>•</span>
 
