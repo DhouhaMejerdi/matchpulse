@@ -1,6 +1,19 @@
 export type TeamMini = { id: string; name: string; crest: string };
 export type Score = { home: number; away: number };
 export type EventType = 'goal' | 'card' | 'sub' | 'var' | 'ht' | 'ft';
+export type MatchStatus =
+  | 'UPCOMING'
+  | 'LIVE'
+  | 'HT'
+  | 'FT'
+  | 'ET'        // feed alias for AET
+  | 'PEN'       // feed alias for PENS
+  | 'DELAYED'
+  | 'POSTPONED'
+  | 'CANCELED'
+  | 'SUSPENDED' // ✅ new
+  | 'ABANDONED' // ✅ new
+  | 'TBD';      // optional but useful fallback
 
 export type MatchEvent = {
   id: string;
@@ -15,7 +28,7 @@ export type Match = {
   id: string;
   league: string;
   kickoff: string; // ISO
-  status: 'LIVE' | 'UPCOMING' | 'FT' | 'HT' | 'POSTPONED' | 'CANCELED' | 'DELAYED' | 'ET' | 'PEN';
+  status: MatchStatus;
   teams: { home: TeamMini; away: TeamMini };
   score?: Score;
   events?: MatchEvent[];
