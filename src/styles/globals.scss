@@ -3,6 +3,7 @@
 @import './components/_tabs.scss';
 @import './components/_timeline.scss';
 @import './components/match-header';
+@import "./tokens/_status.css";
 
 /* Modern base reset */
 *, *::before, *::after { box-sizing: border-box; }

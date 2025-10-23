@@ -190,5 +190,33 @@ export function generateFixtures(dateISO: string): Match[] {
       score: { home: 0, away: 0 },
       events: [],
     },
+        // 13) SUSPENDED — paused indefinitely after kickoff
+    {
+      id: `m-${day}-13`,
+      league: 'La Liga',
+      kickoff: atTime(dateISO, 18, 15),
+      status: 'SUSPENDED',
+      teams: {
+        home: { id: 't-3', name: mockTeams['t-3'].name, crest: mockTeams['t-3'].crest },
+        away: { id: 't-4', name: mockTeams['t-4'].name, crest: mockTeams['t-4'].crest },
+      },
+      score: { home: 1, away: 0 }, // score at suspension time
+      events: [],
+    },
+
+    // 14) ABANDONED — match terminated (won’t resume)
+    {
+      id: `m-${day}-14`,
+      league: 'Premier League',
+      kickoff: atTime(dateISO, 17, 0),
+      status: 'ABANDONED',
+      teams: {
+        home: { id: 't-1', name: mockTeams['t-1'].name, crest: mockTeams['t-1'].crest },
+        away: { id: 't-2', name: mockTeams['t-2'].name, crest: mockTeams['t-2'].crest },
+      },
+      score: { home: 0, away: 0 }, // typically voided, keep neutral
+      events: [],
+    },
+
   ];
 }

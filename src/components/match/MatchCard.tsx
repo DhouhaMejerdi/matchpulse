@@ -4,7 +4,10 @@ import * as React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Match, Score } from '@/lib/api/types';
-import { STATUS_LABELS } from '@/lib/utils/statusMap';
+// ⬇️ NEW: use our centralized status system
+import StatusBadge from '@/components/match/StatusBadge';            // ⬅️ added
+import LiveMeta from '@/components/match/LiveMeta';                  // ⬅️ added
+import type { StatusCode } from '@/lib/status/codes';            // ⬅️ added
 
 export type MatchCardProps = {
   id: string;
@@ -32,7 +35,6 @@ export default function MatchCard(props: MatchCardProps) {
   const { id, home, away, status, kickoff, score, league } = props;
 
   const isLive = status === 'LIVE';
-  const statusLabel = STATUS_LABELS[status] ?? status;
 
   // NEW: map league name → chip modifier
   const leagueMod = React.useMemo(() => {
@@ -97,10 +99,18 @@ export default function MatchCard(props: MatchCardProps) {
 
       {/* ─── Meta Row ─── */}
       <div className="meta">
-        <span className={`status status--${status.toLowerCase()}`}>
-          {isLive && <span aria-hidden className="live-dot" />} {statusLabel}
+        {/* ⬇️ REPLACED: token-driven badge + optional live minute */}
+        <span className="meta__item">
+          <StatusBadge code={(status as StatusCode) ?? 'TBD'} />
         </span>
-        <span>• {formatKickoff(kickoff)}</span>
+        
+        {status === 'LIVE' && (                                  
+          <span className="meta__item">
+            <em><LiveMeta minute={23} /></em>
+          </span>
+        )}
+        
+        <span className="meta__item">{formatKickoff(kickoff)}</span>
 
         {/* NEW: league chip with modifier */}
         <span className={`league-chip league-chip--${leagueMod}`} title={league}>

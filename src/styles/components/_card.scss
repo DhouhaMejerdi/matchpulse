@@ -21,7 +21,7 @@
 /* Generic / fallback */
 .league-chip--generic  { background: var(--ui-200);          color: var(--ink-900);   }
 
-/* Shared status pill for cards AND header */
+/* Shared status pill for cards AND header (delete later) */ 
 .status {
   display: inline-flex;
   align-items: center;
@@ -31,20 +31,84 @@
   background: var(--ui-200);
 }
 
+/* ===== Status badge polish ===== */
+.status-badge {
+  /* layout & rhythm */
+  display: inline-block;
+  margin-block: 2px;              /* subtle vertical rhythm */
+  margin-right: var(--s-2, 8px);
+  min-width: 64px;                /* balances short vs long labels */
+  text-align: center;
+
+  /* typography */
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+
+  /* accessibility */
+  outline: none;
+}
+.status-badge:focus-visible {
+  /* clear keyboard focus ring */
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+  filter: saturate(1.1);
+}
+
+/* LIVE energy (soft, not distracting) */
+.status-badge--live {
+  animation: mp-badge-pulse 1.6s ease-in-out infinite;
+}
+@keyframes mp-badge-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--status-live) 40%, transparent); }
+  50%      { box-shadow: 0 0 10px 4px color-mix(in oklab, var(--status-live) 22%, transparent); }
+}
+
 /* Shared live dot with motion-safe pulse */
 .live-dot {
-  width: 8px;
-  height: 8px;
+  inline-size: 8px;
+  block-size: 8px;
   border-radius: 50%;
-  background: var(--brand-500); /* or var(--red-500) */
+  background: var(--status-live); /* status-driven, not brand */
   display: inline-block;
   margin-right: 6px;
-  animation: pulse 1.2s ease-in-out infinite;
-  will-change: transform, opacity;
+  vertical-align: -1px;           /* nudges to text midline */
+  animation: mp-live-dot 1.4s ease-in-out infinite;
+  will-change: transform, opacity; /* GPU-friendly */
+}
+
+@keyframes mp-live-dot {
+  0%, 100% { transform: scale(1);   opacity: 1;   }
+  50%      { transform: scale(1.5); opacity: 0.75;}
 }
 
 @media (prefers-reduced-motion: reduce) {
   .live-dot { animation: none !important; }
+}
+
+/* Optional only-if-needed variant when placed inside a red chip */
+.live-dot--on-chip { background: #fff; opacity: .9; }
+
+/* Meta row: consistent spacing + auto separators */
+.match-card .meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.meta__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;                 /* dot/emoji/icons + text spacing */
+}
+
+/* Insert "•" before every item except the first */
+.meta__item + .meta__item {
+  position: relative;
+}
+.meta__item + .meta__item::before {
+  content: "•";
+  opacity: 0.7;
+  margin: 0 8px;
 }
 
 /* ----- Per-status colors (token-based) ----- */

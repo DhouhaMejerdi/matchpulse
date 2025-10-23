@@ -1,19 +1,11 @@
 export type TeamMini = { id: string; name: string; crest: string };
 export type Score = { home: number; away: number };
 export type EventType = 'goal' | 'card' | 'sub' | 'var' | 'ht' | 'ft';
-export type MatchStatus =
-  | 'UPCOMING'
-  | 'LIVE'
-  | 'HT'
-  | 'FT'
-  | 'ET'        // feed alias for AET
-  | 'PEN'       // feed alias for PENS
-  | 'DELAYED'
-  | 'POSTPONED'
-  | 'CANCELED'
-  | 'SUSPENDED' // ✅ new
-  | 'ABANDONED' // ✅ new
-  | 'TBD';      // optional but useful fallback
+
+import type { StatusCode } from '@/lib/status/codes';
+import { STATUS_ALIASES } from '@/lib/status/codes';
+export type StatusAlias = keyof typeof STATUS_ALIASES; // 'ET' | 'PEN'
+export type MatchStatus = StatusCode | StatusAlias;     // API can send canonical or alias
 
 export type MatchEvent = {
   id: string;

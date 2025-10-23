@@ -1,23 +1,12 @@
 // src/lib/status/statusMap.ts
 
-export type StatusCode =
-  | 'LIVE'
-  | 'UPCOMING'
-  | 'HT'
-  | 'FT'
-  | 'AET'
-  | 'PENS'
-  | 'DELAYED'
-  | 'SUSPENDED'
-  | 'ABANDONED'
-  | 'POSTPONED'
-  | 'CANCELED'
-  | 'TBD';
+import { StatusCode } from './codes';
 
 export type StatusMeta = {
   label: string;        // human-readable
   token: `--${string}`; // CSS var token (from styles/tokens/_status.css)
   terminal: boolean;    // whether play is definitively over
+  description?: string; // optional human-readable description
 };
 
 export const STATUS_MAP: Record<StatusCode, StatusMeta> = {
@@ -38,3 +27,4 @@ export const STATUS_MAP: Record<StatusCode, StatusMeta> = {
 
 // Small helper for inline styles or CSS-in-JS
 export const getStatusColorVar = (code: StatusCode) => `var(${STATUS_MAP[code].token})`;
+

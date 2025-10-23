@@ -1,28 +1,14 @@
 'use client';
 import React from 'react';
-import { STATUS_MAP, type StatusCode } from '@/lib/status/statusMap';
-
-function normalizeStatus(code?: string | null): StatusCode {
-  const raw = (code ?? '').toUpperCase();
-
-  // ✅ Accept common feed aliases
-  const ALIASES: Record<string, StatusCode> = {
-    ET: 'AET',
-    AET: 'AET',
-    PEN: 'PENS',
-    PENS: 'PENS',
-  };
-
-  const key = (ALIASES[raw] ?? raw) as StatusCode;
-  return (key && (key in STATUS_MAP)) ? key : 'TBD';
-}
+import { normalizeStatus } from '@/lib/status/codes';
+import { STATUS_MAP } from '@/lib/status/statusMap';
 
 /**
  * Reusable visual badge for displaying match statuses.
  * Color + label are derived from STATUS_MAP tokens.
  * Defensive against unknown/undefined codes.
  */
-export default function StatusBadge({ code }: { code?: string | StatusCode }) {
+export default function StatusBadge({ code }: { code?: string }) {
   const safeCode = normalizeStatus(code);
   const status = STATUS_MAP[safeCode];
 
