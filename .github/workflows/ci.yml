@@ -1,18 +1,43 @@
+# =============================================================================
+# WORKFLOW: CI — Lint (JS/TS + CSS) & Typecheck
+# Responsibility: Prevent merges that violate code style or typing contracts
+# Owner: Frontend Team • Last updated: 2025-10-27
+# =============================================================================
 name: ci
 
 on:
   pull_request:
   push:
-    branches: [main, staging]
+    branches: [ main, staging ]
 
 jobs:
   lint_and_types:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      # -- CHECKOUT ------------------------------------------------------------
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # -- SETUP NODE ----------------------------------------------------------
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm ci
-      - run: npm run lint
-      - run: npm run typecheck
+          cache: 'npm'
+
+      # -- INSTALL -------------------------------------------------------------
+      - name: Install deps (npm ci)
+        run: npm ci
+
+      # -- LINT: JS/TS ---------------------------------------------------------
+      - name: ESLint
+        run: npm run lint
+
+      # -- LINT: CSS (strict: no warnings) ------------------------------------
+      - name: Stylelint (strict)
+        run: npm run lint:css:strict
+
+      # -- TYPES ---------------------------------------------------------------
+      - name: Typecheck
+        run: npm run typecheck
