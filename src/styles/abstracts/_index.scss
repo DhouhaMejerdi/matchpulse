@@ -1,0 +1,11 @@
+// =============================================================================
+// ABSTRACTS: Re-exports (functions, mixins, placeholders, maps)
+// Responsibility: expose design tooling as a single module
+// =============================================================================
+
+// Re-export everything so we can import once from index.scss
+
+@forward "./functions";
+@forward "./mixins";
+@forward "./placeholders";
+@forward "./maps";

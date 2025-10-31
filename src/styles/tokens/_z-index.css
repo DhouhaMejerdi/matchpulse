@@ -1,0 +1,9 @@
+:root {
+  /* Layering scale (top to bottom) */
+  --z-overlay: 1000;   /* modals, toasts */
+  --z-dropdown: 900;   /* menus, popovers */
+  --z-sticky: 800;     /* sticky headers/toolbars */
+  --z-header: 700;     /* site header */
+  --z-default: 1;      /* normal flow */
+  --z-below: -1;       /* decorative backgrounds */
+}

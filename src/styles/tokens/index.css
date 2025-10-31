@@ -1,0 +1,21 @@
+/* Canonical tokens aggregator — import ORDER matters */
+
+/* 1) Core color system */
+
+@import './_color.css';
+
+/* 1b) Typography tokens */
+
+@import './_typography.css';
+
+/* 1c) Spacing, radii, shadows and Layering scale */
+
+@import './_spacing.css';
+@import './_z-index.css';
+
+/* 2) Functional token sets (status + controls) */
+
+@import './_status.css';
+@import './_controls.css';
+
+/* 3) (Next steps) typography, spacing, z-index will be added here */

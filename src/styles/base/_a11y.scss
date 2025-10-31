@@ -1,0 +1,41 @@
+// =============================================================================
+// BASE: A11y helpers
+// Responsibility: Screen-reader-only utility with progressive enhancement
+// Contracts: No !important; property order grouped; tokens-first where relevant
+// Owner: Frontend Team • Last updated: 2025-10-27
+// =============================================================================
+
+/* Visually hidden (screen-reader only) — no !important */
+
+.sr-only {
+  /* Positioning -------------------------------------------------------------- */
+  position: absolute;
+
+  /* Box model --------------------------------------------------------------- */
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+
+  /* Text handling ------------------------------------------------------------ */
+  white-space: nowrap;
+}
+
+/* Optional: reveal when focusable (for skip links) */
+
+.sr-only.focusable:active,
+.sr-only.focusable:focus {
+  /* Positioning -------------------------------------------------------------- */
+  position: static;
+
+  /* Box model --------------------------------------------------------------- */
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  border: 0;
+
+  /* Text handling ------------------------------------------------------------ */
+  white-space: normal;
+}

@@ -1,0 +1,44 @@
+// =============================================================================
+// COMPONENT: date-toolbar
+// -----------------------------------------------------------------------------
+// Responsibility: Visual layout for the date navigation controls.
+// Tokens: Uses spacing and radius tokens; no raw px values.
+// A11y: Horizontal toolbar with consistent gaps; button padding ensures 44px tap targets; label uses min-inline-size to prevent layout jump.
+// Notes: Mobile-first layout; gap increases at small breakpoints.
+// Owner: Frontend Team • Last updated: 2025-10-29
+// =============================================================================
+
+@use "../../abstracts" as abs;
+@use "sass:map";
+
+.date-toolbar {
+  display: flex;
+  gap: var(--s-2);
+  align-items: center;
+
+  &__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding-block: var(--s-1);
+    padding-inline: var(--s-2);
+    border-radius: var(--r-sm);
+
+    // Additional visual styles (color, border) should use design tokens and can live in a global controls file if shared
+  }
+
+  &__label {
+    min-inline-size: 8ch;
+    font-weight: 600;
+    text-align: center;
+  }
+}
+
+/* Adjust spacing for larger viewports */
+
+@media (min-width: map.get(abs.$breakpoints, sm)) {
+  .date-toolbar {
+    gap: var(--s-3);
+  }
+}

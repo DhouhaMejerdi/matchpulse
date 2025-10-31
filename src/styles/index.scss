@@ -1,0 +1,15 @@
+// =============================================================================
+// MODULE: Global Styles Entrypoint
+// Order: Tokens → Abstracts → Base → Layout → Components
+// =============================================================================
+
+/* 0) SASS MODULES (no CSS emitted by @use itself) */
+
+@use "./abstracts" as abs;
+@use "./base" as base;
+@use "./layout" as layout;
+@use "./components" as comp;
+
+/* 1) TOKENS (CSS variables) */
+
+@import "./tokens/index.css";

@@ -1,0 +1,113 @@
+// =============================================================================
+// COMPONENT: Status badge + live dot (used across cards, header, etc.)
+// =============================================================================
+
+/* Shared status pill for cards AND header (delete later) */ 
+
+.status {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+
+  padding: 2px 8px;
+  border-radius: 999px;
+
+  background: var(--ui-200);
+}
+
+/* ===== Status badge polish ===== */
+
+.status-badge {
+  /* layout & rhythm */
+  display: inline-block;
+
+  min-width: 64px;                /* balances short vs long labels */
+  margin-block: 2px;              /* subtle vertical rhythm */
+
+  /* typography */
+  font-size: var(--text-xs);
+  text-align: center;
+  letter-spacing: 0.04em;
+
+  /* accessibility */
+  outline: none;
+}
+
+.status-badge:focus-visible {
+  filter: saturate(1.1);
+
+  /* clear keyboard focus ring */
+  outline: 2px solid currentcolor;
+  outline-offset: 2px;
+}
+
+/* LIVE energy (soft, not distracting) */
+
+.status-badge--live {
+  animation: mp-badge-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes mp-badge-pulse {
+  0%,
+  100% {
+    /* stylelint-disable-next-line scale-unlimited/declaration-strict-value */
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--status-live) 40%, transparent);
+  }
+  
+  50% {
+    /* stylelint-disable-next-line scale-unlimited/declaration-strict-value */
+    box-shadow: 0 0 10px 4px color-mix(in oklab, var(--status-live) 22%, transparent);
+  }
+}
+
+
+
+/* In-play statuses */
+
+.status--ht,
+.status--et,
+.status--pen {
+  color: var(--surface-0);
+}
+
+.status--ht {
+  color: var(--ink-900);
+  background: var(--warning-500); /* 🟡 halftime */
+}
+
+.status--et {
+  background: var(--accent-blue-500); /* 🔵 after extra time */
+}
+
+.status--pen {
+  background: var(--danger-500); /* 🔴 penalties */
+}
+
+/* Upcoming / delayed */
+
+.status--upcoming {
+  color: var(--ink-900);
+  background: var(--ui-200);
+}
+
+.status--delayed {
+  color: var(--ink-900);
+  background: var(--warning-500);
+}
+
+.status--postponed {
+  color: var(--surface-0);
+  background: var(--muted-600);
+}
+
+/* Finished / canceled */
+
+.status--ft {
+  color: var(--surface-0);
+  background: var(--muted-600);
+}
+
+.status--canceled {
+  color: var(--ink-900);
+  background: var(--ui-200);
+}

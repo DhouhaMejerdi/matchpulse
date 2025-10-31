@@ -1,0 +1,23 @@
+/* Spacing, radii, shadows */
+
+:root {
+  /* Spacing scale */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-6: 24px;
+  --s-8: 32px;
+  --s-12: 48px;
+
+  /* Radii */
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 20px;
+  --r-xl: 28px;
+
+  /* Shadows (modern color notation) */
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 6%);
+  --shadow-md: 0 6px 16px rgb(11 15 26 / 12%);
+  --shadow-lg: 0 14px 34px rgb(11 15 26 / 18%);
+}

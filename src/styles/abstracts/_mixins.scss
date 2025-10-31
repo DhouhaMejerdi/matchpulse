@@ -1,0 +1,27 @@
+// ============================================================================
+// MIXINS: media & helpers (no direct CSS output)
+// Exports:
+//   - media-min($min)            • @media (min-width)
+//   - focus-ring                 • token-driven focus outline
+// Owner: Frontend Team • Last updated: 2025-10-27
+// Notes:
+//   - Avoid unsupported features by default; enhance behind @supports.
+//   - Do not emit top/left without a positioning context to satisfy
+//     no-invalid-position-declaration.
+// ============================================================================
+
+// -- MEDIA --------------------------------------------------------------------
+
+@mixin media-min($min) {
+  @media (min-width: $min) {
+    @content;
+  }
+}
+
+
+// -- A11Y ---------------------------------------------------------------------
+
+@mixin focus-ring {
+  outline: 2px solid var(--brand-500);
+  outline-offset: 2px;
+}
