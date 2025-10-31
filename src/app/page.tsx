@@ -1,12 +1,11 @@
 'use client';
 
 import * as React from 'react';
-import SegmentedFilter from '@/components/controls/SegmentedFilter';
 import { useFixtures } from '@/lib/hooks/useFixtures';
 import type { FilterTab } from '@/lib/types/ui';
 import FixtureList from '@/components/match/FixtureList';
-import DateToolbar from '@/components/layout/DateToolbar';
-import LeaguePicker from '@/components/controls/LeaguePicker';
+import HeroHeader from '@/components/layout/HeroHeader';
+import ControlsBar from '@/components/layout/ControlsBar';
 
 const FILTER_SEGMENTS: readonly FilterTab[] = ['All', 'Live', 'Upcoming', 'Results'];
 
@@ -61,60 +60,48 @@ export default function HomePage() {
 
   const fixtureRegionId = 'fixtures-region';
   const tabIdPrefix = 'filter-tab';
+
   return (
-    <section style={{ padding: '24px 0' }}>
-      {/* ⬇️ Hero row: title + date switcher */}
-      <div
-        className="container"
-        style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}
-      >
-        <h1 className="h1" style={{ marginBottom: 8 }}>Today’s Matches</h1>
+    <main className="container">
+      <HeroHeader
+        title="Today’s Matches"
+        dateLabel={humanLabel}
+        onPrev={goPrev}
+        onNext={goNext}
+        onToday={goToday}
+      />
 
-        <DateToolbar
-          label={humanLabel}
-          onPrev={goPrev}
-          onNext={goNext}
-          onToday={goToday}
-        />
-      </div> 
+      <ControlsBar
+        segments={FILTER_SEGMENTS}
+        value={tab}
+        onChange={setTab}
+        leagueOptions={leagueOptions}
+        league={league}
+        onLeagueChange={setLeague}
+        sticky
+      />
 
-      {/* NEW: keep layout consistent + expose a landmark for SR users */}
-      <div role="toolbar" aria-label="Fixture filters" className="controls-bar controls-bar--sticky">
-          <SegmentedFilter<FilterTab>
-            segments={FILTER_SEGMENTS}
-            value={tab}
-            onChange={setTab}
-            aria-label="Fixture status"
-            ariaControlsId={fixtureRegionId}
-            idPrefix={tabIdPrefix}          
-          />
-
-          <div className="controls-bar__end">
-            {/* Add more right-side controls here later if needed */}
-            <LeaguePicker className="league-picker"leagues={leagueOptions} value={league} onChange={setLeague} label="League" />
-          </div>
-      </div>
-
- 
       <div
         id={fixtureRegionId}
+        className="fixtures-region"
         role="region"
         aria-label="Fixtures for selected date and filter"
         aria-labelledby={`${tabIdPrefix}-${tab}`}
-        style={{ marginTop: 16 }}
       >
         {error ? (
-          <div className="card" style={{ padding: 16 }}>
+          <div className="card">
             <p className="p">Could not load fixtures.</p>
           </div>
         ) : isLoading ? (
-          <div className="card" style={{ padding: 16 }}>
+          <div className="card">
             <p className="p">Loading fixtures…</p>
           </div>
         ) : (
           <FixtureList matches={filteredByLeague} filter={tab} league={league} />
         )}
       </div>
-    </section>
+
+    </main>
   );
+
 }
