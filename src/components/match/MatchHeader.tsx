@@ -5,7 +5,6 @@ import Image from 'next/image';
 import type { Match, TeamMini } from '@/lib/api/types';
 // ✅ Use the same centralized UI bits as MatchCard
 import StatusBadge from '@/components/match/StatusBadge';
-import LiveMeta from '@/components/match/LiveMeta';
 import type { StatusCode } from '@/lib/status/codes';
 
 export type MatchHeaderProps = {
@@ -97,13 +96,6 @@ export default function MatchHeader({
         <span className="meta__item">
           <StatusBadge code={(status as StatusCode) ?? 'TBD'} />
         </span>
-
-        {/* Optional live minute (same pattern as MatchCard demo) */}
-        {isLive && (
-          <span className="meta__item">
-            <em><LiveMeta minute={23} /></em>
-          </span>
-        )}
         
         <span aria-hidden>•</span>
 
