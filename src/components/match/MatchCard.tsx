@@ -1,42 +1,44 @@
 'use client';
 
+// =============================================================================
+// COMPONENT: MatchCard
+// -----------------------------------------------------------------------------
+// Responsibility: Compose a single match card from Team, Score, and MatchMeta.
+// Contracts: Props { …see original interface… }
+// A11y: Provides an aria-label on the Link describing the match.
+// Owner: Frontend Team • Last updated: 2025‑10‑30
+// =============================================================================
+
 import * as React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
-import type { Match, Score } from '@/lib/api/types';
-// ⬇️ NEW: use our centralized status system
-import StatusBadge from '@/components/match/StatusBadge';            // ⬅️ added
-import LiveMeta from '@/components/match/LiveMeta';                  // ⬅️ added
-import type { StatusCode } from '@/lib/status/codes';            // ⬅️ added
+import Team from '@/components/match/Team';
+import ScoreComponent from '@/components/match/Score';
+import MatchMeta from '@/components/match/MatchMeta';
+import { Match, Score } from '@/lib/api/types';
+
+// -- TYPES --------------------------------------------------------------------
 
 export type MatchCardProps = {
   id: string;
   home: { name: string; crest: string };
   away: { name: string; crest: string };
   status: Match['status'];
-  kickoff: string; // ISO
+  kickoff: string;
   score?: Score;
   league: string;
 };
 
-function formatKickoff(iso: string) {
-  try {
-    const d = new Date(iso);
-    return new Intl.DateTimeFormat(undefined, {
-      hour: '2-digit',
-      minute: '2-digit',
-    }).format(d);
-  } catch {
-    return '—';
-  }
-}
 
-export default function MatchCard(props: MatchCardProps) {
-  const { id, home, away, status, kickoff, score, league } = props;
-
-  const isLive = status === 'LIVE';
-
-  // NEW: map league name → chip modifier
+export default function MatchCard({
+  id,
+  home,
+  away,
+  status,
+  kickoff,
+  score,
+  league,
+}: MatchCardProps) {
+  // Map league name to a modifier for the league chip
   const leagueMod = React.useMemo(() => {
     const s = (league || '').toLowerCase();
     if (s.includes('premier')) return 'premier';
@@ -47,78 +49,23 @@ export default function MatchCard(props: MatchCardProps) {
     return 'generic';
   }, [league]);
 
-  const srLabel = `Open match ${home.name} versus ${away.name} ${
-    isLive ? 'live' : ''
-  } at ${formatKickoff(kickoff)}`;
+  const srLabel = `Open match ${home.name} versus ${away.name}` +
+    `${status === 'LIVE' ? ' live' : ''} at ${new Date(kickoff).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
 
   return (
-    <Link
-      href={`/match/${id}`}
-      className="match-card"
-      aria-label={srLabel}
-    >
-      {/* ─── Teams + Score Row ─── */}
+    <Link href={`/match/${id}`} className="match-card" aria-label={srLabel}>
       <div className="row">
-        {/* Home */}
-        <div className="team team--home">
-          <Image
-            src={home.crest}
-            width={28}
-            height={28}
-            alt={`${home.name} crest`}
-            onError={(e) => ((e.currentTarget as HTMLImageElement).style.visibility = 'hidden')}
-            unoptimized
-          />
-          <span className="team__name">{home.name}</span>
-        </div>
-
-        {/* Score / Status */}
-        <div className="score" aria-live={isLive ? 'polite' : 'off'}>
-          {isLive || status === 'FT' || status === 'HT' ? (
-            <span className="score__val">
-              {score?.home ?? 0} — {score?.away ?? 0}
-            </span>
-          ) : (
-            <span className="score__val">vs</span>
-          )}
-        </div>
-
-        {/* Away */}
-        <div className="team team--away">
-          <span className="team__name team__name--right">{away.name}</span>
-          <Image
-            src={away.crest}
-            width={28}
-            height={28}
-            alt={`${away.name} crest`}
-            onError={(e) => ((e.currentTarget as HTMLImageElement).style.visibility = 'hidden')}
-            unoptimized
-          />
-        </div>
+        <Team name={home.name} crest={home.crest} side="home" />
+        <ScoreComponent status={status} score={score} />
+        <Team name={away.name} crest={away.crest} side="away" />
       </div>
-
-      {/* ─── Meta Row ─── */}
-      <div className="meta">
-        {/* ⬇️ REPLACED: token-driven badge + optional live minute */}
-        <span className="meta__item">
-          <StatusBadge code={(status as StatusCode) ?? 'TBD'} />
-        </span>
-        
-        {status === 'LIVE' && (                                  
-          <span className="meta__item">
-            <em><LiveMeta minute={23} /></em>
-          </span>
-        )}
-        
-        <span className="meta__item">{formatKickoff(kickoff)}</span>
-
-        <span aria-hidden className="meta__item"></span>
-
-        {/* NEW: league chip with modifier */}
-        <span className={`league-chip league-chip--${leagueMod}`} title={league}>
-          {league}
-        </span>
-      </div>
+      <MatchMeta
+        status={status}
+        kickoff={kickoff}
+        league={league}
+        leagueMod={leagueMod}
+        minute={(status === 'LIVE' && score?.minute) || undefined}
+      />
     </Link>
   );
 }

@@ -1,0 +1,69 @@
+// =============================================================================
+// BLOCK: hero
+// -----------------------------------------------------------------------------
+// Responsibility: Visual layout for the page hero (title + date controls).
+// Tokens: Uses spacing, radius and shadow tokens; no raw px values.
+// A11y: Supports fluid typography; ensures readable line length; date controls remain grouped for keyboard/SR users.
+// Notes: Mobile‑first (stacked). Switches to inline row at small breakpoints.
+// Owner: Frontend Team • Last updated: 2025-10-29
+// =============================================================================
+
+@use "../abstracts" as abs; // gives access to abs.$breakpoints
+@use "sass:map";
+
+.hero {
+  /* Padding: token instead of hardcoded 24px */
+  padding-block: var(--s-6);
+
+  &__container {
+    display: flex;
+    flex-direction: column;       /* mobile: stacked */
+    gap: var(--s-3);              /* formerly 12px */
+    align-items: flex-start;
+
+    inline-size: 100%;
+    padding-block: var(--s-3);
+  }
+
+  /* Title: never break layout, readable width, elegant wrapping */
+
+  .hero__title {
+    /* Wrapping safeguards */
+    max-inline-size: 22ch;       /* readable measure on mobile */
+    margin-block: 0 var(--s-2);
+
+    /* Fluid type with guardrails (use tokens for min/max sizes if available) */
+    font-size: clamp(1.75rem, 4vw + 0.5rem, 2.75rem);
+    line-height: 1.1;
+    hyphens: auto;
+
+    /* Modern balancing (safe fallback when unsupported) */
+    text-wrap: balance;
+    word-break: normal;
+    overflow-wrap: anywhere;     /* break very long words if needed */
+
+    text-wrap-mode: pretty;
+  }
+}
+
+/* ———————————————————— Breakpoints ———————————————————— */
+
+@media (min-width: map.get(abs.$breakpoints, sm)) {
+  .hero {
+    &__container {
+      flex-direction: row;
+      gap: var(--s-3);
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Let the title wrap within available space and never push controls */
+
+    .hero__title {
+      flex: 1 1 auto;
+      min-inline-size: 0;        /* allow flex item to shrink without overflow */
+      max-inline-size: 28ch;     /* a bit wider on tablet/desktop */
+      margin-block-end: 0;
+    }
+  }
+}
