@@ -34,11 +34,13 @@ export function generateFixtures(dateISO: string): Match[] {
         home: { id: 't-1', name: mockTeams['t-1'].name, crest: mockTeams['t-1'].crest },
         away: { id: 't-2', name: mockTeams['t-2'].name, crest: mockTeams['t-2'].crest },
       },
-      score: { home: 0, away: 0 },
+      score: {
+        home: 0, away: 0,
+        minute: 0
+      },
       events: [],
     },
-
-    // 2) LIVE — Premier League (your original, unchanged semantics)
+        // 2) LIVE — Premier League (your original, unchanged semantics)
     {
       id: `m-${day}-2`,
       league: 'Premier League',
@@ -48,14 +50,16 @@ export function generateFixtures(dateISO: string): Match[] {
         home: { id: 't-2', name: mockTeams['t-2'].name, crest: mockTeams['t-2'].crest },
         away: { id: 't-1', name: mockTeams['t-1'].name, crest: mockTeams['t-1'].crest },
       },
-      score: { home: 1, away: 2 },
+      score: {
+        home: 1, away: 2,
+        minute: 10
+      },
       events: [
         { id: 'e1', minute: 12, type: 'goal', teamId: 't-1', player: 'Saka', note: 'Right foot' },
         { id: 'e2', minute: 44, type: 'card', teamId: 't-2', player: 'James', note: 'Yellow' },
       ],
     },
-
-    // 3) HT — La Liga (new state)
+        // 3) HT — La Liga (new state)
     {
       id: `m-${day}-3`,
       league: 'La Liga',
@@ -65,15 +69,17 @@ export function generateFixtures(dateISO: string): Match[] {
         home: { id: 't-3', name: mockTeams['t-3'].name, crest: mockTeams['t-3'].crest },
         away: { id: 't-2', name: mockTeams['t-2'].name, crest: mockTeams['t-2'].crest },
       },
-      score: { home: 2, away: 2 },
+      score: {
+        home: 2, away: 2,
+        minute: 0
+      },
       events: [
         { id: 'e3', minute: 11, type: 'goal', teamId: 't-3', player: 'Bellingham' },
         { id: 'e4', minute: 33, type: 'goal', teamId: 't-2', player: 'Jackson' },
         { id: 'e5', minute: 45, type: 'ht', teamId: 't-3', player: '', note: 'Half-time' },
       ],
     },
-
-    // 4) FT — high score (layout stretch)
+        // 4) FT — high score (layout stretch)
     {
       id: `m-${day}-4`,
       league: 'UEFA Champions League',
@@ -81,14 +87,16 @@ export function generateFixtures(dateISO: string): Match[] {
       status: 'FT',
       teams: { home: { id: 't-6', name: mockTeams['t-6'].name, crest: mockTeams['t-6'].crest },
                away: { id: 't-3', name: mockTeams['t-3'].name, crest: mockTeams['t-3'].crest } },
-      score: { home: 3, away: 4 },
+      score: {
+        home: 3, away: 4,
+        minute: 0
+      },
       events: [
         { id: 'e6', minute: 5,  type: 'goal', teamId: 't-3', player: 'Vinícius Jr' },
         { id: 'e7', minute: 45, type: 'ht',   note: 'Half-time' },
         { id: 'e8', minute: 90, type: 'ft',   note: 'Full-time' },
       ],
     },
-
     // 5) POSTPONED — weather, etc.
     {
       id: `m-${day}-5`,
@@ -97,7 +105,10 @@ export function generateFixtures(dateISO: string): Match[] {
       status: 'POSTPONED',
       teams: { home: { id: 't-1', name: mockTeams['t-1'].name, crest: mockTeams['t-1'].crest },
                away: { id: 't-4', name: mockTeams['t-4'].name, crest: mockTeams['t-4'].crest } },
-      score: { home: 0, away: 0 },
+      score: {
+        home: 0, away: 0,
+        minute: 0
+      },
       events: [],
     },
 
@@ -109,10 +120,12 @@ export function generateFixtures(dateISO: string): Match[] {
       status: 'CANCELED',
       teams: { home: { id: 't-5', name: mockTeams['t-5'].name, crest: mockTeams['t-5'].crest },
                away: { id: 't-2', name: mockTeams['t-2'].name, crest: mockTeams['t-2'].crest } },
-      score: { home: 0, away: 0 },
+      score: {
+        home: 0, away: 0,
+        minute: 0
+      },
       events: [],
     },
-
     // 7) DELAYED — start delayed
     {
       id: `m-${day}-7`,
@@ -121,7 +134,10 @@ export function generateFixtures(dateISO: string): Match[] {
       status: 'DELAYED',
       teams: { home: { id: 't-4', name: mockTeams['t-4'].name, crest: mockTeams['t-4'].crest },
                away: { id: 't-3', name: mockTeams['t-3'].name, crest: mockTeams['t-3'].crest } },
-      score: { home: 0, away: 0 },
+      score: {
+        home: 0, away: 0,
+        minute: 0
+      },
       events: [],
     },
 
@@ -133,13 +149,15 @@ export function generateFixtures(dateISO: string): Match[] {
       status: 'ET',
       teams: { home: { id: 't-3', name: mockTeams['t-3'].name, crest: mockTeams['t-3'].crest },
                away: { id: 't-5', name: mockTeams['t-5'].name, crest: mockTeams['t-5'].crest } },
-      score: { home: 2, away: 2 }, // typically shown as 2—2 (AET)
+      score: {
+        home: 2, away: 2,
+        minute: 0
+      }, // typically shown as 2—2 (AET)
       events: [
         { id: 'e9',  minute: 93, type: 'goal', teamId: 't-5', player: 'Lautaro' },
         { id: 'e10', minute: 117, type: 'goal', teamId: 't-3', player: 'Bellingham' },
       ],
     },
-
     // 9) PEN — decided on penalties
     {
       id: `m-${day}-9`,
@@ -148,7 +166,10 @@ export function generateFixtures(dateISO: string): Match[] {
       status: 'PEN',
       teams: { home: { id: 't-6', name: mockTeams['t-6'].name, crest: mockTeams['t-6'].crest },
                away: { id: 't-4', name: mockTeams['t-4'].name, crest: mockTeams['t-4'].crest } },
-      score: { home: 2, away: 2 }, // e.g., 2—2 (4—3 pens)
+      score: {
+        home: 2, away: 2,
+        minute: 0
+      }, // e.g., 2—2 (4—3 pens)
       events: [
         { id: 'e11', minute: 120, type: 'ft',  note: 'End of extra time' },
         { id: 'e12', minute: 121, type: 'var', note: 'VAR check before penalties' },
@@ -163,7 +184,10 @@ export function generateFixtures(dateISO: string): Match[] {
       status: 'LIVE',
       teams: { home: { id: 't-5', name: mockTeams['t-5'].name, crest: mockTeams['t-5'].crest },
                away: { id: 't-2', name: mockTeams['t-2'].name, crest: mockTeams['t-2'].crest } },
-      score: { home: 0, away: 0 },
+      score: {
+        home: 0, away: 0,
+        minute: 0
+      },
       events: [],
     },
 
@@ -175,7 +199,10 @@ export function generateFixtures(dateISO: string): Match[] {
       status: 'UPCOMING',
       teams: { home: { id: 't-2', name: mockTeams['t-2'].name, crest: mockTeams['t-2'].crest },
                away: { id: 't-1', name: mockTeams['t-1'].name, crest: mockTeams['t-1'].crest } },
-      score: { home: 0, away: 0 },
+      score: {
+        home: 0, away: 0,
+        minute: 0
+      },
       events: [],
     },
 
@@ -187,7 +214,10 @@ export function generateFixtures(dateISO: string): Match[] {
       status: 'UPCOMING',
       teams: { home: { id: 't-1', name: mockTeams['t-1'].name, crest: mockTeams['t-1'].crest },
                away: { id: 't-5', name: mockTeams['t-5'].name, crest: mockTeams['t-5'].crest } },
-      score: { home: 0, away: 0 },
+      score: {
+        home: 0, away: 0,
+        minute: 0
+      },
       events: [],
     },
         // 13) SUSPENDED — paused indefinitely after kickoff
@@ -200,7 +230,10 @@ export function generateFixtures(dateISO: string): Match[] {
         home: { id: 't-3', name: mockTeams['t-3'].name, crest: mockTeams['t-3'].crest },
         away: { id: 't-4', name: mockTeams['t-4'].name, crest: mockTeams['t-4'].crest },
       },
-      score: { home: 1, away: 0 }, // score at suspension time
+      score: {
+        home: 1, away: 0,
+        minute: 0
+      }, // score at suspension time
       events: [],
     },
 
@@ -214,9 +247,11 @@ export function generateFixtures(dateISO: string): Match[] {
         home: { id: 't-1', name: mockTeams['t-1'].name, crest: mockTeams['t-1'].crest },
         away: { id: 't-2', name: mockTeams['t-2'].name, crest: mockTeams['t-2'].crest },
       },
-      score: { home: 0, away: 0 }, // typically voided, keep neutral
+      score: {
+        home: 0, away: 0,
+        minute: 0
+      }, // typically voided, keep neutral
       events: [],
     },
-
   ];
 }

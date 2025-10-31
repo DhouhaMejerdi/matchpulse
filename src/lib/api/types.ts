@@ -1,5 +1,5 @@
 export type TeamMini = { id: string; name: string; crest: string };
-export type Score = { home: number; away: number };
+export type Score = { home: number; away: number; minute:number };
 export type EventType = 'goal' | 'card' | 'sub' | 'var' | 'ht' | 'ft';
 
 import type { StatusCode } from '@/lib/status/codes';
