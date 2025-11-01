@@ -2,21 +2,17 @@
 
 import * as React from 'react';
 import Image from 'next/image';
-import type { Match, TeamMini } from '@/lib/api/types';
+
+// 🔁 Use the canonical contract so props don't drift
+import type { MatchHeaderProps } from '@/lib/api/match.types';
+import type { StatusCode } from '@/lib/status/codes';
+import { STATUS_ALIASES } from '@/lib/status/codes';
+
 // ✅ Use the same centralized UI bits as MatchCard
 import StatusBadge from '@/components/match/StatusBadge';
-import type { StatusCode } from '@/lib/status/codes';
 
-export type MatchHeaderProps = {
-  home: TeamMini;
-  away: TeamMini;
-  score?: { home: number; away: number } | null;
-  status: Match['status']; // canonical or alias; StatusBadge will normalize
-  league: string;
-  kickoff?: string | null; // ISO
-  venue?: string | null;
-};
-
+// ————————————————————————————————————————————————————————————————
+// helpers
 function fmtKickoff(iso?: string | null) {
   if (!iso) return '—';
   const d = new Date(iso);
@@ -28,10 +24,22 @@ function fmtKickoff(iso?: string | null) {
   }).format(d);
 }
 
+function toCanonicalStatus(code: MatchHeaderProps['status']): StatusCode {
+  // If it's an alias (ET, PEN, …) map to canonical; otherwise assume canonical
+  return (STATUS_ALIASES as Record<string, StatusCode>)[code as string] ?? (code as StatusCode);
+}
+
+const LIVEISH = new Set<StatusCode | keyof typeof STATUS_ALIASES>([
+  'LIVE', 'ET', 'PEN',
+]);
+
+// ————————————————————————————————————————————————————————————————
+// component
 export default function MatchHeader({
   home, away, score, status, league, kickoff, venue,
 }: MatchHeaderProps) {
-  const isLive = status === 'LIVE';
+  const isLive = LIVEISH.has(status);
+  const canonical = toCanonicalStatus(status);
 
   // Same league chip logic as MatchCard (keeps UI consistent)
   const leagueMod = React.useMemo(() => {
@@ -92,11 +100,11 @@ export default function MatchHeader({
 
       {/* ─── Meta Row ─── */}
       <div className="match-sub" role="group" aria-label="Match details">
-        {/* ✅ Unified, token-driven status badge */}
+        {/* ✅ Unified, token-driven status badge; canonicalized status */}
         <span className="meta__item">
-          <StatusBadge code={(status as StatusCode) ?? 'TBD'} />
+          <StatusBadge code={canonical} />
         </span>
-        
+
         <span aria-hidden>•</span>
 
         <time dateTime={kickoff ?? undefined} title={kickoff ?? undefined}>
@@ -104,7 +112,7 @@ export default function MatchHeader({
         </time>
 
         <span aria-hidden>•</span>
-        {/* NEW: league chip with modifier + title */}
+        {/* League chip with modifier + title */}
         <span className={`league-chip league-chip--${leagueMod}`} title={league}>
           {league}
         </span>
