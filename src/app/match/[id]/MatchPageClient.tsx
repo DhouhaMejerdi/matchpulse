@@ -25,7 +25,7 @@ export default function MatchPageClient({ id }: { id: string }) {
       <section className="match-page container" aria-labelledby="match-page-title">
         <h1 id="match-page-title" className="sr-only">Match</h1>
         <p className="small match-page__back"><Link href="/">← Back to matches</Link></p>
-        <div className="card match-page__card"><p className="p">Could not load match.</p></div>
+        <div className="match-page__card"><p className="p">Could not load match.</p></div>
       </section>
     );
   }
@@ -35,7 +35,7 @@ export default function MatchPageClient({ id }: { id: string }) {
       <section className="match-page container" aria-labelledby="match-page-title">
         <h1 id="match-page-title" className="sr-only">Match</h1>
         <p className="small match-page__back"><Link href="/">← Back to matches</Link></p>
-        <div className="card match-page__card"><p className="p">Loading match…</p></div>
+        <div className="match-page__card"><p className="p">Loading match…</p></div>
       </section>
     );
   }
@@ -69,7 +69,6 @@ export default function MatchPageClient({ id }: { id: string }) {
           value={tab}
           onChange={setTab}
           aria-label="Match sections"
-          aria-controls={panelId}
         />
       </div>
 
@@ -79,7 +78,7 @@ export default function MatchPageClient({ id }: { id: string }) {
         role="region"
       >
         {tab === 'timeline' && (
-          <div className="card match-page__card">
+          <div className="match-page__card">
             {events.length ? (
               <Timeline events={events} homeId={teams.home.id} awayId={teams.away.id} />
             ) : (
@@ -89,19 +88,19 @@ export default function MatchPageClient({ id }: { id: string }) {
         )}
 
         {tab === 'stats' && (
-          <div className="card match-page__card">
+          <div className="match-page__card">
             <p className="p">Stats placeholder.</p>
           </div>
         )}
 
         {tab === 'lineups' && (
-          <div className="card match-page__card">
+          <div className="match-page__card">
             <p className="p">Lineups placeholder.</p>
           </div>
         )}
 
         {tab === 'highlights' && (
-          <div className="card match-page__card">
+          <div className="match-page__card">
             <p className="p">Highlights placeholder.</p>
           </div>
         )}
