@@ -6,13 +6,13 @@
 // =============================================================================
 
 /* Visually hidden (screen-reader only) — no !important */
+
 .sr-only {
   /* Positioning -------------------------------------------------------------- */
   position: absolute;
 
   /* Hiding mechanics --------------------------------------------------------- */
   overflow: hidden;              /* ensure nothing leaks */
-  clip-path: inset(50%);         /* modern, widely supported */
 
   /* Box model --------------------------------------------------------------- */
   inline-size: 1px;              /* logical width */
@@ -23,9 +23,12 @@
 
   /* Text handling ------------------------------------------------------------ */
   white-space: nowrap;           /* avoid line breaks */
+
+  clip-path: inset(50%);         /* modern, widely supported */
 }
 
 /* Optional: reveal when focusable (for skip links) */
+
 .sr-only.focusable:active,
 .sr-only.focusable:focus {
   /* Positioning -------------------------------------------------------------- */
@@ -33,7 +36,6 @@
 
   /* Hiding mechanics --------------------------------------------------------- */
   overflow: visible;
-  clip-path: none;
 
   /* Box model --------------------------------------------------------------- */
   inline-size: auto;
@@ -44,4 +46,6 @@
 
   /* Text handling ------------------------------------------------------------ */
   white-space: normal;
+
+  clip-path: none;
 }

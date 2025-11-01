@@ -34,7 +34,7 @@ export default function Tabs<T extends string>({
   };
 
   return (
-    <div className="tabs" role="tablist" aria-label={ariaLabel} onKeyDown={onKeyDown}>
+    <div className="mp-tabs" role="tablist" aria-label={ariaLabel} onKeyDown={onKeyDown}>
       {items.map((it, i) => {
         const selected = it.value === value;
         return (
@@ -46,7 +46,7 @@ export default function Tabs<T extends string>({
             role="tab"
             aria-selected={selected}
             tabIndex={selected ? 0 : -1}
-            className="tab"
+            className="mp-tab"
             onClick={() => onChange(it.value)}
           >
             {it.label}
