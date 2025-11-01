@@ -1,6 +1,11 @@
 import MatchPageClient from './MatchPageClient';
 
-export default function MatchPage({ params }: { params: { id: string } }) {
-  const { id } = params; // safe here on the server
+// In Next 15, params is a Promise in RSC. Await it.
+export default async function MatchPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
   return <MatchPageClient id={id} />;
 }
