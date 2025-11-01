@@ -53,7 +53,7 @@ export default function MatchHeader({
   }, [league]);
 
   return (
-    <header className="card match-header" style={{ padding: 16, marginTop: 8, marginBottom: 16 }}>
+    <header className="match-header">
       {/* Screen-reader page title */}
       <h1 className="sr-only">
         {home.name} vs {away.name}
@@ -72,7 +72,7 @@ export default function MatchHeader({
             aria-hidden
             className="match-title__crest"
           />
-          <span>{home.name}</span>
+          <span className="match-title__name">{home.name}</span>
         </div>
 
         <div
@@ -83,8 +83,8 @@ export default function MatchHeader({
           {score ? `${score.home} — ${score.away}` : 'vs'}
         </div>
 
-        <div className="match-title__team" style={{ justifyContent: 'flex-end' }}>
-          <span>{away.name}</span>
+        <div className="match-title__team match-title__team--away" >
+          <span className="match-title__name">{away.name}</span>
           <Image
             src={away.crest}
             alt=""
@@ -105,13 +105,13 @@ export default function MatchHeader({
           <StatusBadge code={canonical} />
         </span>
 
-        <span aria-hidden>•</span>
+        <span className="match-sub__dot" aria-hidden>•</span>
 
         <time dateTime={kickoff ?? undefined} title={kickoff ?? undefined}>
           {fmtKickoff(kickoff)}
         </time>
 
-        <span aria-hidden>•</span>
+        <span className="match-sub__dot" aria-hidden>•</span>
         {/* League chip with modifier + title */}
         <span className={`league-chip league-chip--${leagueMod}`} title={league}>
           {league}
@@ -119,7 +119,7 @@ export default function MatchHeader({
 
         {venue ? (
           <>
-            <span aria-hidden>•</span>
+            <span className="match-sub__dot" aria-hidden>•</span>
             <span>{venue}</span>
           </>
         ) : null}
