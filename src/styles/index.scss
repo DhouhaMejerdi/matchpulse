@@ -9,6 +9,8 @@
 @use "./base" as base;
 @use "./layout" as layout;
 @use "./components" as comp;
+/* 2) PAGES (optional layer) */
+@use "./pages" as *;
 
 /* 1) TOKENS (CSS variables) */
 

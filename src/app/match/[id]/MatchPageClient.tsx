@@ -22,27 +22,37 @@ export default function MatchPageClient({ id }: { id: string }) {
 
   if (error) {
     return (
-      <section style={{ padding: '24px 0' }}>
-        <p className="small"><Link href="/">← Back to matches</Link></p>
-        <div className="card" style={{ padding: 16 }}><p className="p">Could not load match.</p></div>
+      <section className="match-page container" aria-labelledby="match-page-title">
+        <h1 id="match-page-title" className="sr-only">Match</h1>
+        <p className="small match-page__back"><Link href="/">← Back to matches</Link></p>
+        <div className="card match-page__card"><p className="p">Could not load match.</p></div>
       </section>
     );
   }
 
   if (isLoading || !match) {
     return (
-      <section style={{ padding: '24px 0' }}>
-        <p className="small"><Link href="/">← Back to matches</Link></p>
-        <div className="card" style={{ padding: 16 }}><p className="p">Loading match…</p></div>
+      <section className="match-page container" aria-labelledby="match-page-title">
+        <h1 id="match-page-title" className="sr-only">Match</h1>
+        <p className="small match-page__back"><Link href="/">← Back to matches</Link></p>
+        <div className="card match-page__card"><p className="p">Loading match…</p></div>
       </section>
     );
   }
 
   const { teams, score, status, league, kickoff, events = [] } = match;
 
+  // IDs to link tabs ↔ panel for SR users
+  const panelId = 'match-tabs-panel';
+
   return (
-    <section style={{ padding: '24px 0' }}>
-      <p className="small"><Link href="/">← Back to matches</Link></p>
+    <section className="match-page container" aria-labelledby="match-page-title">
+      {/* SR title to announce page context */}
+      <h1 id="match-page-title" className="sr-only">
+        {match.teams.home.name} vs {match.teams.away.name}
+      </h1>
+
+      <p className="small match-page__back"><Link href="/">← Back to matches</Link></p>
 
       <MatchHeader
         home={{ id: teams.home.id, name: teams.home.name, crest: teams.home.crest }}
@@ -53,16 +63,23 @@ export default function MatchPageClient({ id }: { id: string }) {
         kickoff={kickoff}
       />
 
-      <Tabs<MatchTab>
-        items={MATCH_TABS}
-        value={tab}
-        onChange={setTab}
-        aria-label="Match sections"
-      />
+      <div className="match-page__tabs">
+        <Tabs<MatchTab>
+          items={MATCH_TABS}
+          value={tab}
+          onChange={setTab}
+          aria-label="Match sections"
+          aria-controls={panelId}
+        />
+      </div>
 
-      <div style={{ marginTop: 12 }}>
+      <div
+        id={panelId}
+        className="match-page__panel"
+        role="region"
+      >
         {tab === 'timeline' && (
-          <div className="card" style={{ padding: 16 }}>
+          <div className="card match-page__card">
             {events.length ? (
               <Timeline events={events} homeId={teams.home.id} awayId={teams.away.id} />
             ) : (
@@ -70,9 +87,24 @@ export default function MatchPageClient({ id }: { id: string }) {
             )}
           </div>
         )}
-        {tab === 'stats' && <div className="card" style={{ padding: 16 }}><p className="p">Stats placeholder.</p></div>}
-        {tab === 'lineups' && <div className="card" style={{ padding: 16 }}><p className="p">Lineups placeholder.</p></div>}
-        {tab === 'highlights' && <div className="card" style={{ padding: 16 }}><p className="p">Highlights placeholder.</p></div>}
+
+        {tab === 'stats' && (
+          <div className="card match-page__card">
+            <p className="p">Stats placeholder.</p>
+          </div>
+        )}
+
+        {tab === 'lineups' && (
+          <div className="card match-page__card">
+            <p className="p">Lineups placeholder.</p>
+          </div>
+        )}
+
+        {tab === 'highlights' && (
+          <div className="card match-page__card">
+            <p className="p">Highlights placeholder.</p>
+          </div>
+        )}
       </div>
     </section>
   );
