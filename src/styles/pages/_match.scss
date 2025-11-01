@@ -1,48 +1,48 @@
-// =============================================================================
-// PAGE: Match (/match/[id])
-// Responsibility: Page shell spacing, tabs rhythm, panel spacing
-// Tokens: --space-*, --surface-0, --ink-*, --radius-*, --shadow-card
-// A11y: Large hit target for back link; consistent region spacing
-// =============================================================================
-
-@use "../abstracts" as abs;
+/* ============================================================================
+   PAGE: /match/[id]
+   Responsibility: Layout frame (no component visuals)
+   ----------------------------------------------------------------------------
+   - Uses project tokens for spacing, radius, shadows, and surfaces.
+   - Mobile-first grid with graceful spacing upgrades at ≥768px.
+   ============================================================================ */
+@use '../abstracts/index' as *;
 
 .match-page {
-  padding-block: var(--space-6);
+  padding-block: var(--s-6);
+  display: grid;
+  gap: var(--s-6);
 
+  /* Back link */
   &__back {
-    margin-block-end: var(--space-3);
+    margin-block-end: var(--s-2);
   }
 
+  /* Tabs wrapper */
   &__tabs {
-    margin-block-start: var(--space-2);
-    margin-block-end: var(--space-2);
+    position: relative;
   }
 
+  /* Panels container (each tab content) */
   &__panel {
-    margin-block-start: var(--space-2);
+    display: grid;
+    gap: var(--s-4);
   }
 
+  /* Neutral card shell used for Timeline/Stats/Lineups placeholders */
   &__card {
-    padding: var(--space-4);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-card);
-    background: var(--surface-0);
-
-    // motion-safe micro polish for future dynamic panels
-    @media (prefers-reduced-motion: no-preference) {
-      transition: margin 160ms ease, padding 160ms ease, box-shadow 160ms ease;
-    }
+    background: var(--surface-1);
+    border: 1px solid var(--ui-200);
+    border-radius: var(--r-xl);
+    padding: var(--s-4);
+    box-shadow: var(--shadow-sm);
   }
 
-  // container queries ready (when container is on .container)
-  @supports (container-type: inline-size) {
-    container-type: inline-size;
-    container-name: matchpage;
+  @media (min-width: 768px) {
+    gap: var(--s-8);
 
-    @container matchpage (min-width: 42rem) {
-      &__tabs { margin-block-end: var(--space-3); }
-      &__card { padding: var(--space-5); }
+    &__card {
+      padding: var(--s-6);
+      box-shadow: var(--shadow-md);
     }
   }
 }
