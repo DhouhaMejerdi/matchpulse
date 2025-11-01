@@ -1,47 +1,47 @@
 // =============================================================================
 // BASE: A11y helpers
 // Responsibility: Screen-reader-only utility with progressive enhancement
-// Contracts: No !important; property order grouped; tokens-first where relevant
+// Contracts: No !important; tokens-first where relevant
 // Owner: Frontend Team • Last updated: 2025-11-01
 // =============================================================================
 
 /* Visually hidden (screen-reader only) — no !important */
-
 .sr-only {
   /* Positioning -------------------------------------------------------------- */
   position: absolute;
 
+  /* Hiding mechanics --------------------------------------------------------- */
+  overflow: hidden;              /* ensure nothing leaks */
+  clip-path: inset(50%);         /* modern, widely supported */
+
   /* Box model --------------------------------------------------------------- */
-  inline-size: 1px; /* logical width */
-  block-size: 1px;  /* logical height */
+  inline-size: 1px;              /* logical width */
+  block-size: 1px;               /* logical height */
   margin: -1px;
   padding: 0;
   border: 0;
 
-  /* Hiding mechanics --------------------------------------------------------- */
-  overflow: hidden;             /* ensure nothing leaks */
-  clip-path: inset(50%);        /* modern, widely supported */
-  clip: rect(0 0 0 0);          /* legacy fallback */
-  white-space: nowrap;          /* avoid line breaks */
+  /* Text handling ------------------------------------------------------------ */
+  white-space: nowrap;           /* avoid line breaks */
 }
 
 /* Optional: reveal when focusable (for skip links) */
-
 .sr-only.focusable:active,
 .sr-only.focusable:focus {
   /* Positioning -------------------------------------------------------------- */
   position: static;
 
+  /* Hiding mechanics --------------------------------------------------------- */
+  overflow: visible;
+  clip-path: none;
+
   /* Box model --------------------------------------------------------------- */
-  width: auto;
-  height: auto;
+  inline-size: auto;
+  block-size: auto;
   margin: 0;
   padding: 0;
   border: 0;
 
-  /* Hiding mechanics --------------------------------------------------------- */
-  overflow: visible;
-  clip-path: none;
-  clip: auto;
+  /* Text handling ------------------------------------------------------------ */
   white-space: normal;
 }
