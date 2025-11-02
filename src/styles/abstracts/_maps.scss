@@ -1,4 +1,10 @@
-// Example maps for internal use (optional; expand later)
+// =============================================================================
+// MAPS: design maps to centralize scales
+// Exports:
+//   - $breakpoints: sm/md/lg (use with mq-* or media-* mixins)
+// Owner: Frontend Team • Last updated: 2025-11-02
+// =============================================================================
+
 $breakpoints: (
   sm: 40rem,  // 640px
   md: 48rem,  // 768px

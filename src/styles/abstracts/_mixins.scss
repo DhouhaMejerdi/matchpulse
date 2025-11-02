@@ -1,27 +1,39 @@
-// ============================================================================
-// MIXINS: media & helpers (no direct CSS output)
+// =============================================================================
+// MIXINS: media & a11y helpers (no direct CSS output)
 // Exports:
-//   - media-min($min)            • @media (min-width)
-//   - focus-ring                 • token-driven focus outline
-// Owner: Frontend Team • Last updated: 2025-10-27
+//   - media-min($min)                     • legacy min-width syntax
+//   - media-max($max)                     • legacy max-width syntax
+//   - media-between($min, $max)           • legacy between
+//   - mq-min($min)                        • modern range: (width >= $min)
+//   - mq-max($max)                        • modern range: (width <= $max)
+//   - mq-between($min, $max)              • modern range between
+//   - focus-ring($color, $w, $offset)     • token-driven focus outline
+// Owner: Frontend Team • Last updated: 2025-11-02
 // Notes:
-//   - Avoid unsupported features by default; enhance behind @supports.
-//   - Do not emit top/left without a positioning context to satisfy
-//     no-invalid-position-declaration.
-// ============================================================================
+//   • Prefer mq-* (modern) with our updated .browserslistrc; keep media-* for safety.
+//   • Do not emit top/left without positioned ancestor (Stylelint: position rules).
+// =============================================================================
 
-// -- MEDIA --------------------------------------------------------------------
-
-@mixin media-min($min) {
-  @media (min-width: $min) {
-    @content;
-  }
+// ----- Legacy (safe everywhere) ----------------------------------------------
+@mixin media-min($min) { @media (min-width: $min) { @content; } }
+@mixin media-max($max) { @media (max-width: $max) { @content; } }
+@mixin media-between($min, $max) {
+  @media (min-width: $min) and (max-width: $max) { @content; }
 }
 
+// ----- Modern media range syntax (enabled by our support matrix) --------------
+@mixin mq-min($min) { @media (width >= $min) { @content; } }
+@mixin mq-max($max) { @media (width <= $max) { @content; } }
+@mixin mq-between($min, $max) {
+  @media (width >= $min) and (width <= $max) { @content; }
+}
 
-// -- A11Y ---------------------------------------------------------------------
-
-@mixin focus-ring {
-  outline: 2px solid var(--brand-500);
-  outline-offset: 2px;
+// ----- A11y: token-driven focus outline --------------------------------------
+@mixin focus-ring(
+  $color: var(--brand-500),
+  $width: 2px,
+  $offset: 2px
+) {
+  outline: $width solid $color;
+  outline-offset: $offset;
 }
