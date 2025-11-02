@@ -5,9 +5,8 @@
 // -----------------------------------------------------------------------------
 // Responsibility: Page hero row with title + date switcher.
 // Contracts: Props { title: string; dateLabel: string; onPrev: () => void; onNext: () => void; onToday: () => void }
-// A11y: Header landmark is labelled via aria-labelledby; h1 defines the page title; date controls are grouped with role="group".
-// Notes: Semantics‑first. Visual styles remain inline for now; will be moved to `_hero-header.scss` in Step 2 (mobile‑first).
-// Owner: Frontend Team • Last updated: 2025-10-29
+// A11y: <header> is labelled by the H1; DateToolbar exposes role="toolbar".
+// Owner: Frontend Team • Last updated: 2025-11-02
 // =============================================================================
 
 // -- PROPS --------------------------------------------------------------------
@@ -32,19 +31,17 @@ export default function HeroHeader({
 }: Props) {
   return (
     <header className="hero" aria-labelledby="heroTitle">
-      <div className="hero__container ">
+      <div className="hero__container container">
         <h1 id="heroTitle" className="h1 hero__title">
           {title}
         </h1>
 
-        <div role="group" aria-label="Match day controls">
-          <DateToolbar
-            label={dateLabel}
-            onPrev={onPrev}
-            onNext={onNext}
-            onToday={onToday}
-          />
-        </div>
+        <DateToolbar
+          label={dateLabel}
+          onPrev={onPrev}
+          onNext={onNext}
+          onToday={onToday}
+        />
       </div>
     </header>
   );

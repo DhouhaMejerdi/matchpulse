@@ -18,4 +18,14 @@
 @import './_status.css';
 @import './_controls.css';
 
-/* 3) (Next steps) typography, spacing, z-index will be added here */
+/* 3) Layout contract tokens (container + page padding) --------------------- */
+/* Owner: UI Systems • Last updated: 2025-11-02 */
+
+:root {
+  /* Max readable line length for main content areas */
+  --container-max: 1200px;
+
+  /* Page padding (logical inline axis); map to spacing scale */
+  --page-pad-inline-min: var(--s-3); /* e.g., 12px */
+  --page-pad-inline-max: var(--s-6); /* e.g., 24px */
+}

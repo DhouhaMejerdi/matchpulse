@@ -49,7 +49,8 @@ export default function DateToolbar({
       className="date-toolbar"
       role="toolbar"
       aria-label={ariaLabel}
-      aria-keyshortcuts="ArrowLeft, ArrowRight"
+      aria-orientation="horizontal"
+      aria-keyshortcuts="ArrowLeft ArrowRight" 
       tabIndex={0}
       onKeyDown={onKeyDown}
     >

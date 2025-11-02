@@ -1,19 +1,18 @@
 // =============================================================================
 // MODULE: Global Styles Entrypoint
-// Order: Tokens → Abstracts → Base → Layout → Components
+// -----------------------------------------------------------------------------
+// Responsibility: Orchestrate Sass modules only (no tokens import here).
+// Contracts: Modules @forward mixins/functions/placeholders. Side-effect CSS
+// may come from forwarded files (e.g., reset, typography), which is OK because
+// tokens are loaded in the app shell before this file.
+// Owner: UI Systems • Last updated: 2025-11-02
 // =============================================================================
 
-/* 0) SASS MODULES (no CSS emitted by @use itself) */
-
+/* 0) SASS MODULES (no CSS emitted by @use itself) --------------------------- */
 @use "./abstracts" as abs;
-@use "./base" as base;
-@use "./layout" as layout;
-@use "./components" as comp;
+@use "./base" as base;       // may emit CSS via reset/typography/a11y
+@use "./layout" as layout;   // may emit CSS for layout scaffolding
+@use "./components" as comp; // component-level CSS if any
+@use "./pages" as *;         // page-level Sass modules (no tokens needed here)
 
-/* 2) PAGES (optional layer) */
-
-@use "./pages" as *;
-
-/* 1) TOKENS (CSS variables) */
-
-@import "./tokens/index.css";
+// NOTE: Tokens are imported in `src/app/layout.tsx` to guarantee order.

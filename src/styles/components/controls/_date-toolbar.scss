@@ -1,44 +1,40 @@
 // =============================================================================
-// COMPONENT: date-toolbar
-// -----------------------------------------------------------------------------
-// Responsibility: Visual layout for the date navigation controls.
-// Tokens: Uses spacing and radius tokens; no raw px values.
-// A11y: Horizontal toolbar with consistent gaps; button padding ensures 44px tap targets; label uses min-inline-size to prevent layout jump.
-// Notes: Mobile-first layout; gap increases at small breakpoints.
-// Owner: Frontend Team • Last updated: 2025-10-29
+// COMPONENT: DateToolbar (styles)
+// Responsibility: Inline control group for date navigation.
+// Tokens: spacing (--s-*), radii (--r-*), surfaces, focus ring.
+// Owner: UI Systems • Last updated: 2025-11-02
 // =============================================================================
 
-@use "../../abstracts" as abs;
-@use "sass:map";
-
 .date-toolbar {
-  display: flex;
-  gap: var(--s-2);
+  display: inline-flex;
   align-items: center;
+  gap: var(--s-3);
 
   &__button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    min-inline-size: 2rem;
+    min-block-size: 2rem;
+    padding: var(--s-2) var(--s-3);
+    border-radius: var(--r-md);
+    background: var(--surface-0);
+    color: var(--ink-900);
+    text-decoration: none;
 
-    padding-block: var(--s-1);
-    padding-inline: var(--s-2);
-    border-radius: var(--r-sm);
+    &:hover { background: var(--ui-100); }
+    &:focus-visible {
+      outline: var(--focus-ring, 2px solid currentColor);
+      outline-offset: 2px;
+    }
 
-    // Additional visual styles (color, border) should use design tokens and can live in a global controls file if shared
+    @media (prefers-reduced-motion: reduce) {
+      transition: none !important;
+      animation: none !important;
+    }
   }
 
   &__label {
-    min-inline-size: 8ch;
-    font-weight: 600;
-    text-align: center;
-  }
-}
-
-/* Adjust spacing for larger viewports */
-
-@media (min-width: map.get(abs.$breakpoints, sm)) {
-  .date-toolbar {
-    gap: var(--s-3);
+    color: var(--ink-800);
   }
 }

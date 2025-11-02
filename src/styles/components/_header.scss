@@ -1,0 +1,82 @@
+// =============================================================================
+/* COMPONENT: Header (styles)
+   Responsibility: Layout + styling for the site header’s brand + nav.
+   Tokens: spacing (--s-*), radii (--r-*), shadows, colors, typography scale.
+   A11y: Visible :focus-visible; motion-safe transitions.
+   Owner: UI Systems • Last updated: 2025-11-02 */
+// =============================================================================
+
+.header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: var(--s-4);
+  min-block-size: 64px; /* replaces inline height */
+  padding-block: var(--s-4);
+
+  @media (width >= 48rem) {
+    gap: var(--s-6);
+  }
+
+  &__home-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-3);
+    text-decoration: none;
+    color: var(--ink-900);
+
+    &:focus-visible {
+      outline: var(--focus-ring, 2px solid currentColor);
+      outline-offset: 2px;
+      border-radius: var(--r-md);
+    }
+  }
+
+  &__logo {
+    inline-size: clamp(24px, 3.5vw, 36px);
+    block-size: clamp(24px, 3.5vw, 36px);
+    border-radius: var(--r-md);
+    background: var(--brand-500); // placeholder; swap for real logo asset when ready
+  }
+
+  &__title {
+    font-weight: 700;
+    font-size: clamp(1rem, 2.4vw, 1.25rem);
+  }
+
+  &__nav {
+    justify-self: end;
+    min-inline-size: 0;
+  }
+
+  &__nav-list {
+    display: inline-flex;
+    gap: var(--s-3);
+  }
+
+  &__nav-link {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: var(--r-md);
+    color: var(--ink-800);
+    text-decoration: none;
+
+    &:hover { background: var(--ui-100); }
+
+    /* Active state via aria-current */
+    &[aria-current='page'] {
+      background: var(--ui-200);
+      color: var(--ink-900);
+    }
+
+    &:focus-visible {
+      outline: var(--focus-ring, 2px solid currentColor);
+      outline-offset: 2px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+}

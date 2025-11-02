@@ -62,46 +62,50 @@ export default function HomePage() {
   const tabIdPrefix = 'filter-tab';
 
   return (
-    <main className="container">
-      <HeroHeader
-        title="Today’s Matches"
-        dateLabel={humanLabel}
-        onPrev={goPrev}
-        onNext={goNext}
-        onToday={goToday}
-      />
+    <>
+      <section className="container">
+        <HeroHeader
+          title="Today’s Matches"
+          dateLabel={humanLabel}
+          onPrev={goPrev}
+          onNext={goNext}
+          onToday={goToday}
+        />
+      </section>
 
-      <ControlsBar
-        segments={FILTER_SEGMENTS}
-        value={tab}
-        onChange={setTab}
-        leagueOptions={leagueOptions}
-        league={league}
-        onLeagueChange={setLeague}
-        sticky
-      />
+      <section className="container">
+        <ControlsBar
+          segments={FILTER_SEGMENTS}
+          value={tab}
+          onChange={setTab}
+          leagueOptions={leagueOptions}
+          league={league}
+          onLeagueChange={setLeague}
+          sticky
+        />
+      </section>
 
-      <div
-        id={fixtureRegionId}
-        className="fixtures-region"
-        role="region"
-        aria-label="Fixtures for selected date and filter"
-        aria-labelledby={`${tabIdPrefix}-${tab}`}
-      >
-        {error ? (
-          <div className="card">
-            <p className="p">Could not load fixtures.</p>
-          </div>
-        ) : isLoading ? (
-          <div className="card">
-            <p className="p">Loading fixtures…</p>
-          </div>
-        ) : (
-          <FixtureList matches={filteredByLeague} filter={tab} league={league} />
-        )}
-      </div>
-
-    </main>
+      <section className="container">
+        <div
+          id={fixtureRegionId}
+          className="fixtures-region"
+          role="region"
+          aria-label="Fixtures for selected date and filter"
+          aria-labelledby={`${tabIdPrefix}-${tab}`}
+        >
+          {error ? (
+            <div className="card">
+              <p className="p">Could not load fixtures.</p>
+            </div>
+          ) : isLoading ? (
+            <div className="card">
+              <p className="p">Loading fixtures…</p>
+            </div>
+          ) : (
+            <FixtureList matches={filteredByLeague} filter={tab} league={league} />
+          )}
+        </div>
+      </section>
+    </>
   );
-
 }

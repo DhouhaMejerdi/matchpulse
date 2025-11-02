@@ -15,8 +15,10 @@
     "format": "prettier . --write",
     "check": "npm run lint && npm run lint:css && npm run typecheck",
     "support:matrix": "npx browserslist",
-    "verify": "npm run lint && npm run lint:css:strict && npm run typecheck && npm run build"
-
+    "verify": "npm run lint && npm run lint:css:strict && npm run typecheck && npm run build",
+    "ci:check": "npm run lint && npm run lint:css:strict && npm run typecheck",
+    "ci:verify": "npm run ci:check && npm run build",
+    "format:check": "prettier . --check"
   },
   "lint-staged": {
     "**/*.{ts,tsx,js,jsx,css,scss,md}": [
@@ -41,6 +43,7 @@
     "lint-staged": "^16.2.4",
     "postcss": "^8.5.6",
     "postcss-preset-env": "^10.4.0",
+    "postcss-scss": "^4.0.9",
     "prettier": "^3.6.2",
     "sass": "^1.93.2",
     "stylelint": "^16.25.0",
