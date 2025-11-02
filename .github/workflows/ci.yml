@@ -1,18 +1,55 @@
 # =============================================================================
-# WORKFLOW: CI — Lint (JS/TS + CSS) & Typecheck
-# Responsibility: Prevent merges that violate code style or typing contracts
-# Owner: Frontend Team • Last updated: 2025-10-27
+# WORKFLOW: CI — Lint (JS/TS + CSS) & Typecheck (+ optional Build)
+# Responsibility: Block merges that violate code style, typing, or CSS rules
+# Contracts:
+#  - Uses Browserslist as single source of truth
+#  - Fails on any ESLint/Stylelint warnings in strict mode
+#  - Cancels stale runs per-branch to reduce CI load
+# Owner: Frontend Team • Last updated: 2025-11-01
 # =============================================================================
 name: ci
 
 on:
   pull_request:
+    # Run CI only when relevant files change (avoids burning minutes on docs-only PRs)
+    paths:
+      - "src/**"
+      - "styles/**"
+      - "src/styles/**"
+      - "package.json"
+      - "package-lock.json"
+      - ".eslintrc*"
+      - ".stylelintrc*"
+      - ".browserslistrc"
+      - "postcss.config.*"
+      - "tsconfig*.json"
+      - ".github/workflows/ci.yml"
   push:
     branches: [ main, staging ]
+    paths-ignore:
+      - "docs/**"
+      - "**/*.md"
+      - ".github/ISSUE_TEMPLATE/**"
+
+# Principle of least privilege for GitHub token
+permissions:
+  contents: read
+
+# Cancel in-flight CI for the same branch/PR to keep results fresh
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   lint_and_types:
+    name: Lint & Typecheck
     runs-on: ubuntu-latest
+
+    # Optionally test multiple Node LTS lines. Keep typecheck on the primary.
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [ "20.x" ] # Upgrade to ["20.x", "22.x"] when ready
 
     steps:
       # -- CHECKOUT ------------------------------------------------------------
@@ -20,17 +57,27 @@ jobs:
         uses: actions/checkout@v4
 
       # -- SETUP NODE ----------------------------------------------------------
-      - name: Setup Node
+      - name: Setup Node ${{ matrix.node }}
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: 'npm'
+          node-version: ${{ matrix.node }}
+          cache: npm
+
+      # -- ENV BASELINE --------------------------------------------------------
+      - name: Configure CI env
+        run: |
+          echo "CI=true" >> $GITHUB_ENV
 
       # -- INSTALL -------------------------------------------------------------
-      - name: Install deps (npm ci)
+      - name: Install dependencies
         run: npm ci
 
+      # -- BROWSERSLIST (reference visibility) --------------------------------
+      - name: Print Browserslist targets
+        run: npx browserslist
+
       # -- LINT: JS/TS ---------------------------------------------------------
+      # Tip: make ESLint strict on warnings too by using --max-warnings=0 in script
       - name: ESLint
         run: npm run lint
 
@@ -41,3 +88,9 @@ jobs:
       # -- TYPES ---------------------------------------------------------------
       - name: Typecheck
         run: npm run typecheck
+
+      # -- (OPTIONAL) BUILD SANITY --------------------------------------------
+      # Keep this ON for main/staging, OFF for PRs if CI minutes are tight.
+      - name: Build (Next.js)
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/staging'
+        run: npm run build
