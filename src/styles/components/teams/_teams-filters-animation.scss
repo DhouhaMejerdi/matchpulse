@@ -1,0 +1,51 @@
+// =============================================================================
+// COMPONENT: TeamsHeaderFiltersAnimation
+// Responsibility: Animation layer for /teams header filters (yellow underline)
+// Depends on: Base layout/styles from _teams-filters.scss
+// Owner: Frontend Team • Last updated: 2025-11-04
+// =============================================================================
+
+@use "sass:map";
+@use "../../abstracts" as abstracts;
+
+/* Base underline segment: short yellow bar at the bottom of the pill */
+.teams-header .teams-filter__field::after {
+  content: "";
+  position: absolute;
+  inset-block-end: 0;
+  inline-size: 40%;   // short segment, not full width
+  block-size: 2px;    // can be tokenised later if needed
+  left: 30%;          // roughly centred
+  border-radius: 999px;
+
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    yellow 40%,
+    yellow 60%,
+    transparent 100%
+  );
+
+  opacity: 0;
+  transform: translateX(-100%);
+}
+
+/* When field is focused, run the yellow segment from left -> right */
+.teams-header .teams-filter__field:focus-within::after {
+  opacity: 1;
+
+  @include abstracts.motion-safe() {
+    animation: teams-filter-underline-sweep 1.1s ease-out infinite;
+  }
+}
+
+/* Moving underline animation */
+@keyframes teams-filter-underline-sweep {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}

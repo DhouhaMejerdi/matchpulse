@@ -1,0 +1,46 @@
+// =============================================================================
+// COMPONENT: TeamsHeader
+// Responsibility: /teams hero layout (title + filters bar shell)
+// Tokens: --surface-1, --border-subtle, --s-6, --s-4, --s-3, --s-2, --s-8,
+//         --text-xl, --text-2xl, --control-text-muted
+// A11y: Uses :focus-within + focus-ring to highlight when filters are focused
+// Owner: Frontend Team • Last updated: 2025-11-04
+// =============================================================================
+
+@use "sass:map";
+@use "../../abstracts" as abstracts;
+
+.teams-header {
+  padding-block: var(--s-6);
+  background: var(--surface-1);
+  border-bottom: 1px solid var(--border-subtle);
+
+  &__top {
+    margin-bottom: var(--s-4);
+  }
+
+  &__title {
+    font-size: clamp(var(--text-xl), 3vw, var(--text-2xl));
+    font-weight: 600;
+  }
+
+  &__subtitle {
+    color: var(--control-text-muted);
+    margin-top: var(--s-2);
+  }
+
+  &__controls {
+    display: flex;
+    gap: var(--s-3);
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  @include abstracts.mq-min(map.get(abstracts.$breakpoints, md)) {
+    padding-block: var(--s-8);
+
+    &__controls {
+      gap: var(--s-4);
+    }
+  }
+}
