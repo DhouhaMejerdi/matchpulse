@@ -10,7 +10,6 @@
 // BLOCK -----------------------------------------------------------------------
 
 .container {
-  inline-size: min(100%, var(--container-max));
   margin-inline: auto;
 
   /* Use tokens -> converts to clamp(s-3 .. s-6) via CSS custom properties */
@@ -19,4 +18,5 @@
     3vw,
     var(--page-pad-inline-max)
   );
+  inline-size: min(100%, var(--container-max));
 }

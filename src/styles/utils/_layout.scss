@@ -5,16 +5,16 @@
 /* Mirrors your global .container clamp without forcing devs to use .container */
 
 .u-container {
-  inline-size: 100%;
   max-width: 1200px;
   margin-inline: auto;
   padding-inline: var(--s-4);
+  inline-size: 100%;
 }
 
 /* Force full-bleed when needed (rarely) */
 
 .u-bleed {
-  inline-size: 100%;
   max-width: none;
   margin-inline: 0;
+  inline-size: 100%;
 }

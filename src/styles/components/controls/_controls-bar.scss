@@ -14,11 +14,11 @@
 .controls-bar {
   /* Base (mobile) layout: stacked */
   display: flex;
-  flex-direction: column;
-  gap: var(--s-3);
-  align-items: stretch;
 
   margin-block: var(--s-3);
+  gap: var(--s-3);
+  align-items: stretch;
+  flex-direction: column;
  
 
   .segmented,
@@ -29,18 +29,18 @@
 
   &__end {
     display: inline-flex;
+
+    width: 100%;
     gap: var(--s-3);
     align-items: center;
     justify-content: flex-start;
-
-    width: 100%;
     margin-inline-start: 0;
   }
 
   &--sticky {
     position: sticky;
-    z-index: var(--z-toolbar, 20);
     top: 0;
+    z-index: var(--z-toolbar, 20);
 
     background: linear-gradient(
       to bottom,
@@ -53,13 +53,13 @@
 
 @media (min-width: map.get(abs.$breakpoints, sm)) {
   .controls-bar {
-    /* Row layout on larger screens */
-    flex-flow: row wrap;
+    margin-block: var(--s-3);
+    padding-inline: 0;
     gap: var(--s-3);
     align-items: center;
 
-    margin-block: var(--s-3);
-    padding-inline: 0;
+    /* Row layout on larger screens */
+    flex-flow: row wrap;
 
     .segmented,
     .league-picker {
@@ -68,8 +68,8 @@
     }
 
     &__end {
-      justify-content: flex-start;
       width: auto;
+      justify-content: flex-start;
       margin-inline-start: auto;
     }
 

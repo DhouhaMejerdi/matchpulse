@@ -1,10 +1,10 @@
 .meta {
   display: flex;
-  flex-wrap: wrap;           /* 🔑 wrap instead of push-overflow */
-  gap: 8px;
-  align-items: center;
 
   min-width: 0;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;           /* 🔑 wrap instead of push-overflow */
   margin-top: 8px;           /* breathing room under the row */
 }
 
@@ -13,32 +13,31 @@
   /* Shared live dot with motion-safe pulse */
 
   .live-dot {
-    will-change: transform, opacity; /* GPU-friendly */
-
     display: inline-block;
-
-    inline-size: 8px;
-    block-size: 8px;
-    margin-right: 6px;
     border-radius: 50%;
 
-    vertical-align: -1px;           /* nudges to text midline */
-
     background: var(--status-live); /* status-driven, not brand */
+    will-change: transform, opacity; /* GPU-friendly */
 
     animation: mp-live-dot 1.4s ease-in-out infinite;
+    block-size: 8px;
+
+    inline-size: 8px;
+    margin-right: 6px;
+
+    vertical-align: -1px;           /* nudges to text midline */
   }
 
   @keyframes mp-live-dot {
     0%,
     100% {
-      transform: scale(1);
       opacity: 1;
+      transform: scale(1);
     }
 
     50% {
-      transform: scale(1.5);
       opacity: 0.75;
+      transform: scale(1.5);
     }
   }
 
@@ -49,11 +48,11 @@
   }
 
 .league-chip {
-  overflow: hidden;
   display: inline-block;
-
-  max-inline-size: 100%;
+  overflow: hidden;
+  white-space: nowrap;
 
   text-overflow: ellipsis;
-  white-space: nowrap;
+
+  max-inline-size: 100%;
 }

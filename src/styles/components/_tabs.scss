@@ -2,14 +2,12 @@
 
 .tabs {
   display: flex;
+  height: 40px;
   gap: 8px;
   align-items: center;
-  height: 40px;
 }
 
 .tab {
-  cursor: pointer;
-
   padding: 8px 12px;
   border: none;
   border-radius: var(--r-sm);
@@ -17,6 +15,7 @@
   color: var(--ink-900);
 
   background: transparent;
+  cursor: pointer;
 }
 
 .tab[aria-selected="true"] {
@@ -29,10 +28,10 @@
 
 .segmented {
   display: inline-flex;
-  gap: 6px;
 
   padding: var(--control-pad);
   border-radius: var(--control-radius);
+  gap: 6px;
 
   background: var(--control-bg);
 }
@@ -40,8 +39,6 @@
 /* Each item */
 
 .segmented__item {
-  cursor: pointer;
-
   padding: 8px 14px;
   border: 1px solid var(--control-item-border);
   border-radius: calc(var(--control-radius) - 2px);
@@ -50,6 +47,7 @@
   color: var(--control-text);
 
   background: var(--control-item-bg);
+  cursor: pointer;
 }
 
 .segmented__item:hover { background: var(--control-item-hover); }
@@ -69,16 +67,15 @@
 
 @media (max-width: 640px) {
   .segmented {
-    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
     overflow-x: auto;
     overscroll-behavior-x: contain;
-
-    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
   }
 
   .segmented__item {
-    scroll-snap-align: center;
     white-space: nowrap;
+    scroll-snap-align: center;
   }
 }
 
@@ -89,25 +86,24 @@
 
 .league-picker {
   display: inline-flex;
-  gap: 6px;
-  align-items: center;
 
   padding: var(--control-pad);
   border-radius: var(--control-radius);
+  gap: 6px;
 
   background: var(--control-bg);
+  align-items: center;
 }
 
 .league-picker__label { color: var(--control-text); }
 
 .league-picker__clear {
-  cursor: pointer;
-
   padding: 6px 10px;
   border: 0;
   border-radius: 8px;
 
   background: var(--ui-200);
+  cursor: pointer;
 }
 
 .league-picker__clear:focus-visible {
@@ -117,8 +113,8 @@
 
 .league-picker__field {
   position: relative;
-  flex: 1 1 auto;
   min-width: 180px;
+  flex: 1 1 auto;
 }
 
 .league-picker__input {
@@ -145,11 +141,9 @@
 
 .league-picker__popover {
   position: absolute;
-  z-index: var(--z-dropdown, 20);
   top: calc(100% + 4px);
   left: 0;
-
-  overflow-y: auto;
+  z-index: var(--z-dropdown, 20);
 
   min-width: 220px;
   max-height: 220px;
@@ -157,10 +151,12 @@
   padding: 4px;
   border-radius: 10px;
 
-  list-style: none;
-
   background: var(--surface-0);
   box-shadow: var(--shadow-md);
+
+  list-style: none;
+
+  overflow-y: auto;
 }
 
 .league-picker__empty { 
@@ -169,9 +165,9 @@
 }
 
 .league-picker__option {
-  cursor: pointer;
   padding: 6px 10px;
   border-radius: 8px;
+  cursor: pointer;
 }
 
 .league-picker__option.is-active { background: var(--control-item-hover); }

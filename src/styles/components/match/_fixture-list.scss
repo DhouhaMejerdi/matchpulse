@@ -16,22 +16,22 @@
 
 .fixture-list {
   display: grid;
-  grid-template-columns: 1fr; // default: single column
-  gap: var(--s-3);
 
   margin: 0;
-  margin-block-start: var(--s-4);
   padding: 0;
+  gap: var(--s-3);
+  grid-template-columns: 1fr; // default: single column
 
   list-style: none;
+  margin-block-start: var(--s-4);
 }
 
 /* 2 columns on medium screens */
 
 @media (min-width: map.get(abs.$breakpoints, md)) {
   .fixture-list {
-    grid-template-columns: repeat(2, 1fr);
     gap: var(--s-4); // a bit more breathing room on wider screens
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -39,7 +39,7 @@
 
 @media (min-width: map.get(abs.$breakpoints, lg)) {
   .fixture-list {
-    grid-template-columns: repeat(3, 1fr);
     gap: var(--s-4);
+    grid-template-columns: repeat(3, 1fr);
   }
 }

@@ -4,7 +4,8 @@
 // Contracts: Targets come from .browserslistrc
 // Owner: Frontend Team • Last updated: 2025-11-02
 // =============================================================================
-export default {
+
+const postcssConfig = {
   plugins: {
     '@tailwindcss/postcss': {},
     'postcss-preset-env': {
@@ -12,7 +13,9 @@ export default {
       features: {
         'nesting-rules': true, // optional; fine to leave on
       },
-      autoprefixer: { grid: true },
     },
+    autoprefixer: { grid: true },
   },
 };
+
+export default postcssConfig;

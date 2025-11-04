@@ -10,8 +10,8 @@
 
 .match-page {
   display: grid;
-  gap: var(--s-6);
   padding-block: var(--s-6);
+  gap: var(--s-6);
 
   /* Back link — accessible, comfy tap-target, subtle hover/focus */
 
@@ -20,30 +20,30 @@
 
     a {
       display: inline-flex;
-      gap: var(--s-2);                 /* space before/after arrow text */
-      align-items: center;
 
       padding: var(--s-1) var(--s-2);  /* tap target without looking like a button */
       border-radius: var(--r-sm);
+      gap: var(--s-2);                 /* space before/after arrow text */
 
       line-height: var(--lh-normal);
       color: inherit;                  /* inherit current text color */
+      align-items: center;
       text-decoration: none;
       text-underline-offset: 3px;
 
       /* Hover: show it’s interactive, keep it gentle */
 
       &:hover {
-        text-decoration: underline;
         background: var(--ui-100);
+        text-decoration: underline;
       }
 
       /* Keyboard focus: clear, accessible ring */
 
       &:focus-visible {
-        background: color-mix(in oklab, var(--accent-blue-500) 10%, transparent);
         outline: 2px solid var(--accent-blue-500);
         outline-offset: 2px;
+        background: color-mix(in oklab, var(--accent-blue-500) 10%, transparent);
       }
 
       /* Active: tiny tactile feedback */
@@ -98,15 +98,15 @@
 .match-page {
   &__tabs {
     position: sticky;
-    z-index: 20;
     top: var(--site-sticky-top, 0); /* set header height via CSS var if header is sticky */
-
-    margin-block-end: var(--s-2);
+    z-index: 20;
     padding-block: var(--s-2);
-    border-bottom: 1px solid var(--ui-200);
 
     background: var(--surface-0);
-    backdrop-filter: saturate(180%) blur(6px); /* optional, looks nice on scroll */
     box-shadow: var(--shadow-sm);
+    backdrop-filter: saturate(180%) blur(6px); /* optional, looks nice on scroll */
+    border-bottom: 1px solid var(--ui-200);
+
+    margin-block-end: var(--s-2);
   }
 }

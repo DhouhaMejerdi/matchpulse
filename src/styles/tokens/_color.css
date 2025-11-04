@@ -22,6 +22,13 @@
   --success-500: #17b26a;
   --warning-500: #f59e0b;
   --danger-500:  #ef4444;
+
+  /* Header semantics -------------------------------------------------------- */
+
+  /* Semantic aliases used by <SiteHeader /> */
+  --surface-header: var(--surface-0);   /* main header background */
+  --text-primary: var(--ink-900);       /* primary header text color */
+  --border-subtle: var(--ui-200);       /* subtle dividers (e.g., bottom border) */
 }
 
 /* Dark-mode overrides (tokens-first) */

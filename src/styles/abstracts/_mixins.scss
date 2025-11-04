@@ -8,27 +8,35 @@
 //   - mq-max($max)                        • modern range: (width <= $max)
 //   - mq-between($min, $max)              • modern range between
 //   - focus-ring($color, $w, $offset)     • token-driven focus outline
-// Owner: Frontend Team • Last updated: 2025-11-02
+//   - motion-safe()                       • motion wrapper for no-preference
+// Owner: Frontend Team • Last updated: 2025-11-03
 // Notes:
 //   • Prefer mq-* (modern) with our updated .browserslistrc; keep media-* for safety.
 //   • Do not emit top/left without positioned ancestor (Stylelint: position rules).
 // =============================================================================
 
 // ----- Legacy (safe everywhere) ----------------------------------------------
+
 @mixin media-min($min) { @media (min-width: $min) { @content; } }
+
 @mixin media-max($max) { @media (max-width: $max) { @content; } }
+
 @mixin media-between($min, $max) {
   @media (min-width: $min) and (max-width: $max) { @content; }
 }
 
 // ----- Modern media range syntax (enabled by our support matrix) --------------
+
 @mixin mq-min($min) { @media (width >= $min) { @content; } }
+
 @mixin mq-max($max) { @media (width <= $max) { @content; } }
+
 @mixin mq-between($min, $max) {
   @media (width >= $min) and (width <= $max) { @content; }
 }
 
 // ----- A11y: token-driven focus outline --------------------------------------
+
 @mixin focus-ring(
   $color: var(--focus-ring, currentColor),
   $width: 2px,
@@ -38,9 +46,11 @@
   outline-offset: $offset;
 }
 
-@mixin motion-safe {
-  @media (prefers-reduced-motion: reduce) {
-    transition: none !important;
-    animation: none !important;
+// Motion-safe wrapper
+// Usage: @include motion-safe { transition: var(--motion-hover); }
+
+@mixin motion-safe() {
+  @media (prefers-reduced-motion: no-preference) {
+    @content;
   }
 }

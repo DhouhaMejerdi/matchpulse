@@ -14,18 +14,18 @@
 
   /* Hiding mechanics --------------------------------------------------------- */
   overflow: hidden;              /* ensure nothing leaks */
-
-  /* Box model --------------------------------------------------------------- */
-  inline-size: 1px;              /* logical width */
-  block-size: 1px;               /* logical height */
   margin: -1px;
   padding: 0;
   border: 0;
 
   /* Text handling ------------------------------------------------------------ */
   white-space: nowrap;           /* avoid line breaks */
+  block-size: 1px;               /* logical height */
 
   clip-path: inset(50%);         /* modern, widely supported */
+
+  /* Box model --------------------------------------------------------------- */
+  inline-size: 1px;              /* logical width */
 }
 
 /* SR-only but becomes visible when focused/active (for skip links) ---------- */
@@ -37,23 +37,25 @@
 
   /* Hiding mechanics --------------------------------------------------------- */
   overflow: visible;
-
-  /* Box model --------------------------------------------------------------- */
-  inline-size: auto;
-  block-size: auto;
   margin: 0;
   padding: 0;
   border: 0;
 
   /* Text handling ------------------------------------------------------------ */
   white-space: normal;
+  block-size: auto;
 
   clip-path: none;
+
+  /* Box model --------------------------------------------------------------- */
+  inline-size: auto;
 }
 
 /* Optional convenience alias for skip links -------------------------------- */
+
 .skip-link {
   @extend .sr-only;
   @extend .focusable;
+
   /* Optional: tokenized pad/radius/shadow if you want a visible chip on focus */
 }

@@ -1,32 +1,32 @@
 /* Teams fill their column; inner grid makes name the shrink target */
 
 .team { 
-  justify-self: stretch; 
   min-width: 0; 
+  justify-self: stretch; 
 }
 
 .team--home {
   display: grid;
-  grid-template-columns: 28px minmax(0,1fr); /* crest | name */
   gap: clamp(6px, 1.5vw, 10px);
-  align-items: center;
 
   text-align: left;
+  align-items: center;
+  grid-template-columns: 28px minmax(0,1fr); /* crest | name */
 }
 
 .team--away {
   display: grid;
-  grid-template-columns: minmax(0,1fr) 28px; /* name | crest */
   gap: clamp(6px, 1.5vw, 10px);
-  align-items: center;
 
   text-align: right;
+  align-items: center;
+  grid-template-columns: minmax(0,1fr) 28px; /* name | crest */
 }
 
 .team img { 
-  flex: 0 0 28px; 
   width: 28px; 
   height: 28px; 
+  flex: 0 0 28px; 
 }
 
 .team__name {
@@ -34,9 +34,9 @@
 
   min-width: 0;
   max-width: 100%;
+  white-space: nowrap;       /* 🔒 always 1 line, always truncated */
 
   text-overflow: ellipsis;
-  white-space: nowrap;       /* 🔒 always 1 line, always truncated */
 }
 
 /* Ultra-narrow rescue only if needed */
@@ -44,7 +44,7 @@
 @media (max-width: 380px) {
   .team__name { 
     display:-webkit-box; 
-    -webkit-box-orient:vertical; 
     white-space: normal; 
+    -webkit-box-orient:vertical; 
   }
 }

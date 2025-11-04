@@ -14,31 +14,31 @@
 @use "sass:map";
 
 .match-card {
-  overflow: hidden;    /* avoid bleed from children */
   display: block;      /* Link becomes a block card */
+  overflow: hidden;    /* avoid bleed from children */
 
   min-width: 0;        /* IMPORTANT: allow shrink in grid cell */
   padding: var(--s-4);
   border-radius: var(--r-lg);
 
   color: inherit;
-  text-decoration: none;
 
   background: var(--surface-0);
   box-shadow: var(--shadow-sm);
+  text-decoration: none;
 
   &:hover {
-    transform: translateY(-2px);
     box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
   }
 
   .row {
     display: grid;
-    grid-template-columns: minmax(0,1fr) auto minmax(0,1fr);  /* 🔑 */ /* Team | Score | Team */
-    gap: var(--s-3);
-    align-items: center;
 
     min-width: 0;
+    gap: var(--s-3);
+    align-items: center;
+    grid-template-columns: minmax(0,1fr) auto minmax(0,1fr);  /* 🔑 */ /* Team | Score | Team */
   }
 
     /* (Optional) ultra-narrow tweak: stack meta below neatly */

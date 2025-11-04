@@ -8,23 +8,23 @@
 
 .match-header {
   display: grid;
-  gap: var(--s-4);
   padding-block: var(--s-4);       /* page owns outer spacing; keep this modest */
+  gap: var(--s-4);
 }
 
 .match-title {
   --crest: 22px;
 
   display: grid;
-  grid-template-columns: 1fr auto 1fr; /* home | score | away */
   gap: var(--s-2);
   align-items: center;
+  grid-template-columns: 1fr auto 1fr; /* home | score | away */
 
   &__team {
     display: inline-flex;
+    min-width: 0; /* allow truncation */
     gap: var(--s-2);
     align-items: center;
-    min-width: 0; /* allow truncation */
   }
 
   &__team--away {
@@ -32,16 +32,16 @@
   }
 
   &__crest {
-    inline-size: var(--crest);
     block-size: var(--crest);
+    inline-size: var(--crest);
     object-fit: contain;
   }
 
   &__name {
     overflow: hidden;
     font: 700 var(--text-lg) /var(--lh-tight) var(--font-sans);
-    text-overflow: ellipsis;
     white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   &__score {
@@ -53,12 +53,12 @@
 
 .match-sub {
   display: flex;
-  flex-wrap: wrap;
   gap: var(--s-2);
-  align-items: center;
 
   font: 500 var(--text-sm)/var(--lh-normal) var(--font-sans);
   color: var(--muted-600);
+  align-items: center;
+  flex-wrap: wrap;
 
   .meta__item { display: inline-flex; align-items: center; }
 

@@ -6,13 +6,13 @@
 
 .status {
   display: inline-flex;
-  gap: 6px;
-  align-items: center;
 
   padding: 2px 8px;
   border-radius: 999px;
+  gap: 6px;
 
   background: var(--ui-200);
+  align-items: center;
 }
 
 /* ===== Status badge polish ===== */
@@ -24,21 +24,20 @@
   min-width: 64px;                /* balances short vs long labels */
   margin-block: 2px;              /* subtle vertical rhythm */
 
-  /* typography */
-  font-size: var(--text-xs);
-  text-align: center;
-  letter-spacing: 0.04em;
-
   /* accessibility */
   outline: none;
+
+  /* typography */
+  font-size: var(--text-xs);
+  letter-spacing: 0.04em;
+  text-align: center;
 }
 
 .status-badge:focus-visible {
-  filter: saturate(1.1);
-
   /* clear keyboard focus ring */
   outline: 2px solid currentcolor;
   outline-offset: 2px;
+  filter: saturate(1.1);
 }
 
 /* LIVE energy (soft, not distracting) */

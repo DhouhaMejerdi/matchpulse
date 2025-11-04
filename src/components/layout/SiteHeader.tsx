@@ -12,11 +12,12 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import '@/styles/components/_header.scss';
 
 const links = [
   { href: '/', label: 'Matches' },
-  { href: '/team/demo', label: 'Teams' },
+  { href: '/teams', label: 'Teams' },
+  { href: '/standings', label: 'Standings' },
+  { href: '/news', label: 'News' },
 ] as const;
 
 export default function SiteHeader() {
@@ -28,6 +29,14 @@ export default function SiteHeader() {
         <span className="header__logo" aria-hidden="true" />
         <span className="header__title">MatchPulse</span>
       </Link>
+
+      <button
+        type="button"
+        className="header__menu-toggle"
+        aria-label="Open primary navigation"
+      >
+        <span className="header__menu-icon" aria-hidden="true" />
+      </button>
 
       <nav className="header__nav" aria-label="Primary">
         <ul className="header__nav-list" role="list">

@@ -10,30 +10,32 @@
 @use "../abstracts" as abs;
 
 .hero {
-  background: var(--surface-1, #0f1322);
   color: var(--ink-on-surface, #fff);
+  background: var(--surface-1, #0f1322);
 
   &__container {
     display: grid;
-    align-items: end;
-    gap: var(--s-4);
     padding-block: var(--s-6);
+    gap: var(--s-4);
+    align-items: end;
 
     @include abs.mq-min(48rem) {
-      grid-template-columns: 1fr auto;
-      gap: var(--s-6);
       padding-block: var(--s-8);
+      gap: var(--s-6);
+      grid-template-columns: 1fr auto;
     }
   }
 
   &__title {
     margin: 0;
+
     /* Tokenized fluid size; adjust to your scale if you have --font-* tokens */
     font-size: clamp(1.5rem, 4vw, 2.75rem);
     line-height: 1.1;
   }
 
   /* DateToolbar sits to the right at tablet+ thanks to grid */
+
   .date-toolbar {
     justify-self: start;
 

@@ -4,7 +4,7 @@
 
 // keep @use at the top of the file, before any rules
 
-
+@forward './header';
 @forward "./controls/index";
 @forward "./chip";
 @forward './tabs';
