@@ -1,0 +1,50 @@
+// =============================================================================
+// COMPONENT: match-card
+// -----------------------------------------------------------------------------
+// Responsibility: Layout and styling for a single match card (teams, score, meta).
+// Tokens: Uses spacing (--s-2, --s-3, --s-4), radius (--r-lg), colour tokens
+//         (surface, muted) and shadows (--shadow-sm, --shadow-md).
+// A11y: Ensures adequate clickable area and hover/focus feedback; meta row
+//       separators are automatically inserted via ::before.
+// Notes: BEM structure; mobile-first. Adjust grid and spacing through tokens.
+// Owner: Frontend Team • Last updated: 2025-10-30
+// =============================================================================
+
+@use "../../abstracts" as abs;
+@use "sass:map";
+
+.match-card {
+  display: block;      /* Link becomes a block card */
+  overflow: hidden;    /* avoid bleed from children */
+
+  min-width: 0;        /* IMPORTANT: allow shrink in grid cell */
+  padding: var(--s-4);
+  border-radius: var(--r-lg);
+
+  color: inherit;
+
+  background: var(--surface-0);
+  box-shadow: var(--shadow-sm);
+  text-decoration: none;
+
+  &:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  .row {
+    display: grid;
+
+    min-width: 0;
+    gap: var(--s-3);
+    align-items: center;
+    grid-template-columns: minmax(0,1fr) auto minmax(0,1fr);  /* 🔑 */ /* Team | Score | Team */
+  }
+
+    /* (Optional) ultra-narrow tweak: stack meta below neatly */
+
+  @media (max-width: 360px) {
+    .match-card .row { gap: var(--s-2); }
+  }
+
+}

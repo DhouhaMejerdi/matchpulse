@@ -1,0 +1,185 @@
+// Timeline, Stats, Lineups, Highlights http://localhost:3000/match/m-23-1
+
+.tabs {
+  display: flex;
+  height: 40px;
+  gap: 8px;
+  align-items: center;
+}
+
+.tab {
+  padding: 8px 12px;
+  border: none;
+  border-radius: var(--r-sm);
+
+  color: var(--ink-900);
+
+  background: transparent;
+  cursor: pointer;
+}
+
+.tab[aria-selected="true"] {
+  background: var(--ui-200);
+  box-shadow: var(--shadow-sm);
+}
+
+
+/* SegmentedFilter container NEW */
+
+.segmented {
+  display: inline-flex;
+
+  padding: var(--control-pad);
+  border-radius: var(--control-radius);
+  gap: 6px;
+
+  background: var(--control-bg);
+}
+
+/* Each item */
+
+.segmented__item {
+  padding: 8px 14px;
+  border: 1px solid var(--control-item-border);
+  border-radius: calc(var(--control-radius) - 2px);
+
+  line-height: 1;
+  color: var(--control-text);
+
+  background: var(--control-item-bg);
+  cursor: pointer;
+}
+
+.segmented__item:hover { background: var(--control-item-hover); }
+
+.segmented__item[aria-selected="true"] {
+  color: var(--control-text-selected);
+  background: var(--control-item-selected);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Keyboard focus */
+
+.segmented__item:focus-visible {
+  outline: 2px solid var(--control-focus);
+  outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+  .segmented {
+    -webkit-overflow-scrolling: touch;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+  }
+
+  .segmented__item {
+    white-space: nowrap;
+    scroll-snap-align: center;
+  }
+}
+
+
+/* LeaguePicker shell (visual parity with SegmentedFilter) */
+
+/* LeaguePicker (BEM) */
+
+.league-picker {
+  display: inline-flex;
+
+  padding: var(--control-pad);
+  border-radius: var(--control-radius);
+  gap: 6px;
+
+  background: var(--control-bg);
+  align-items: center;
+}
+
+.league-picker__label { color: var(--control-text); }
+
+.league-picker__clear {
+  padding: 6px 10px;
+  border: 0;
+  border-radius: 8px;
+
+  background: var(--ui-200);
+  cursor: pointer;
+}
+
+.league-picker__clear:focus-visible {
+  outline: 2px solid var(--control-focus);
+  outline-offset: 2px;
+}
+
+.league-picker__field {
+  position: relative;
+  min-width: 180px;
+  flex: 1 1 auto;
+}
+
+.league-picker__input {
+  width: 100%;
+  min-height: 40px;
+  padding: 8px 12px;
+  border: 1px solid transparent;
+  border-radius: calc(var(--control-radius) - 2px);
+
+  color: var(--control-text);
+
+  background: var(--surface-0);
+  box-shadow: var(--shadow-sm);
+}
+
+.league-picker__input::placeholder { 
+  color: var(--control-text-muted); 
+}
+
+.league-picker__input:focus-visible { 
+  outline: 2px solid var(--control-focus); 
+  outline-offset: 2px; 
+}
+
+.league-picker__popover {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: var(--z-dropdown, 20);
+
+  min-width: 220px;
+  max-height: 220px;
+  margin: 0;
+  padding: 4px;
+  border-radius: 10px;
+
+  background: var(--surface-0);
+  box-shadow: var(--shadow-md);
+
+  list-style: none;
+
+  overflow-y: auto;
+}
+
+.league-picker__empty { 
+  padding: 6px 10px; 
+  opacity: .65; 
+}
+
+.league-picker__option {
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.league-picker__option.is-active { background: var(--control-item-hover); }
+
+.league-picker__option.is-selected { font-weight: 600; }
+
+@media (max-width: 640px) {
+  .league-picker { width: 100%; }
+
+  .league-picker__input { 
+    min-height: 44px; 
+    font-size: 
+    var(--text-base); 
+  }
+}

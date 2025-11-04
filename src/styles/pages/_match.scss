@@ -1,0 +1,112 @@
+/* ============================================================================
+   PAGE: /match/[id]
+   Responsibility: Layout frame (no component visuals)
+   ----------------------------------------------------------------------------
+   - Uses project tokens for spacing, radius, shadows, and surfaces.
+   - Mobile-first grid with graceful spacing upgrades at ≥768px.
+   ============================================================================ */
+
+@use '../abstracts/index' as *;
+
+.match-page {
+  display: grid;
+  padding-block: var(--s-6);
+  gap: var(--s-6);
+
+  /* Back link — accessible, comfy tap-target, subtle hover/focus */
+
+  &__back {
+    margin-block-end: var(--s-2);
+
+    a {
+      display: inline-flex;
+
+      padding: var(--s-1) var(--s-2);  /* tap target without looking like a button */
+      border-radius: var(--r-sm);
+      gap: var(--s-2);                 /* space before/after arrow text */
+
+      line-height: var(--lh-normal);
+      color: inherit;                  /* inherit current text color */
+      align-items: center;
+      text-decoration: none;
+      text-underline-offset: 3px;
+
+      /* Hover: show it’s interactive, keep it gentle */
+
+      &:hover {
+        background: var(--ui-100);
+        text-decoration: underline;
+      }
+
+      /* Keyboard focus: clear, accessible ring */
+
+      &:focus-visible {
+        outline: 2px solid var(--accent-blue-500);
+        outline-offset: 2px;
+        background: color-mix(in oklab, var(--accent-blue-500) 10%, transparent);
+      }
+
+      /* Active: tiny tactile feedback */
+
+      &:active {
+        transform: translateY(0.5px);
+      }
+
+      /* Reduce motion for those who prefer it */
+
+      @media (prefers-reduced-motion: reduce) {
+        &:active { transform: none; }
+      }
+    }
+  }
+
+
+  /* Tabs wrapper */
+
+  &__tabs {
+    position: relative;
+  }
+
+  /* Panels container (each tab content) */
+
+  &__panel {
+    display: grid;
+    gap: var(--s-4);
+  }
+
+  /* Neutral card shell used for Timeline/Stats/Lineups placeholders */
+
+  &__card {
+    padding: var(--s-4);
+    border: 1px solid var(--ui-200);
+    border-radius: var(--r-xl);
+
+    background: var(--surface-1);
+    box-shadow: var(--shadow-sm);
+  }
+
+  @media (min-width: 768px) {
+    gap: var(--s-8);
+
+    &__card {
+      padding: var(--s-6);
+      box-shadow: var(--shadow-md);
+    }
+  }
+}
+
+.match-page {
+  &__tabs {
+    position: sticky;
+    top: var(--site-sticky-top, 0); /* set header height via CSS var if header is sticky */
+    z-index: 20;
+    padding-block: var(--s-2);
+
+    background: var(--surface-0);
+    box-shadow: var(--shadow-sm);
+    backdrop-filter: saturate(180%) blur(6px); /* optional, looks nice on scroll */
+    border-bottom: 1px solid var(--ui-200);
+
+    margin-block-end: var(--s-2);
+  }
+}

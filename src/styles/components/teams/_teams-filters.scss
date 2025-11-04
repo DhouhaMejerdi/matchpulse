@@ -1,0 +1,87 @@
+// =============================================================================
+// COMPONENT: TeamsHeaderFilters
+// Responsibility: Visual styling for /teams header filters
+// Tokens: --s-2, --s-3, --s-4, --r-md, --surface-1, --surface-2, --border-subtle,
+//         --control-text, --control-text-muted, --text-primary, --brand-500
+// A11y: 44px tap targets; visible focus ring via mixin; motion-safe transitions
+// Owner: Frontend Team • Last updated: 2025-11-04
+// =============================================================================
+
+@use "sass:map";
+@use "../../abstracts" as abstracts;
+
+/* Wrapper for each filter block */
+.teams-filter {
+  flex: 1 1 0;
+  min-inline-size: 0; // allow even shrinking in the row
+}
+
+.teams-filter--league,
+.teams-filter--search,
+.teams-filter--sort {
+  min-block-size: 44px;
+}
+
+/* Pill container: icon + control share the same capsule */
+.teams-filter__field {
+  position: relative;
+  z-index: 0;
+
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  inline-size: 100%;
+  min-block-size: 44px;
+
+  padding-inline: var(--s-3);
+  padding-block: var(--s-2);
+
+  border-radius: var(--r-md);
+  border: 1px solid var(--border-subtle);
+  background-color: var(--surface-2);
+
+  @include abstracts.motion-safe() {
+    transition-property: border-color, background-color;
+    transition-duration: 150ms;
+    transition-timing-function: ease-out;
+  }
+}
+
+.teams-filter__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--control-text-muted);
+}
+
+.teams-filter__control {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  color: var(--control-text);
+
+  background-color: transparent;
+  inline-size: 100%;
+  min-block-size: 44px;
+
+  &::placeholder {
+    color: var(--control-text-muted);
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+/* Hover = simple feedback */
+.teams-filter__field:hover {
+  border-color: var(--brand-500);
+  background-color: var(--surface-1);
+}
+
+/* Focus/active = underline highlight + stronger border/bg */
+.teams-filter__field:focus-within {
+  border-color: var(--brand-500);
+  background-color: var(--surface-1);
+}

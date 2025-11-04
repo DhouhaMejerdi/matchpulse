@@ -1,0 +1,16 @@
+// =============================================================================
+// COMPONENTS LAYER (module index) — forwards only
+// =============================================================================
+
+// keep @use at the top of the file, before any rules
+
+@forward './header';
+@forward './teams';
+@forward "./controls/index";
+@forward "./chip";
+@forward './tabs';
+@forward './controls';
+
+// Sub-package: match
+
+@forward "./match/index";

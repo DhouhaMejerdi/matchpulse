@@ -1,0 +1,88 @@
+/* ============================================================================
+   COMPONENT: MatchHeader
+   Responsibility: Visual layout for teams/score + meta strip
+   Tokens: spacing (--s-*), radius (--r-*), type (--text-*, --lh-*), colors
+   ============================================================================ */
+
+@use '../../abstracts/index' as *;
+
+.match-header {
+  display: grid;
+  padding-block: var(--s-4);       /* page owns outer spacing; keep this modest */
+  gap: var(--s-4);
+}
+
+.match-title {
+  --crest: 22px;
+
+  display: grid;
+  gap: var(--s-2);
+  align-items: center;
+  grid-template-columns: 1fr auto 1fr; /* home | score | away */
+
+  &__team {
+    display: inline-flex;
+    min-width: 0; /* allow truncation */
+    gap: var(--s-2);
+    align-items: center;
+  }
+
+  &__team--away {
+    justify-content: flex-end;
+  }
+
+  &__crest {
+    block-size: var(--crest);
+    inline-size: var(--crest);
+    object-fit: contain;
+  }
+
+  &__name {
+    overflow: hidden;
+    font: 700 var(--text-lg) /var(--lh-tight) var(--font-sans);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  &__score {
+    padding-inline: var(--s-2);
+    font: 800 clamp(1.25rem, 1.05rem + 1.2vw, 1.75rem)/var(--lh-tight) var(--font-sans);
+    letter-spacing: 0.015em;
+  }
+}
+
+.match-sub {
+  display: flex;
+  gap: var(--s-2);
+
+  font: 500 var(--text-sm)/var(--lh-normal) var(--font-sans);
+  color: var(--muted-600);
+  align-items: center;
+  flex-wrap: wrap;
+
+  .meta__item { display: inline-flex; align-items: center; }
+
+  &__dot { opacity: 0.7; }
+
+  .league-chip {
+    /* assumes your chip component styles exist; keep sizing consistent */
+    line-height: var(--lh-tight);
+  }
+}
+
+/* ─── Breakpoints ───────────────────────────────────────────────────────── */
+
+@media (min-width: 768px) {
+  .match-title {
+    --crest: 26px;
+
+    &__name { font-size: var(--text-xl); }
+
+    &__score {
+      padding-inline: var(--s-3);
+      font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2rem);
+    }
+  }
+
+  .match-sub { gap: var(--s-3); }
+}

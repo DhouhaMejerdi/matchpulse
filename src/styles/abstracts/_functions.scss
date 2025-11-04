@@ -1,0 +1,27 @@
+// =============================================================================
+// FUNCTIONS: math & unit helpers (no direct CSS output)
+// Exports:
+//   - strip-unit($value)  → 16px → 16
+//   - rem($px, $base: 16) → 16px → 1rem (base 16)
+// Owner: Frontend Team • Last updated: 2025-11-02
+// =============================================================================
+
+@use "sass:math";
+
+// strip-unit(16px) → 16
+
+@function strip-unit($value) {
+  @if math.is-unitless($value) {
+    @return $value;
+  }
+
+  // Classic Sass trick: divide by a like-typed “1” to remove units
+
+  @return $value / ($value * 0 + 1);
+}
+
+// rem(16px) → 1rem   (base defaults to 16)
+
+@function rem($px, $base: 16) {
+  @return (strip-unit($px) / strip-unit($base)) * 1rem;
+}

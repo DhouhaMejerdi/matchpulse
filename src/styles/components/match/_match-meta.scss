@@ -1,0 +1,58 @@
+.meta {
+  display: flex;
+
+  min-width: 0;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;           /* 🔑 wrap instead of push-overflow */
+  margin-top: 8px;           /* breathing room under the row */
+}
+
+.meta__item { min-width: 0; }
+
+  /* Shared live dot with motion-safe pulse */
+
+  .live-dot {
+    display: inline-block;
+    border-radius: 50%;
+
+    background: var(--status-live); /* status-driven, not brand */
+    will-change: transform, opacity; /* GPU-friendly */
+
+    animation: mp-live-dot 1.4s ease-in-out infinite;
+    block-size: 8px;
+
+    inline-size: 8px;
+    margin-right: 6px;
+
+    vertical-align: -1px;           /* nudges to text midline */
+  }
+
+  @keyframes mp-live-dot {
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    50% {
+      opacity: 0.75;
+      transform: scale(1.5);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .live-dot {
+      animation: none;
+    }
+  }
+
+.league-chip {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
+
+  max-inline-size: 100%;
+}

@@ -1,0 +1,23 @@
+# =============================================================================
+# CONFIG: Stylelint Ignore
+# Responsibility: Exclude generated or external artifacts from stylelint runs
+# Owner: Frontend Team • Last updated: 2025-11-01
+# =============================================================================
+
+# Build artifacts
+.next
+dist
+build
+
+# Dependencies & caches
+node_modules
+
+# Public assets (minified/vendor CSS)
+public
+
+# Tooling outputs (if any reporters dump here)
+coverage
+reports
+
+# Global CSS owned by Next/Tailwind entry (lint separately if needed)
+src/app/globals.css

@@ -1,0 +1,24 @@
+// =============================================================================
+// PLACEHOLDERS: A11y helpers (no direct CSS output)
+// Exports: %visually-hidden
+// Owner: Frontend Team • Last updated: 2025-10-27
+// Notes:
+// - Avoid deprecated `clip` property.
+// - Provide a robust fallback without clip-path,
+//   then progressively enhance when supported.
+// =============================================================================
+
+%visually-hidden {
+  /* Positioning -------------------------------------------------------------- */
+  position: absolute;
+
+  /* Box model --------------------------------------------------------------- */
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+
+  /* Text handling ------------------------------------------------------------ */
+  white-space: nowrap;
+}

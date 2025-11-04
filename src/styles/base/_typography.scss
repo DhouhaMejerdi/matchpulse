@@ -1,0 +1,28 @@
+// =============================================================================
+// MODULE: Typography
+// Responsibility: Type scale utilities powered by tokens (fluid where available)
+// Tokens: --display-2xl, --text-xl, --text-base, --text-sm, --muted-600
+// Owner: UI Systems • Last updated: 2025-10-27
+// =============================================================================
+
+/* Typography scale powered by tokens (fluid type) */
+
+.h1 {
+  font-size: var(--display-2xl);
+  font-weight: 700;
+}
+
+.h2 {
+  font-size: var(--text-xl);
+  font-weight: 700;
+}
+
+.p {
+  font-size: var(--text-base);
+  line-height: 1.6;
+}
+
+.small {
+  font-size: var(--text-sm);
+  color: var(--muted-600);
+}

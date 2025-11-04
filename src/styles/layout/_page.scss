@@ -1,0 +1,10 @@
+// =============================================================================
+// LAYOUT: Page region (optional)
+// Responsibility: Provide vertical rhythm and prevent CLS on load.
+// Tokens: --s-6 (--s-* scale), --container-max
+// Owner: UI Systems • Last updated: 2025-11-02
+// =============================================================================
+
+.page {
+  padding-block: var(--s-6); /* vertical rhythm for top/bottom */
+}

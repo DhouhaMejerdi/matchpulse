@@ -1,0 +1,78 @@
+// =============================================================================
+// COMPONENT: controls-bar
+// -----------------------------------------------------------------------------
+// Responsibility: Styles for the fixture-filter toolbar (SegmentedFilter + LeaguePicker).
+// Tokens: Uses spacing and radius tokens (--s-3, --s-4, --control-bg, --control-radius); z-index via --z-toolbar.
+// A11y: Ensures tap targets ≥44px; sticky variant includes backdrop blur; respects safe-area insets on mobile.
+// Notes: Mobile‑first layout; stacks controls by default and switches to a row layout at the small breakpoint.
+// Owner: Frontend Team • Last updated: 2025‑10‑30
+// =============================================================================
+
+@use "../../abstracts" as abs;
+@use "sass:map";
+
+.controls-bar {
+  /* Base (mobile) layout: stacked */
+  display: flex;
+
+  margin-block: var(--s-3);
+  gap: var(--s-3);
+  align-items: stretch;
+  flex-direction: column;
+ 
+
+  .segmented,
+  .league-picker {
+    width: 100%;
+    min-block-size: 2.75rem; // ≈44 px tap target
+  }
+
+  &__end {
+    display: inline-flex;
+
+    width: 100%;
+    gap: var(--s-3);
+    align-items: center;
+    justify-content: flex-start;
+    margin-inline-start: 0;
+  }
+
+  &--sticky {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-toolbar, 20);
+
+    background: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--surface-1), black 10%),
+      color-mix(in srgb, var(--surface-1), black 0%)
+    );
+    backdrop-filter: saturate(1.2) blur(6px);
+  }
+}
+
+@media (min-width: map.get(abs.$breakpoints, sm)) {
+  .controls-bar {
+    margin-block: var(--s-3);
+    padding-inline: 0;
+    gap: var(--s-3);
+    align-items: center;
+
+    /* Row layout on larger screens */
+    flex-flow: row wrap;
+
+    .segmented,
+    .league-picker {
+      width: auto;
+      min-block-size: auto;
+    }
+
+    &__end {
+      width: auto;
+      justify-content: flex-start;
+      margin-inline-start: auto;
+    }
+
+    /* Sticky variant remains optional for large screens */
+  }
+}

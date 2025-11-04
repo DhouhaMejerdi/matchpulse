@@ -1,0 +1,177 @@
+// =============================================================================
+// COMPONENT: Header
+// Responsibility: Global header bar with brand + primary navigation for
+//                 Match Pulse. Mobile-first, tokens-first, a11y-first.
+// Tokens: --surface-header, --text-primary, --border-subtle, --shadow-sm,
+//         --s-2, --s-3, --s-4, --s-6, --r-md
+// A11y: 44px tap targets on mobile; focus-visible ring via focus-ring mixin;
+//       high contrast between --surface-header and --text-primary.
+// Owner: UI Systems • Last updated: 2025-11-03
+// =============================================================================
+
+@use 'sass:map';
+@use '../abstracts' as abstracts;
+
+// BLOCK -----------------------------------------------------------------------
+
+.header {
+  display: flex;
+
+  padding-inline: var(--s-3);
+  padding-block: var(--s-3);
+
+  gap: var(--s-2);
+
+  color: var(--text-primary);
+  background-color: var(--surface-header);
+
+  align-items: center;
+  justify-content: space-between;
+  min-block-size: 56px; // TODO: swap to --header-h-sm token when available
+
+  @include abstracts.mq-min(map.get(abstracts.$breakpoints, md)) {
+    padding-inline: var(--s-4);
+    padding-block: var(--s-3);
+    border-bottom: 1px solid var(--border-subtle);
+    min-block-size: 72px; // TODO: swap to --header-h-md token when available
+  }
+}
+
+
+
+
+
+// ELEMENTS --------------------------------------------------------------------
+
+.header__home-link {
+  display: inline-flex;
+  gap: var(--s-3);
+  flex: 0 0 auto;
+  color: var(--ink-900);
+  align-items: center;
+  text-decoration: none;
+
+  &:focus-visible {
+    @include abstracts.focus-ring;
+
+    border-radius: var(--r-md);
+  }
+}
+
+.header__logo {
+  border-radius: var(--r-md);
+  background: var(--brand-500); // NOTE: placeholder; swap for real logo asset when ready
+  block-size: clamp(24px, 3.5vw, 36px);
+  inline-size: clamp(24px, 3.5vw, 36px);
+}
+
+.header__menu-toggle {
+  display: inline-flex;
+
+  padding: 0;
+  border: none;
+  border-radius: var(--r-md);
+  color: inherit;
+  background: transparent;
+  align-items: center;
+  cursor: pointer;
+  justify-content: center;
+
+  margin-left: var(--s-2);
+  min-block-size: 40px;
+  min-inline-size: 40px;
+
+  &:focus-visible {
+    @include abstracts.focus-ring;
+
+    border-radius: var(--r-md);
+  }
+
+  @include abstracts.mq-min(map.get(abstracts.$breakpoints, md)) {
+    display: none;
+  }
+}
+
+.header__menu-icon {
+  border-radius: 999px;
+  background-color: currentColor;
+  box-shadow: var(--shadow-header-menu-icon);
+  block-size: 2px;
+  inline-size: 18px;
+}
+
+
+.header__title {
+  font-size: clamp(1rem, 2.4vw, 1.25rem);
+  font-weight: 700;
+}
+
+.header__nav {
+  display: none;
+  min-inline-size: 0;
+
+  @include abstracts.mq-min(map.get(abstracts.$breakpoints, md)) {
+    display: flex;
+    flex: 1 1 auto;
+    justify-content: flex-end;
+  }
+}
+
+
+.header__nav-list {
+  display: inline-flex;
+  margin: 0;
+  padding: 0;
+  gap: var(--s-2);
+  align-items: center;
+  list-style: none;
+
+  @include abstracts.mq-min(map.get(abstracts.$breakpoints, md)) {
+    gap: var(--s-3);
+  }
+}
+
+/* Remove this for now:
+.header__nav-item {
+}
+*/
+
+.header__nav-link {
+  display: inline-flex;
+  padding-inline: var(--s-4);
+
+  border-radius: var(--r-md);
+  font-size: clamp(0.875rem, 1.6vw, 1rem);
+  font-weight: 600;
+  color: var(--ink-800);
+  align-items: center;
+  justify-content: center;
+
+  min-block-size: 44px; // A11Y: tap target size
+  text-decoration: none;
+
+
+  @include abstracts.motion-safe {
+    transition:
+      background-color 150ms ease-out,
+      color 150ms ease-out;
+  }
+
+
+  &:hover {
+    background: var(--ui-100);
+  }
+
+  /* Active state via aria-current */
+
+  &[aria-current='page'] {
+    color: var(--text-primary);
+    background: var(--ui-200);
+    box-shadow: inset 0 calc(var(--s-1) * -0.5) 0 0 var(--brand-500);
+  }
+
+  &:focus-visible {
+    @include abstracts.focus-ring;
+  }
+}
+

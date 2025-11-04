@@ -1,0 +1,7 @@
+// =============================================================================
+// BASE LAYER (module index) — forwards only (no direct CSS output here)
+// =============================================================================
+
+@forward './reset';
+@forward './typography';
+@forward './a11y';

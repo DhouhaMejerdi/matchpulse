@@ -1,0 +1,41 @@
+// =============================================================================
+// COMPONENT: DateToolbar (styles)
+// Responsibility: Inline control group for date navigation.
+// Tokens: spacing (--s-*), radii (--r-*), surfaces, focus ring.
+// Owner: UI Systems • Last updated: 2025-11-02
+// =============================================================================
+
+.date-toolbar {
+  display: inline-flex;
+  gap: var(--s-3);
+  align-items: center;
+
+  &__button {
+    display: inline-flex;
+    padding: var(--s-2) var(--s-3);
+    border-radius: var(--r-md);
+    color: var(--ink-900);
+    background: var(--surface-0);
+    align-items: center;
+    justify-content: center;
+    min-block-size: 2rem;
+    min-inline-size: 2rem;
+    text-decoration: none;
+
+    &:hover { background: var(--ui-100); }
+
+    &:focus-visible {
+      outline: var(--focus-ring, 2px solid currentColor);
+      outline-offset: 2px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  &__label {
+    color: var(--ink-800);
+  }
+}

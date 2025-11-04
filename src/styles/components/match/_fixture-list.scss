@@ -1,0 +1,45 @@
+// =============================================================================
+// COMPONENT: fixture-list
+// -----------------------------------------------------------------------------
+// Responsibility: Styles for the list of match cards.
+// Tokens: Uses spacing tokens (--s-3, --s-4) for gap and margin; no raw px.
+// A11y: Provides generous spacing between items; the list itself remains flexible.
+// Notes: Mobile-first. Adjusts the number of columns at breakpoints defined in
+//        abstracts.$breakpoints.
+// Owner: Frontend Team • Last updated: 2025-10-30
+// =============================================================================
+
+@use "../../abstracts" as abs;
+@use "sass:map";
+
+
+
+.fixture-list {
+  display: grid;
+
+  margin: 0;
+  padding: 0;
+  gap: var(--s-3);
+  grid-template-columns: 1fr; // default: single column
+
+  list-style: none;
+  margin-block-start: var(--s-4);
+}
+
+/* 2 columns on medium screens */
+
+@media (min-width: map.get(abs.$breakpoints, md)) {
+  .fixture-list {
+    gap: var(--s-4); // a bit more breathing room on wider screens
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* 3 columns on large screens */
+
+@media (min-width: map.get(abs.$breakpoints, lg)) {
+  .fixture-list {
+    gap: var(--s-4);
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

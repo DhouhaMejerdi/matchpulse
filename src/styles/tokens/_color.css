@@ -1,0 +1,48 @@
+/* Color tokens (light + dark) */
+
+:root {
+  /* Brand & accents */
+  --brand-500: #ff4d4f;
+  --brand-600: #d9363e;
+  --accent-blue-500: #3b82f6;
+
+  /* Ink & neutrals */
+  --ink-900: #0b0f1a;
+  --ink-700: #1e2430;
+  --muted-600: #5b6475;
+
+  /* UI surfaces */
+  --ui-100: #f6f8fb;
+  --ui-200: #e9edf5;
+  --surface-0: #fff;
+  --surface-1: #fbfcfe;
+  --surface-2: #f2f5fa;
+
+  /* State helpers */
+  --success-500: #17b26a;
+  --warning-500: #f59e0b;
+  --danger-500:  #ef4444;
+
+  /* Header semantics -------------------------------------------------------- */
+
+  /* Semantic aliases used by <SiteHeader /> */
+  --surface-header: var(--surface-0);   /* main header background */
+  --text-primary: var(--ink-900);       /* primary header text color */
+  --border-subtle: var(--ui-200);       /* subtle dividers (e.g., bottom border) */
+}
+
+/* Dark-mode overrides (tokens-first) */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --surface-0: #0b0f1a;
+    --surface-1: #0f1422;
+    --surface-2: #131a2a;
+    --ink-900:   #f8fafc;
+    --ink-700:   #e2e8f0;
+    --ui-100:    #111827;
+    --ui-200:    #1f2937;
+    
+    /* keep brand as accent */
+  }
+}

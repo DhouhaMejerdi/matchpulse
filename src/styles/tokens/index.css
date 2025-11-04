@@ -1,0 +1,32 @@
+/* Canonical tokens aggregator — import ORDER matters */
+
+/* 1) Core color system */
+
+@import './_color.css';
+
+/* 1b) Typography tokens */
+
+@import './_typography.css';
+
+/* 1c) Spacing, radii, shadows and Layering scale */
+
+@import './_spacing.css';
+@import './_z-index.css';
+
+/* 2) Functional token sets (status + controls) */
+
+@import './_status.css';
+@import './_controls.css';
+
+/* 3) Layout contract tokens (container + page padding) --------------------- */
+
+/* Owner: UI Systems • Last updated: 2025-11-02 */
+
+:root {
+  /* Max readable line length for main content areas */
+  --container-max: 1200px;
+
+  /* Page padding (logical inline axis); map to spacing scale */
+  --page-pad-inline-min: var(--s-3); /* e.g., 12px */
+  --page-pad-inline-max: var(--s-6); /* e.g., 24px */
+}

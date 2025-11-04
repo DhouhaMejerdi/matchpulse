@@ -1,0 +1,22 @@
+// =============================================================================
+// LAYOUT: Container
+// -----------------------------------------------------------------------------
+// Responsibility: Constrain content width and apply page padding (inline axis).
+// Tokens: --container-max, --page-pad-inline-min, --page-pad-inline-max
+// A11y: Supports readable line lengths on wide viewports.
+// Owner: UI Systems • Last updated: 2025-11-02
+// =============================================================================
+
+// BLOCK -----------------------------------------------------------------------
+
+.container {
+  margin-inline: auto;
+
+  /* Use tokens -> converts to clamp(s-3 .. s-6) via CSS custom properties */
+  padding-inline: clamp(
+    var(--page-pad-inline-min),
+    3vw,
+    var(--page-pad-inline-max)
+  );
+  inline-size: min(100%, var(--container-max));
+}
