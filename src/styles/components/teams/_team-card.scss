@@ -17,6 +17,8 @@
   justify-content: space-between;
   min-block-size: 44px;
   padding: var(--s-4);
+  /* Reserve space for the slide-up CTA so it doesn't cover the form dots */
+  padding-block-end: calc(var(--s-4) + var(--s-6));
   border-radius: var(--r-lg);
   background: var(--surface-0);
   box-shadow: var(--shadow-sm);
@@ -85,8 +87,8 @@
   }
 
 &__form-dot {
-  inline-size: 0.75rem;
-  block-size: 0.75rem;
+  inline-size: var(--s-3);
+  block-size: var(--s-3);
   border-radius: 999px;
   background: var(--ui-200); /* neutral / default */
 

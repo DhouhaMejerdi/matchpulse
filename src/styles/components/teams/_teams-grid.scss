@@ -27,6 +27,12 @@
   color: var(--muted-600);
   }
 
+  @include abstracts.mq-max(340px) {
+    .teams-grid__list {
+      grid-template-columns: 1fr;
+    }
+  }
+
   // ≥ md → 3 columns
   @include abstracts.mq-min(map.get(abstracts.$breakpoints, md)) {
     &__list {

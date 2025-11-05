@@ -3,14 +3,13 @@ import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   images: {
-    // ✅ Add wildcard pattern to allow query-string URLs from /api/crest
+    // Allow /api/crest and any query string (e.g. ?team=manchester-city)
     localPatterns: [
       {
         pathname: '/api/crest',
-        search: '*', // 👈 allow any query string (?name=..., ?size=...)
+        // NOTE: omit `search` to allow all query strings
       },
     ],
-    // ✅ SVG safe + local only
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; img-src 'self' data: blob;",
   },
