@@ -1,0 +1,122 @@
+// =============================================================================
+// COMPONENT: TeamCard
+// Responsibility: Single team card in /teams grid
+// Tokens: --surface-team-card, --shadow-sm, --shadow-lg,
+//         --s-4, --s-3, --s-2, --s-1, --r-lg, --text-base, --text-sm
+// A11y: 44px min tap target, motion-safe transitions, focus-visible support
+// Owner: Frontend Team • Last updated: 2025-11-05
+// =============================================================================
+
+@use "sass:map";
+@use "../../abstracts" as abstracts;
+
+.team-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-block-size: 44px;
+  padding: var(--s-4);
+  border-radius: var(--r-lg);
+  background: var(--surface-team-card);
+  box-shadow: var(--shadow-sm);
+  text-decoration: none;
+  color: inherit;
+  overflow: hidden;
+  border: 1px solid transparent;
+
+  @include abstracts.motion-safe() {
+    transition:
+      box-shadow 150ms ease-out,
+      transform 150ms ease-out,
+      border-color 150ms ease-out;
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-3);
+  }
+
+  &__crest-wrap {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__crest {
+    inline-size: clamp(4rem, 6vw, 5rem); // ~64–80px
+    block-size: auto;
+  }
+
+  &__text {
+    text-align: center;
+  }
+
+  &__name {
+    font-weight: 600;
+    font-size: var(--text-base);
+  }
+
+  &__meta {
+    margin-top: var(--s-1);
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+  }
+
+  &__form {
+    margin-top: var(--s-3);
+    display: flex;
+    justify-content: center;
+    gap: var(--s-1);
+  }
+
+  &__form-dot {
+    inline-size: 0.75rem;
+    block-size: 0.75rem;
+    border-radius: 999px;
+    background: var(--teams-form-neutral);
+
+    &--W {
+      background: var(--teams-form-win);
+    }
+
+    &--D {
+      background: var(--teams-form-draw);
+    }
+
+    &--L {
+      background: var(--teams-form-loss);
+    }
+  }
+
+  &__cta {
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: 0;
+    padding: var(--s-2) var(--s-4);
+    font-size: var(--text-sm);
+    background: var(--surface-cta-overlay);
+    display: flex;
+    justify-content: center;
+    transform: translateY(100%);
+
+    @include abstracts.motion-safe() {
+      transition: transform 150ms ease-out;
+    }
+  }
+
+  &:hover,
+  &:focus-visible {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+    border-color: var(--team-accent, var(--accent-1));
+
+    .team-card__cta {
+      transform: translateY(0);
+    }
+  }
+
+  &:focus-visible {
+    @include abstracts.focus-ring();
+  }
+}
