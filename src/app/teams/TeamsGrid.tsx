@@ -6,6 +6,7 @@
 // Owner: Frontend Team • Last updated: 2025-11-05
 // =============================================================================
 
+import type { TeamFormEntry } from './form';
 import TeamCard from '@/components/teams/TeamCard';
 
 export type TeamSummary = {
@@ -14,7 +15,7 @@ export type TeamSummary = {
   crestUrl: string;
   country: string;
   leagueName: string;
-  form: ('W' | 'D' | 'L')[];
+  form: TeamFormEntry[];
 };
 
 export type TeamsGridProps = {

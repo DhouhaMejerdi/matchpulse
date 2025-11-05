@@ -12,6 +12,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
 import type { TeamSummary } from '@/app/teams/TeamsGrid';
+import { getFormResult, getFormTooltip } from '@/app/teams/form';
 
 type Props = TeamSummary;
 
@@ -61,20 +62,20 @@ export default function TeamCard({
         </div>
 
         <div className="team-card__form" aria-label={`Recent form for ${name}`}>
-          {form.map((result, index) => (
-            <span
-              key={`${result}-${index}`}
-              className={`team-card__form-dot team-card__form-dot--${result}`}
-            >
-              <span className="sr-only">
-                {result === 'W'
-                  ? 'Win'
-                  : result === 'D'
-                  ? 'Draw'
-                  : 'Loss'}
+          {form.map((entry, index) => {
+            const result = getFormResult(entry);
+            const tooltip = getFormTooltip(entry);
+
+            return (
+              <span
+                key={index}
+                className={`team-card__form-dot team-card__form-dot--${result}`}
+                title={tooltip}
+              >
+                <span className="sr-only">{tooltip}</span>
               </span>
-            </span>
-          ))}
+            );
+          })}
         </div>
       </div>
 
