@@ -1,0 +1,43 @@
+// =============================================================================
+// COMPONENT: TeamsGrid
+// Responsibility: Layout wrapper for TeamCard grid on /teams
+// Tokens: --s-4, --s-6, --container-max, --gap-md
+// A11y: Empty state message; list semantics for cards
+// Owner: Frontend Team • Last updated: 2025-11-05
+// =============================================================================
+
+@use "sass:map";
+@use "../../abstracts" as abstracts;
+
+.teams-grid {
+  padding-block: var(--s-6);
+
+  &__list {
+    display: grid;
+    gap: var(--s-4);
+    grid-template-columns: repeat(2, minmax(0, 1fr)); // mobile: 2 cols
+  }
+
+  &__item {
+    list-style: none;
+  }
+
+  &__empty {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+  }
+
+  // ≥ md → 3 columns
+  @include abstracts.mq-min(map.get(abstracts.$breakpoints, md)) {
+    &__list {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  // ≥ lg → auto-fill 4+ columns (~240 px min)
+  @include abstracts.mq-min(map.get(abstracts.$breakpoints, lg)) {
+    &__list {
+      grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    }
+  }
+}
