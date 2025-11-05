@@ -23,7 +23,7 @@ export type TeamsGridProps = {
 
 export default function TeamsGrid({ teams }: TeamsGridProps) {
   return (
-    <section className="teams-grid" aria-label="Teams list">
+    <section className="teams-grid container" aria-label="Teams list">
       {teams.length === 0 ? (
         <p className="teams-grid__empty">No teams match your filters.</p>
       ) : (
