@@ -18,7 +18,7 @@
   min-block-size: 44px;
   padding: var(--s-4);
   border-radius: var(--r-lg);
-  background: var(--surface-team-card);
+  background: var(--surface-0);
   box-shadow: var(--shadow-sm);
   text-decoration: none;
   color: inherit;
@@ -60,7 +60,7 @@
   &__meta {
     margin-top: var(--s-1);
     font-size: var(--text-sm);
-    color: var(--text-muted);
+    color: var(--text-600);
   }
 
   &__form {
@@ -70,24 +70,25 @@
     gap: var(--s-1);
   }
 
-  &__form-dot {
-    inline-size: 0.75rem;
-    block-size: 0.75rem;
-    border-radius: 999px;
-    background: var(--teams-form-neutral);
+&__form-dot {
+  inline-size: 0.75rem;
+  block-size: 0.75rem;
+  border-radius: 999px;
+  background: var(--ui-200); /* neutral / default */
 
-    &--W {
-      background: var(--teams-form-win);
-    }
-
-    &--D {
-      background: var(--teams-form-draw);
-    }
-
-    &--L {
-      background: var(--teams-form-loss);
-    }
+  &--W {
+    background: var(--success-500);
   }
+
+  &--D {
+    background: var(--warning-500);
+  }
+
+  &--L {
+    background: var(--danger-500);
+  }
+}
+
 
   &__cta {
     position: absolute;
@@ -95,7 +96,7 @@
     inset-block-end: 0;
     padding: var(--s-2) var(--s-4);
     font-size: var(--text-sm);
-    background: var(--surface-cta-overlay);
+    background: color-mix(in srgb, var(--surface-1), black 8%);
     display: flex;
     justify-content: center;
     transform: translateY(100%);
@@ -109,7 +110,8 @@
   &:focus-visible {
     box-shadow: var(--shadow-lg);
     transform: translateY(-2px);
-    border-color: var(--team-accent, var(--accent-1));
+    border-color: var(--team-accent, var(--brand-500));
+
 
     .team-card__cta {
       transform: translateY(0);
