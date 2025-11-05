@@ -1,7 +1,7 @@
 // ============================================================================
 // BASE: Reset (mobile-first)
 // Responsibility: predictable defaults, token-driven colors
-// Owner: Frontend Team • Last updated: 2025-10-27
+// Owner: Frontend Team • Last updated: 2025-11-05
 // Notes:
 // - No vendor prefixes (Stylelint rule). Use standards + @supports where needed.
 // - Provide a :focus fallback; gate :focus-visible behind @supports.
@@ -42,6 +42,19 @@ img, svg, video {
 
 button, input, select, textarea {
   font: inherit;
+}
+
+/* Lists — remove default margins, bullets, and indent ----------------------- */
+/* Responsibility: ensure predictable alignment for grids & nav lists */
+/* Affects: ul, ol, menu, dir (legacy-safe) */
+
+ul,
+ol,
+menu,
+dir {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 /* A11y focus: provide fallback + gated :focus-visible */
