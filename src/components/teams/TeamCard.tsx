@@ -1,3 +1,5 @@
+'use client';
+
 // =============================================================================
 // COMPONENT: TeamCard
 // Responsibility: Individual team card (crest, name, meta, form, CTA)
@@ -7,6 +9,8 @@
 // =============================================================================
 
 import Link from 'next/link';
+import Image from 'next/image';
+import { useState } from 'react';
 import type { TeamSummary } from '@/app/teams/TeamsGrid';
 
 type Props = TeamSummary;
@@ -19,6 +23,10 @@ export default function TeamCard({
   leagueName,
   form,
 }: Props) {
+  const [hasCrestError, setHasCrestError] = useState(false);
+
+  const initial = name?.charAt(0)?.toUpperCase() ?? '?';
+
   return (
     <Link
       href={`/team/${id}`}
@@ -27,12 +35,20 @@ export default function TeamCard({
     >
       <div className="team-card__body">
         <div className="team-card__crest-wrap">
-          <img
-            src={crestUrl}
-            alt={`${name} crest`}
-            className="team-card__crest"
-            loading="lazy"
-          />
+          {hasCrestError ? (
+            <div className="team-card__crest-fallback" aria-hidden="true">
+              {initial}
+            </div>
+          ) : (
+            <Image
+              src={crestUrl}
+              alt={`${name} crest`}
+              className="team-card__crest"
+              width={80}
+              height={80}
+              onError={() => setHasCrestError(true)}
+            />
+          )}
         </div>
 
         <div className="team-card__text">
