@@ -8,7 +8,7 @@
 
 import React from "react";
 import TeamsPageHeader from "./TeamsPageHeader";
-import TeamsGrid from "./TeamsGrid";
+import TeamsGrid, { TeamSummary } from "./TeamsGrid";
 
 const PREMIER_LEAGUE_MOCK_TEAMS: TeamSummary[] = [
   {
