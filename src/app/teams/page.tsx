@@ -5,8 +5,9 @@
 // A11y: Lives inside <main id="main-content"> from RootLayout
 // Owner: Frontend Team • Last updated: 2025-11-06
 // =============================================================================
+"use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import TeamsPageHeader from './TeamsPageHeader';
 import TeamsGrid from './TeamsGrid';
 import LeagueInfoBanner from '@/components/teams/LeagueInfoBanner';
@@ -14,12 +15,15 @@ import { PREMIER_LEAGUE_MOCK_TEAMS } from '@/components/teams/__mocks__/teams.mo
 import { DEFAULT_LEAGUE_ID, LEAGUE_META } from '@/lib/teams/leagues';
 
 export default function TeamsPage() {
-  const selectedLeagueId = DEFAULT_LEAGUE_ID;
-  const leagueMeta = LEAGUE_META[selectedLeagueId];
+  const [selectedLeague, setSelectedLeague] = useState(DEFAULT_LEAGUE_ID);
+  const leagueMeta = LEAGUE_META[selectedLeague];
 
   return (
     <>
-      <TeamsPageHeader />
+      <TeamsPageHeader
+        league={selectedLeague}
+        onLeagueChange={setSelectedLeague}
+      />
 
       {leagueMeta && <LeagueInfoBanner league={leagueMeta} />}
 

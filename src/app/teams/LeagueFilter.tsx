@@ -1,9 +1,3 @@
-import React from "react";
-import {
-  LEAGUE_OPTIONS,
-  DEFAULT_LEAGUE_ID,
-} from "@/lib/teams/leagues";
-
 // =============================================================================
 // COMPONENT: LeagueFilter
 // Responsibility: Dropdown control for selecting the current league
@@ -12,11 +6,22 @@ import {
 // Owner: Frontend Team • Last updated: 2025-11-04
 // =============================================================================
 
-export default function LeagueFilter() {
+import React from "react";
+import {
+  LEAGUE_OPTIONS,
+  DEFAULT_LEAGUE_ID,
+} from "@/lib/teams/leagues";
+
+type LeagueFilterProps = {
+  value: string;
+  onChange: (value: string) => void;
+};
+
+export default function LeagueFilter({ value, onChange }: LeagueFilterProps) {
   return (
     <div className="teams-filter teams-filter--league">
       <label htmlFor="league-select" className="sr-only">
-        League
+        Select league
       </label>
 
       <div className="teams-filter__field">
@@ -29,9 +34,12 @@ export default function LeagueFilter() {
 
         <select
           id="league-select"
+          aria-label="League"
           name="league"
           defaultValue={DEFAULT_LEAGUE_ID}
           className="teams-filter__control"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
         >
           {LEAGUE_OPTIONS.map((league) => (
             <option key={league.id} value={league.id}>

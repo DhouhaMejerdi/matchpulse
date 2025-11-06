@@ -11,7 +11,12 @@ import LeagueFilter from "./LeagueFilter";
 import TeamsSearchField from "./TeamsSearchField";
 import TeamsSortSelect from "./TeamsSortSelect";
 
-export default function TeamsPageHeader() {
+type TeamsPageHeaderProps = {
+  league: string;
+  onLeagueChange: (value: string) => void;
+};
+
+export default function TeamsPageHeader({ league, onLeagueChange }: TeamsPageHeaderProps) {
   return (
     <section
       className="teams-header container"
@@ -33,7 +38,7 @@ export default function TeamsPageHeader() {
         role="group"
         aria-label="Team filters"
       >
-        <LeagueFilter />
+        <LeagueFilter value={league} onChange={onLeagueChange}/>
         <TeamsSearchField />
         <TeamsSortSelect />
       </div>
