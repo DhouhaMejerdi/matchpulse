@@ -1,0 +1,78 @@
+// =============================================================================
+// COMPONENT: LeagueBanner
+// Responsibility: Context banner above TeamsGrid for selected league on /teams
+// Tokens: --surface-1, --border-subtle, --s-6, --s-4, --s-3, --s-2, --s-1,
+//         --r-md, --shadow-sm, --shadow-lg, --text-sm, --text-base,
+//         --control-text-muted
+// A11y: Uses focus-ring via :focus-within; motion-safe hover transitions
+// Owner: Frontend Team • Last updated: 2025-11-06
+// =============================================================================
+
+@use "sass:map";
+@use "../../abstracts" as abstracts;
+
+.league-banner {
+  margin-block: var(--s-4);
+  padding: var(--s-4);
+  border-radius: var(--r-md);
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-sm);
+
+  &__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--s-2);
+
+    font-size: clamp(var(--text-sm), 2.5vw, var(--text-base));
+    font-weight: 500;
+  }
+
+  &__name {
+    font-weight: 600;
+  }
+
+  &__flag {
+    margin-left: var(--s-1);
+  }
+
+  &__separator {
+    opacity: 0.6;
+  }
+
+  &__stat {
+    color: var(--control-text-muted);
+  }
+
+  &__tagline {
+    margin-top: var(--s-2);
+    font-size: clamp(var(--text-sm), 2.4vw, var(--text-base));
+    color: var(--control-text-muted);
+  }
+
+  @include abstracts.mq-min(map.get(abstracts.$breakpoints, md)) {
+    padding-inline: var(--s-6);
+
+    &__meta {
+      gap: var(--s-3);
+    }
+
+    &__tagline {
+      margin-top: var(--s-1);
+    }
+  }
+
+  &:focus-within {
+    @include abstracts.focus-ring();
+  }
+
+  @include abstracts.motion-safe() {
+    transition: box-shadow 150ms ease-out, transform 150ms ease-out;
+
+    &:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-1px);
+    }
+  }
+}
