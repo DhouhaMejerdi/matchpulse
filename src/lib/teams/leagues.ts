@@ -5,19 +5,7 @@
 // Owner: Frontend Team • Last updated: 2025-11-06
 // =============================================================================
 
-import type { LeagueMeta } from '@/app/teams/types';
-
-// -----------------------------------------------------------------------------
-// TYPES
-// -----------------------------------------------------------------------------
-
-export type LeagueOption = {
-  id: string;          // Stable internal ID, e.g. "premier-league"
-  name: string;        // Display name, e.g. "Premier League"
-  countryCode: string; // ISO-like country code
-  slug: string;        // URL / API slug, e.g. "england-premier-league"
-  isDefault?: boolean;
-};
+import type { LeagueMeta, LeagueOption } from '@/app/teams/types';
 
 // -----------------------------------------------------------------------------
 // BASE OPTIONS (used by LeagueFilter and TeamsHeader)

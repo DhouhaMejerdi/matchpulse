@@ -27,3 +27,13 @@ export type LeagueMeta = {
   seasonLabel: string; // "2025/26"
   tagline?: string;    // Optional custom tagline for banner
 };
+
+// League option used by filters and league selection UI
+export type LeagueOption = {
+  id: string;          // Stable internal ID, e.g. "premier-league"
+  name: string;        // Display name, e.g. "Premier League"
+  countryCode: string; // ISO-like country code
+  slug: string;        // URL / API slug, e.g. "england-premier-league"
+  isDefault?: boolean;
+};
+
