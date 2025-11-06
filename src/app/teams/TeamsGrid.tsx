@@ -3,20 +3,11 @@
 // Responsibility: Responsive grid layout for team cards on /teams
 // Contracts: Receives teams[]; renders <ul> of <TeamCard>; supports empty state
 // A11y: Section labelled "Teams list"; list semantics around cards
-// Owner: Frontend Team • Last updated: 2025-11-05
+// Owner: Frontend Team • Last updated: 2025-11-06
 // =============================================================================
 
-import type { TeamFormEntry } from './form';
 import TeamCard from '@/components/teams/TeamCard';
-
-export type TeamSummary = {
-  id: string;
-  name: string;
-  crestUrl: string;
-  country: string;
-  leagueName: string;
-  form: TeamFormEntry[];
-};
+import type { TeamSummary } from './types';
 
 export type TeamsGridProps = {
   teams: TeamSummary[];
