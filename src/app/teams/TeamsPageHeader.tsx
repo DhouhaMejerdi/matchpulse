@@ -1,9 +1,10 @@
 // =============================================================================
 // COMPONENT: TeamsPageHeader
-// Responsibility: Page hero for /teams (title + future filters bar)
-// Contracts: No props (v1.0); rendered at top of /teams main content
-// A11y: Section labelled by h1; wrapped in .container to prevent CLS
-// Owner: Frontend Team • Last updated: 2025-11-04
+// Responsibility: /teams hero (title + filters bar: league, search, sort)
+// Contracts: Controlled league props (league, onLeagueChange); does not own
+//            data fetching or teams grid state
+// A11y: Section labelled by h1; filters grouped via role="group" with label
+// Owner: Frontend Team • Last updated: 2025-11-06
 // =============================================================================
 
 import React from "react";
@@ -11,12 +12,19 @@ import LeagueFilter from "./LeagueFilter";
 import TeamsSearchField from "./TeamsSearchField";
 import TeamsSortSelect from "./TeamsSortSelect";
 
-type TeamsPageHeaderProps = {
+// -- PROPS --------------------------------------------------------------------
+
+export type TeamsPageHeaderProps = {
   league: string;
-  onLeagueChange: (value: string) => void;
+  onLeagueChange: (leagueId: string) => void;
 };
 
-export default function TeamsPageHeader({ league, onLeagueChange }: TeamsPageHeaderProps) {
+// -- COMPONENT ----------------------------------------------------------------
+
+export default function TeamsPageHeader({
+  league,
+  onLeagueChange,
+}: TeamsPageHeaderProps) {
   return (
     <section
       className="teams-header container"
@@ -33,12 +41,13 @@ export default function TeamsPageHeader({ league, onLeagueChange }: TeamsPageHea
         </p>
       </div>
 
+      {/* -- CONTROLS BAR ------------------------------------------------------ */}
       <div
         className="teams-header__controls"
         role="group"
         aria-label="Team filters"
       >
-        <LeagueFilter value={league} onChange={onLeagueChange}/>
+        <LeagueFilter value={league} onChange={onLeagueChange} />
         <TeamsSearchField />
         <TeamsSortSelect />
       </div>
