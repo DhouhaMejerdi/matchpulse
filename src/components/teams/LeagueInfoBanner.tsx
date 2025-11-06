@@ -6,57 +6,59 @@
 // Owner: Frontend Team • Last updated: 2025-11-06
 // =============================================================================
 
-import * as React from 'react';
-import type { LeagueMeta } from '@/app/teams/types';
+import * as React from "react";
+import type { LeagueMeta } from "@/app/teams/types";
 
 type Props = {
   league: LeagueMeta;
 };
 
 export default function LeagueInfoBanner({ league }: Props) {
-  const { name, countryCode, countryName, teamCount, seasonLabel, tagline } = league;
+  const { name, countryCode, countryName, teamCount, seasonLabel, tagline } =
+    league;
 
   const flag = countryCodeToFlag(countryCode);
 
   return (
     <section
-      className="league-banner container"
+      className="container"
       aria-label={`${name} league overview`}
     >
-      <div className="league-banner__meta">
-        <span className="league-banner__name">
-          {name}
-          {flag && (
-            <span
-              className="league-banner__flag"
-              role="img"
-              aria-label={countryName}
-            >
-              {' ' + flag}
-            </span>
-          )}
-        </span>
+      <div className="league-banner">
+        <div className="league-banner__meta">
+          <span className="league-banner__name">
+            {name}
+            {flag && (
+              <span
+                className="league-banner__flag"
+                role="img"
+                aria-label={countryName}
+              >
+                {" " + flag}
+              </span>
+            )}
+          </span>
 
-        <span className="league-banner__separator" aria-hidden="true">
-          ·
-        </span>
+          <span className="league-banner__separator" aria-hidden="true">
+            ·
+          </span>
 
-        <span className="league-banner__stat">
-          {teamCount} Teams
-        </span>
+          <span className="league-banner__stat">{teamCount} Teams</span>
 
-        <span className="league-banner__separator" aria-hidden="true">
-          ·
-        </span>
+          <span className="league-banner__separator" aria-hidden="true">
+            ·
+          </span>
 
-        <span className="league-banner__stat">
-          Current Season: {seasonLabel}
-        </span>
+          <span className="league-banner__stat">
+            Current Season: {seasonLabel}
+          </span>
+        </div>
+
+        <p className="league-banner__tagline">
+          {tagline ??
+            "Select a team to view fixtures, stats, and top players."}
+        </p>
       </div>
-
-      <p className="league-banner__tagline">
-        {tagline ?? 'Select a team to view fixtures, stats, and top players.'}
-      </p>
     </section>
   );
 }
@@ -71,6 +73,6 @@ function countryCodeToFlag(code: string): string | null {
 
   return String.fromCodePoint(
     base + (upper.charCodeAt(0) - 65),
-    base + (upper.charCodeAt(1) - 65),
+    base + (upper.charCodeAt(1) - 65)
   );
 }

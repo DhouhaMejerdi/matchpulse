@@ -24,7 +24,6 @@
 
   &__empty {
   color: var(--muted-600);
-  color: var(--muted-600);
   }
 
   @include abstracts.mq-max(340px) {
@@ -34,6 +33,7 @@
   }
 
   // ≥ md → 3 columns
+
   @include abstracts.mq-min(map.get(abstracts.$breakpoints, md)) {
     &__list {
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -41,6 +41,7 @@
   }
 
   // ≥ lg → auto-fill 4+ columns (~240 px min)
+
   @include abstracts.mq-min(map.get(abstracts.$breakpoints, lg)) {
     &__list {
       grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));

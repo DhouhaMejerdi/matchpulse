@@ -9,18 +9,14 @@
 @use "../../abstracts" as abstracts;
 
 /* Ensure the beam can position itself relative to the pill */
+
 .teams-header .teams-filter__field {
   position: relative;
 }
 
 /* Overlay container = the empty div you inspected on GFE */
-.teams-header .teams-filter__beam {
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  z-index: 0;
 
+.teams-header .teams-filter__beam {
   /* Default values (can be overridden inline, like GFE does) */
   --anchor: 90;
   --border-width: 1.5;
@@ -30,29 +26,31 @@
   --duration: 5; // seconds
   --size: 100;   // px
 
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+
   /* [border:calc(var(--border-width)*1px)_solid_transparent] */
   border: calc(var(--border-width) * 1px) solid transparent;
+  border-radius: inherit;
 
   /* [mask:linear-gradient(transparent,transparent),linear-gradient(white,white)] */
-  -webkit-mask: linear-gradient(transparent, transparent),
-    linear-gradient(#fff, #fff);
   mask: linear-gradient(transparent, transparent),
     linear-gradient(#fff, #fff);
 
   /* ![mask-clip:padding-box,border-box] */
-  -webkit-mask-clip: padding-box, border-box;
   mask-clip: padding-box, border-box;
 
   /* ![mask-composite:intersect] (WebKit + generic) */
-  -webkit-mask-composite: source-in, xor;
+  mask-composite: source-in, xor;
   mask-composite: intersect;
+  pointer-events: none;
 }
 
 /* This corresponds to the Tailwind `after:*` utilities */
+
 .teams-header .teams-filter__beam::after {
-  content: "";
   position: absolute;
-  aspect-ratio: 1 / 1;
   width: calc(var(--size) * 1px);
 
   /* after:[background:linear-gradient(to_left,var(--color-from),var(--color-to),transparent)] */
@@ -62,30 +60,34 @@
     var(--color-to),
     transparent
   );
+  opacity: 0;
+  aspect-ratio: 1 / 1;
+  content: "";
 
   /* after:[offset-anchor:calc(var(--anchor)*1%)_50%] */
   offset-anchor: calc(var(--anchor) * 1%) 50%;
 
+  offset-distance: 0%;
+
   /* after:[offset-path:rect(0_auto_auto_0_round_calc(var(--size)*1px))] */
   offset-path: rect(0 auto auto 0 round calc(var(--size) * 1px));
-
-  offset-distance: 0%;
-  opacity: 0;
 }
 
 /* This replaces `after:animate-border-beam` */
+
 .teams-header
   .teams-filter__field:focus-within
   .teams-filter__beam::after {
   opacity: 1;
 
-  @include abstracts.motion-safe() {
+  @include abstracts.motion-safe {
     animation: border-beam calc(var(--duration) * 1s) linear infinite;
     animation-delay: var(--delay);
   }
 }
 
 /* Keyframes: just like GFE, drive offset-distance 0 → 100% */
+
 @keyframes border-beam {
   to {
     offset-distance: 100%;

@@ -2,9 +2,21 @@
 // LAYOUT: Page region (optional)
 // Responsibility: Provide vertical rhythm and prevent CLS on load.
 // Tokens: --s-6 (--s-* scale), --container-max
-// Owner: UI Systems • Last updated: 2025-11-02
+// Owner: UI Systems • Last updated: 2025-11-06
 // =============================================================================
 
 .page {
   padding-block: var(--s-6); /* vertical rhythm for top/bottom */
+}
+
+/**
+ * Vertical rhythm between direct children of the page.
+ *
+ * Each child after the first gets a top margin, giving us consistent spacing
+ * between header, banners, grids, etc. without every component inventing its
+ * own arbitrary page-level margins.
+ */
+
+.page > * + * {
+  margin-block-start: var(--s-4);
 }

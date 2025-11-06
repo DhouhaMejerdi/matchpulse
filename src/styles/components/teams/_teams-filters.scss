@@ -11,6 +11,7 @@
 @use "../../abstracts" as abstracts;
 
 /* Wrapper for each filter block */
+
 .teams-filter {
   flex: 1 1 0;
   min-inline-size: 0; // allow even shrinking in the row
@@ -23,35 +24,36 @@
 }
 
 /* Pill container: icon + control share the same capsule */
+
 .teams-filter__field {
   position: relative;
   z-index: 0;
 
   display: inline-flex;
-  align-items: center;
-  gap: var(--s-2);
-  inline-size: 100%;
-  min-block-size: 44px;
 
   padding-inline: var(--s-3);
   padding-block: var(--s-2);
+  border: 1px solid var(--border-subtle);
 
   border-radius: var(--r-md);
-  border: 1px solid var(--border-subtle);
+  gap: var(--s-2);
   background-color: var(--surface-2);
+  align-items: center;
+  inline-size: 100%;
+  min-block-size: 44px;
 
-  @include abstracts.motion-safe() {
-    transition-property: border-color, background-color;
+  @include abstracts.motion-safe {
     transition-duration: 150ms;
+    transition-property: border-color, background-color;
     transition-timing-function: ease-out;
   }
 }
 
 .teams-filter__icon {
   display: inline-flex;
+  color: var(--control-text-muted);
   align-items: center;
   justify-content: center;
-  color: var(--control-text-muted);
 }
 
 .teams-filter__control {
@@ -75,12 +77,14 @@
 }
 
 /* Hover = simple feedback */
+
 .teams-filter__field:hover {
   border-color: var(--brand-500);
   background-color: var(--surface-1);
 }
 
 /* Focus/active = underline highlight + stronger border/bg */
+
 .teams-filter__field:focus-within {
   border-color: var(--brand-500);
   background-color: var(--surface-1);

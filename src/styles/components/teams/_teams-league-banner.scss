@@ -12,21 +12,20 @@
 @use "../../abstracts" as abstracts;
 
 .league-banner {
-  margin-block: var(--s-4);
   padding: var(--s-4);
-  border-radius: var(--r-md);
-  background: var(--surface-1);
   border: 1px solid var(--border-subtle);
+  border-radius: var(--r-md);
+  background: var(--surface-2);
   box-shadow: var(--shadow-sm);
 
   &__meta {
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
     gap: var(--s-2);
 
     font-size: clamp(var(--text-sm), 2.5vw, var(--text-base));
     font-weight: 500;
+    align-items: center;
+    flex-wrap: wrap;
   }
 
   &__name {
@@ -46,9 +45,9 @@
   }
 
   &__tagline {
-    margin-top: var(--s-2);
     font-size: clamp(var(--text-sm), 2.4vw, var(--text-base));
     color: var(--control-text-muted);
+    margin-top: var(--s-2);
   }
 
   @include abstracts.mq-min(map.get(abstracts.$breakpoints, md)) {
@@ -64,10 +63,10 @@
   }
 
   &:focus-within {
-    @include abstracts.focus-ring();
+    @include abstracts.focus-ring;
   }
 
-  @include abstracts.motion-safe() {
+  @include abstracts.motion-safe {
     transition: box-shadow 150ms ease-out, transform 150ms ease-out;
 
     &:hover {

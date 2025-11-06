@@ -13,21 +13,22 @@
 .team-card {
   position: relative;
   display: flex;
+  overflow: hidden;
+  padding: var(--s-4);
+  border: 1px solid transparent;
+  border-radius: var(--r-lg);
+  color: inherit;
+  background: var(--surface-0);
+  box-shadow: var(--shadow-sm);
   flex-direction: column;
   justify-content: space-between;
   min-block-size: 44px;
-  padding: var(--s-4);
+
   /* Reserve space for the slide-up CTA so it doesn't cover the form dots */
   padding-block-end: calc(var(--s-4) + var(--s-6));
-  border-radius: var(--r-lg);
-  background: var(--surface-0);
-  box-shadow: var(--shadow-sm);
   text-decoration: none;
-  color: inherit;
-  overflow: hidden;
-  border: 1px solid transparent;
 
-  @include abstracts.motion-safe() {
+  @include abstracts.motion-safe {
     transition:
       box-shadow 150ms ease-out,
       transform 150ms ease-out,
@@ -36,8 +37,8 @@
 
   &__body {
     display: flex;
-    flex-direction: column;
     gap: var(--s-3);
+    flex-direction: column;
   }
 
   &__crest-wrap {
@@ -46,21 +47,21 @@
   }
 
   &__crest {
-    inline-size: clamp(4rem, 6vw, 5rem); // ~64–80px
     block-size: auto;
+    inline-size: clamp(4rem, 6vw, 5rem); // ~64–80px
   }
 
   &__crest-fallback {
-    inline-size: clamp(4rem, 6vw, 5rem);
-    block-size: clamp(4rem, 6vw, 5rem);
-    border-radius: 999px;
     display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--surface-1);
-    color: var(--muted-600);
-    font-weight: 600;
+    border-radius: 999px;
     font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--muted-600);
+    background: var(--surface-1);
+    align-items: center;
+    block-size: clamp(4rem, 6vw, 5rem);
+    inline-size: clamp(4rem, 6vw, 5rem);
+    justify-content: center;
     text-transform: uppercase;
   }
 
@@ -69,28 +70,28 @@
   }
 
   &__name {
-    font-weight: 600;
     font-size: var(--text-base);
+    font-weight: 600;
   }
 
   &__meta {
-    margin-top: var(--s-1);
     font-size: var(--text-sm);
     color: var(--text-600);
+    margin-top: var(--s-1);
   }
 
   &__form {
-    margin-top: var(--s-3);
     display: flex;
-    justify-content: center;
     gap: var(--s-1);
+    justify-content: center;
+    margin-top: var(--s-3);
   }
 
 &__form-dot {
-  inline-size: var(--s-3);
-  block-size: var(--s-3);
   border-radius: 999px;
   background: var(--ui-200); /* neutral / default */
+  block-size: var(--s-3);
+  inline-size: var(--s-3);
 
   &--W {
     background: var(--status-upcoming);
@@ -108,25 +109,25 @@
 
   &__cta {
     position: absolute;
-    inset-inline: 0;
-    inset-block-end: 0;
+    display: flex;
     padding: var(--s-2) var(--s-4);
     font-size: var(--text-sm);
     background: color-mix(in srgb, var(--surface-1), black 8%);
-    display: flex;
-    justify-content: center;
     transform: translateY(100%);
+    inset-block-end: 0;
+    inset-inline: 0;
+    justify-content: center;
 
-    @include abstracts.motion-safe() {
+    @include abstracts.motion-safe {
       transition: transform 150ms ease-out;
     }
   }
 
   &:hover,
   &:focus-visible {
+    border-color: var(--team-accent, var(--brand-500));
     box-shadow: var(--shadow-lg);
     transform: translateY(-2px);
-    border-color: var(--team-accent, var(--brand-500));
 
 
     .team-card__cta {
@@ -135,6 +136,6 @@
   }
 
   &:focus-visible {
-    @include abstracts.focus-ring();
+    @include abstracts.focus-ring;
   }
 }

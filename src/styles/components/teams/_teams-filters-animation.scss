@@ -9,12 +9,9 @@
 @use "../../abstracts" as abstracts;
 
 /* Base underline segment: short yellow bar at the bottom of the pill */
+
 .teams-header .teams-filter__field::after {
-  content: "";
   position: absolute;
-  inset-block-end: 0;
-  inline-size: 40%;   // short segment, not full width
-  block-size: 2px;    // can be tokenised later if needed
   left: 30%;          // roughly centred
   border-radius: 999px;
 
@@ -28,18 +25,24 @@
 
   opacity: 0;
   transform: translateX(-100%);
+  block-size: 2px;    // can be tokenised later if needed
+  content: "";
+  inline-size: 40%;   // short segment, not full width
+  inset-block-end: 0;
 }
 
 /* When field is focused, run the yellow segment from left -> right */
+
 .teams-header .teams-filter__field:focus-within::after {
   opacity: 1;
 
-  @include abstracts.motion-safe() {
+  @include abstracts.motion-safe {
     animation: teams-filter-underline-sweep 1.1s ease-out infinite;
   }
 }
 
 /* Moving underline animation */
+
 @keyframes teams-filter-underline-sweep {
   0% {
     transform: translateX(-100%);
