@@ -17,6 +17,10 @@ import TeamsGrid from "./TeamsGrid";
 import LeagueInfoBanner from "@/components/teams/LeagueInfoBanner";
 import { ALL_LEAGUES_MOCK_TEAMS } from "@/components/teams/__mocks__/teams.mock";
 import { DEFAULT_LEAGUE_ID, LEAGUE_META } from "@/lib/teams/leagues";
+import TeamsEmptyState from "@/components/teams/TeamsEmptyState";
+import TeamsGridSkeleton from "@/components/teams/TeamsGridSkeleton";
+
+type TeamsPageStatus = "loading" | "success" | "error";
 
 // =============================================================================
 // PAGE COMPONENT
@@ -26,6 +30,20 @@ export default function TeamsPage() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+
+  // ---------------------------------------------------------------------------
+  // STATUS / DATA LOADING MODEL (v1.0)
+  // ---------------------------------------------------------------------------
+  // NOTE:
+  // - For v1.0, teams data comes from ALL_LEAGUES_MOCK_TEAMS (synchronous),
+  //   so we hard-code status to "success" and skip any real loading UI.
+  // - When we move to a real API:
+  //   • Promote `status` to React state (useState/useReducer) or hook return.
+  //   • Set status = "loading" before the request, "success" on success,
+  //     and "error" on failure.
+  //   • Keep the branching logic below (gridContent) as the single source
+  //     of truth for loading / empty / error / success visual states.
+  const status: TeamsPageStatus = "success";
 
   // -- STATE ------------------------------------------------------------------
   // NOTE: Initialise league from ?league= param when present and valid,
@@ -47,6 +65,33 @@ export default function TeamsPage() {
     return team.leagueName === leagueMeta.name;
   });
 
+  let gridContent: React.ReactNode;
+
+  /* 
+  if (status === "loading") {
+    gridContent = (
+      <section className="teams-grid container" aria-busy="true">
+        <p className="teams-grid__status" aria-live="polite">
+          🌀 Loading teams…
+        </p>
+        <TeamsGridSkeleton />
+      </section>
+    );
+  } else if (filteredTeams.length === 0) {
+    gridContent = (
+      <section className="teams-grid container">
+        <TeamsEmptyState />
+      </section>
+    );
+  } else {
+    gridContent = (
+      <section className="teams-grid container">
+        <TeamsGrid teams={filteredTeams} />
+      </section>
+    );
+  }
+  */
+ 
   // -- HANDLERS ---------------------------------------------------------------
   const handleLeagueChange = (nextLeagueId: string) => {
     setSelectedLeagueId(nextLeagueId);
@@ -77,7 +122,7 @@ export default function TeamsPage() {
 
       {leagueMeta && <LeagueInfoBanner league={leagueMeta} />}
 
-      <TeamsGrid teams={filteredTeams} />
+      {gridContent}
     </>
   );
 }

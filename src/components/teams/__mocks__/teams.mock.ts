@@ -57,24 +57,7 @@ export const LA_LIGA_MOCK_TEAMS: TeamSummary[] = [
 // SERIE A
 // -----------------------------------------------------------------------------
 
-export const SERIE_A_MOCK_TEAMS: TeamSummary[] = [
-  {
-    id: "juventus",
-    name: "Juventus",
-    crestUrl: "/api/crest?team=juventus",
-    country: "Italy",
-    leagueName: "Serie A",
-    form: ["W", "L", "W", "D", "W"],
-  },
-  {
-    id: "inter-milan",
-    name: "Inter Milan",
-    crestUrl: "/api/crest?team=inter-milan",
-    country: "Italy",
-    leagueName: "Serie A",
-    form: ["D", "W", "W", "W", "L"],
-  },
-];
+
 
 // -----------------------------------------------------------------------------
 // ALL LEAGUES (CONVENIENCE AGGREGATE)
@@ -83,5 +66,5 @@ export const SERIE_A_MOCK_TEAMS: TeamSummary[] = [
 export const ALL_LEAGUES_MOCK_TEAMS: TeamSummary[] = [
   ...PREMIER_LEAGUE_MOCK_TEAMS,
   ...LA_LIGA_MOCK_TEAMS,
-  ...SERIE_A_MOCK_TEAMS,
+
 ];

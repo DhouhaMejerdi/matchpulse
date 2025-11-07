@@ -12,6 +12,12 @@
 .teams-grid {
   padding-block: var(--s-6);
 
+  &__status {
+    font-size: var(--text-sm);
+    color: var(--muted-600);
+    margin-block-end: var(--s-3);
+  }
+
   &__list {
     display: grid;
     gap: var(--s-4);
@@ -23,7 +29,28 @@
   }
 
   &__empty {
-  color: var(--muted-600);
+    display: flex;
+    padding-inline: var(--s-4);
+    padding-block: var(--s-8);
+    gap: var(--s-3);
+    text-align: center;
+    color: var(--muted-600);
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &__empty-icon {
+    font-size: var(--text-base);
+  }
+
+  &__empty-title {
+    font-size: var(--text-base);
+    font-weight: 600;
+  }
+
+  &__empty-message {
+    font-size: var(--text-sm);
   }
 
   @include abstracts.mq-max(340px) {

@@ -28,6 +28,8 @@
   padding-block-end: calc(var(--s-4) + var(--s-6));
   text-decoration: none;
 
+  // 🔁 FIX: use motion-safe() wrapper with parentheses
+
   @include abstracts.motion-safe {
     transition:
       box-shadow 150ms ease-out,
@@ -87,24 +89,26 @@
     margin-top: var(--s-3);
   }
 
-&__form-dot {
-  border-radius: 999px;
-  background: var(--ui-200); /* neutral / default */
-  block-size: var(--s-3);
-  inline-size: var(--s-3);
+  &__form-dot {
+    border-radius: 999px;
+    background: var(--ui-200); /* neutral / default */
+    block-size: var(--s-3);
+    inline-size: var(--s-3);
 
-  &--W {
-    background: var(--status-upcoming);
-  }
+    // BEM-compliant, lowercase modifiers
 
-  &--D {
-    background: var(--status-ht);
-  }
+    &--win {
+      background: var(--status-upcoming);
+    }
 
-  &--L {
-    background: var(--status-pens);
+    &--draw {
+      background: var(--status-ht);
+    }
+
+    &--loss {
+      background: var(--status-pens);
+    }
   }
-}
 
 
   &__cta {
@@ -136,6 +140,83 @@
   }
 
   &:focus-visible {
+    // 🔁 FIX: use focus-ring() with parentheses
+
     @include abstracts.focus-ring;
+  }
+
+  // ---------------------------------------------------------------------------
+  // SKELETON VARIANT
+  // ---------------------------------------------------------------------------
+
+  &--skeleton {
+    border-color: transparent;
+    background: var(--surface-1);
+    box-shadow: none;
+    cursor: default;
+
+    // No slide-up CTA reserve; just normal padding
+    padding-block-end: var(--s-4);
+    pointer-events: none;
+  }
+}
+
+// Shared skeleton placeholder styles (flattened to avoid deep nesting)
+
+.team-card--skeleton .team-card__crest--skeleton,
+.team-card--skeleton .team-card__line,
+.team-card--skeleton .team-card__form--skeleton {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--r-sm);
+  background: var(--skeleton-base);
+}
+
+.team-card--skeleton .team-card__crest--skeleton::after,
+.team-card--skeleton .team-card__line::after,
+.team-card--skeleton .team-card__form--skeleton::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--skeleton-shimmer),
+    transparent
+  );
+  transform: translateX(-100%);
+  content: "";
+
+  @include abstracts.motion-safe {
+    animation: teams-skeleton-shimmer 1.2s infinite;
+  }
+}
+
+.team-card--skeleton .team-card__crest--skeleton {
+  border-radius: 999px;
+  block-size: clamp(4rem, 6vw, 5rem);
+  inline-size: clamp(4rem, 6vw, 5rem);
+}
+
+.team-card--skeleton .team-card__line--primary {
+  block-size: var(--s-2);
+  inline-size: 70%;
+  margin-block-start: var(--s-3);
+}
+
+.team-card--skeleton .team-card__line--secondary {
+  block-size: var(--s-2);
+  inline-size: 50%;
+  margin-block-start: var(--s-2);
+}
+
+.team-card--skeleton .team-card__form--skeleton {
+  block-size: var(--s-3);
+  inline-size: 100%;
+  margin-block-start: var(--s-4);
+}
+
+@keyframes teams-skeleton-shimmer {
+  100% {
+    transform: translateX(100%);
   }
 }

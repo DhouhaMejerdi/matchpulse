@@ -11,8 +11,14 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
-import type { TeamSummary } from '@/app/teams/TeamsGrid';
-import { getFormResult, getFormTooltip } from '@/app/teams/form';
+import { TeamSummary } from '@/app/teams/types';
+import { getFormResult, getFormTooltip, TeamFormResult } from '@/app/teams/form';
+
+const FORM_RESULT_TO_MODIFIER: Record<TeamFormResult, 'win' | 'draw' | 'loss'> = {
+  W: 'win',
+  D: 'draw',
+  L: 'loss',
+};
 
 type Props = TeamSummary;
 
@@ -63,13 +69,14 @@ export default function TeamCard({
 
         <div className="team-card__form" aria-label={`Recent form for ${name}`}>
           {form.map((entry, index) => {
-            const result = getFormResult(entry);
+            const result = getFormResult(entry); // "W" | "D" | "L"
+            const modifier = FORM_RESULT_TO_MODIFIER[result];
             const tooltip = getFormTooltip(entry);
 
             return (
               <span
                 key={index}
-                className={`team-card__form-dot team-card__form-dot--${result}`}
+                className={`team-card__form-dot team-card__form-dot--${modifier}`}
                 title={tooltip}
               >
                 <span className="sr-only">{tooltip}</span>
