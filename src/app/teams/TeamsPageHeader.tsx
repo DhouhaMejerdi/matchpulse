@@ -1,10 +1,10 @@
 // =============================================================================
 // COMPONENT: TeamsPageHeader
 // Responsibility: /teams hero (title + filters bar: league, search, sort)
-// Contracts: Controlled league props (league, onLeagueChange); does not own
-//            data fetching or teams grid state
+// Contracts: Controlled filters (league, search, sort); does not own data
+//            fetching or teams grid state; delegates filter changes upwards
 // A11y: Section labelled by h1; filters grouped via role="group" with label
-// Owner: Frontend Team • Last updated: 2025-11-06
+// Owner: Frontend Team • Last updated: 2025-11-10
 // =============================================================================
 
 import React from "react";
@@ -17,6 +17,10 @@ import TeamsSortSelect from "./TeamsSortSelect";
 export type TeamsPageHeaderProps = {
   league: string;
   onLeagueChange: (leagueId: string) => void;
+  search: string;
+  onSearchChange: (value: string) => void;
+  sort: "alpha-asc" | "alpha-desc";
+  onSortChange: (value: "alpha-asc" | "alpha-desc") => void;
 };
 
 // -- COMPONENT ----------------------------------------------------------------
@@ -24,6 +28,10 @@ export type TeamsPageHeaderProps = {
 export default function TeamsPageHeader({
   league,
   onLeagueChange,
+  search,
+  onSearchChange,
+  sort,
+  onSortChange,
 }: TeamsPageHeaderProps) {
   return (
     <section
@@ -48,8 +56,8 @@ export default function TeamsPageHeader({
         aria-label="Team filters"
       >
         <LeagueFilter value={league} onChange={onLeagueChange} />
-        <TeamsSearchField />
-        <TeamsSortSelect />
+        <TeamsSearchField value={search} onChange={onSearchChange} />
+        <TeamsSortSelect value={sort} onChange={onSortChange} />
       </div>
     </section>
   );

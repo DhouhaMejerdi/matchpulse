@@ -1,7 +1,9 @@
 // =============================================================================
 // COMPONENT: TeamsHeaderFilters
 // Responsibility: Visual styling for /teams header filters
-// Tokens: --s-2, --s-3, --s-4, --r-md, --surface-1, --surface-2, --border-subtle,
+// Tokens: --s-2, --s-3, --s-4, --r-md, 
+//         --surface-teams-filter, --surface-teams-filter-hover, --surface-teams-filter-active, 
+//         --border-subtle,
 //         --control-text, --control-text-muted, --text-primary, --brand-500
 // A11y: 44px tap targets; visible focus ring via mixin; motion-safe transitions
 // Owner: Frontend Team • Last updated: 2025-11-04
@@ -37,7 +39,7 @@
 
   border-radius: var(--r-md);
   gap: var(--s-2);
-  background-color: var(--surface-2);
+  background-color: var(--surface-teams-filter);
   align-items: center;
   inline-size: 100%;
   min-block-size: 44px;
@@ -76,16 +78,42 @@
   }
 }
 
+/* Select-specific modifier -------------------------------------------------- */
+
+.teams-filter__control--select {
+  cursor: pointer;
+}
+
+/* NOTE:
+ * Styling <option> is browser-dependent; where supported, these classes
+ * improve typography and contrast while remaining token-driven.
+ */
+
+.teams-filter__option {
+  font: inherit;
+  color: var(--control-text);
+  background-color: var(--surface-teams-filter);
+}
+
+.teams-filter__option--primary {
+  font-weight: 500;
+}
+
+.teams-filter__option--muted {
+  color: var(--control-text-muted);
+}
+
 /* Hover = simple feedback */
 
 .teams-filter__field:hover {
   border-color: var(--brand-500);
-  background-color: var(--surface-1);
+  background-color: var(--surface-teams-filter-hover);
 }
 
 /* Focus/active = underline highlight + stronger border/bg */
 
 .teams-filter__field:focus-within {
   border-color: var(--brand-500);
-  background-color: var(--surface-1);
+  background-color: var(--surface-teams-filter-active);
+  @include abstracts.focus-ring();
 }

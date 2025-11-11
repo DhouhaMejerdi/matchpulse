@@ -20,8 +20,6 @@
   /* Default values (can be overridden inline, like GFE does) */
   --anchor: 90;
   --border-width: 1.5;
-  --color-from: #ffaa40;
-  --color-to: #e4fe71;
   --delay: 0s;
   --duration: 5; // seconds
   --size: 100;   // px
@@ -36,7 +34,7 @@
 
   /* [mask:linear-gradient(transparent,transparent),linear-gradient(white,white)] */
   mask: linear-gradient(transparent, transparent),
-    linear-gradient(#fff, #fff);
+    linear-gradient(var(--surface-0), var(--surface-0));
 
   /* ![mask-clip:padding-box,border-box] */
   mask-clip: padding-box, border-box;
@@ -56,8 +54,8 @@
   /* after:[background:linear-gradient(to_left,var(--color-from),var(--color-to),transparent)] */
   background: linear-gradient(
     to left,
-    var(--color-from),
-    var(--color-to),
+    var(--teams-filters-beam-from),
+    var(--teams-filters-beam-to),
     transparent
   );
   opacity: 0;

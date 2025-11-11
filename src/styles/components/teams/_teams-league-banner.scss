@@ -1,7 +1,7 @@
 // =============================================================================
 // COMPONENT: LeagueBanner
 // Responsibility: Context banner above TeamsGrid for selected league on /teams
-// Tokens: --surface-1, --border-subtle, --s-6, --s-4, --s-3, --s-2, --s-1,
+// Tokens: --surface-teams-banner, --border-subtle, --s-6, --s-4, --s-3, --s-2, --s-1,
 //         --r-md, --shadow-sm, --shadow-lg, --text-sm, --text-base,
 //         --control-text-muted
 // A11y: Uses focus-ring via :focus-within; motion-safe hover transitions
@@ -15,7 +15,7 @@
   padding: var(--s-4);
   border: 1px solid var(--border-subtle);
   border-radius: var(--r-md);
-  background: var(--surface-2);
+  background: var(--surface-teams-banner);
   box-shadow: var(--shadow-sm);
 
   &__meta {

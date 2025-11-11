@@ -18,6 +18,18 @@
   --surface-1: #fbfcfe;
   --surface-2: #f2f5fa;
 
+  /* ─────────────────────────────────────────────
+   * /teams semantic surfaces (v1.0)
+   * These are just aliases for now; we can tune
+   * them later without touching component SCSS.
+   * ───────────────────────────────────────────── */
+  --surface-teams-header: var(--surface-1);
+  --surface-teams-banner: var(--surface-2);
+  --surface-teams-filter: var(--surface-2);
+  --surface-teams-filter-hover: var(--surface-1);
+  --surface-teams-filter-active: var(--surface-1);
+  --surface-teams-card: var(--surface-0);
+
   /* State helpers */
   --success-500: #17b26a;
   --warning-500: #f59e0b;
@@ -29,6 +41,11 @@
   --surface-header: var(--surface-0);   /* main header background */
   --text-primary: var(--ink-900);       /* primary header text color */
   --border-subtle: var(--ui-200);       /* subtle dividers (e.g., bottom border) */
+
+  /* Teams filters beam (semantic) */
+  --teams-filters-beam-from: var(--warning-500); /* or closest existing brand token */
+  --teams-filters-beam-to: var(--accent-blue-500);
+  --teams-filters-beam-bg: var(--surface-1);   /* optional, for the path */
 }
 
 /* Dark-mode overrides (tokens-first) */

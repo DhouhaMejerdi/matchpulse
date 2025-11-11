@@ -1,3 +1,5 @@
+# README_TeamsLeagueInfoBanner_Implementation_v1.1
+
 # 📘 Match Pulse — `LeagueInfoBanner` Implementation Guide (v1.1)
 
 **Component:** `LeagueInfoBanner`  

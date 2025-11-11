@@ -1,7 +1,7 @@
 // ============================================================================
 // BASE: Reset (mobile-first)
 // Responsibility: predictable defaults, token-driven colors
-// Owner: Frontend Team • Last updated: 2025-11-05
+// Owner: Frontend Team • Last updated: 2025-11-10
 // Notes:
 // - No vendor prefixes (Stylelint rule). Use standards + @supports where needed.
 // - Provide a :focus fallback; gate :focus-visible behind @supports.
@@ -12,42 +12,76 @@
 }
 
 /* Text size adjust (standard property; avoids vendor prefix warning) */
-
 /* Prevent unwanted text autosizing on iOS Safari */
 
 html {
-    /* stylelint-disable-next-line property-no-vendor-prefix */
+  /* stylelint-disable-next-line property-no-vendor-prefix */
   -webkit-text-size-adjust: 100%;
-  
+
   /* stylelint-disable-next-line plugin/no-unsupported-browser-features */
   text-size-adjust: 100%;
 }
 
 body {
   margin: 0;
-  font-family: var(--font-sans, system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif);
+  font-family: var(
+    --font-sans,
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    Inter,
+    sans-serif
+  );
   color: var(--ink-900);
   background: var(--surface-1);
 }
 
 /* Media elements */
 
-img, svg, video {
-  display: block;    /* order: display before size */
+img,
+svg,
+video {
+  display: block; /* order: display before size */
   max-width: 100%;
   height: auto;
 }
 
-/* Form controls inherit font */
+/* Form controls inherit font ------------------------------------------------- */
 
-button, input, select, textarea {
+button,
+input,
+select,
+textarea {
   font: inherit;
 }
 
+/* Normalize text-like inputs and options to inherit typography + color
+ * from their context. Layout (padding, borders) stays component-driven.
+ */
+
+input[type="text"],
+input[type="search"],
+input[type="email"],
+input[type="url"],
+input[type="password"],
+input[type="number"] {
+  color: inherit;
+  background-color: transparent;
+}
+
+/* NOTE:
+ * <option> styling is browser-dependent; we keep this reset minimal and
+ * token-agnostic so component-level BEM classes can refine styling.
+ */
+
+option {
+  font: inherit;
+  color: inherit;
+}
+
 /* Lists — remove default margins, bullets, and indent ----------------------- */
-
 /* Responsibility: ensure predictable alignment for grids & nav lists */
-
 /* Affects: ul, ol, menu, dir (legacy-safe) */
 
 ul,
@@ -59,7 +93,7 @@ dir {
   list-style: none;
 }
 
-/* A11y focus: provide fallback + gated :focus-visible */
+/* A11y focus: provide fallback + gated :focus-visible ----------------------- */
 
 /* Fallback for browsers without :focus-visible */
 
