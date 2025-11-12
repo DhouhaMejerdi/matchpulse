@@ -108,6 +108,10 @@
     &--loss {
       background: var(--status-pens);
     }
+
+    &--empty {
+      opacity: 0.35; // neutral, “no data”
+    }
   }
 
 

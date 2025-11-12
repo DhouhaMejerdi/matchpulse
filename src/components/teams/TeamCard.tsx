@@ -68,22 +68,34 @@ export default function TeamCard({
         </div>
 
         <div className="team-card__form" aria-label={`Recent form for ${name}`}>
-          {form.map((entry, index) => {
-            const result = getFormResult(entry); // "W" | "D" | "L"
-            const modifier = FORM_RESULT_TO_MODIFIER[result];
-            const tooltip = getFormTooltip(entry);
-
-            return (
+          {form.length === 0 ? (
+            Array.from({ length: 5 }).map((_, i) => (
               <span
-                key={index}
-                className={`team-card__form-dot team-card__form-dot--${modifier}`}
-                title={tooltip}
+                key={i}
+                className="team-card__form-dot team-card__form-dot--empty"
+                title="No recent match"
               >
-                <span className="sr-only">{tooltip}</span>
+                <span className="sr-only">No recent match</span>
               </span>
-            );
-          })}
+            ))
+          ) : (
+            form.map((entry, index) => {
+              const result = getFormResult(entry); // "W" | "D" | "L"
+              const modifier = FORM_RESULT_TO_MODIFIER[result];
+              const tooltip = getFormTooltip(entry); // uses opponent + score
+              return (
+                <span
+                  key={index}
+                  className={`team-card__form-dot team-card__form-dot--${modifier}`}
+                  title={tooltip}
+                >
+                  <span className="sr-only">{tooltip}</span>
+                </span>
+              );
+            })
+          )}
         </div>
+
       </div>
 
       <div className="team-card__cta" aria-hidden="true">
