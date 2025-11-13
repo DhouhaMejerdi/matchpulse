@@ -12,6 +12,7 @@
 }
 
 /* Text size adjust (standard property; avoids vendor prefix warning) */
+
 /* Prevent unwanted text autosizing on iOS Safari */
 
 html {
@@ -81,7 +82,9 @@ option {
 }
 
 /* Lists — remove default margins, bullets, and indent ----------------------- */
+
 /* Responsibility: ensure predictable alignment for grids & nav lists */
+
 /* Affects: ul, ol, menu, dir (legacy-safe) */
 
 ul,

@@ -115,5 +115,6 @@
 .teams-filter__field:focus-within {
   border-color: var(--brand-500);
   background-color: var(--surface-teams-filter-active);
-  @include abstracts.focus-ring();
+
+  @include abstracts.focus-ring;
 }

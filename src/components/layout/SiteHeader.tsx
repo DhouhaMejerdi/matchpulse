@@ -24,7 +24,7 @@ export default function SiteHeader() {
   const pathname = usePathname();
 
   return (
-    <div className="header container">
+    <header className="header container">
       <Link className="header__home-link" href="/" aria-label="MatchPulse home">
         <span className="header__logo" aria-hidden="true" />
         <span className="header__title">MatchPulse</span>
@@ -56,6 +56,6 @@ export default function SiteHeader() {
           })}
         </ul>
       </nav>
-    </div>
+    </header>
   );
 }

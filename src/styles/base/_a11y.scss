@@ -1,61 +1,92 @@
 // =============================================================================
 // BASE: A11y helpers
-// Responsibility: Screen-reader-only utility with progressive enhancement.
-// SR-only utilities, focusable reveal, skip-link variant.
-// Contracts: No !important; tokens-first where relevant
-// Owner: Frontend Team • Last updated: 2025-11-01
+// -----------------------------------------------------------------------------
+// Responsibility: Screen-reader utilities (sr-only), focus-reveal helpers,
+//                 and a robust skip-link pattern with tokens-first styling.
+// Contracts: No !important; compatible with both LTR/RTL via logical props;
+//            reusable in any component without side effects.
+// A11y: Uses modern `clip-path: inset(50%)` with classic `clip` fallback;
+//       skip-link pops into view on focus using design tokens.
+// Owner: Frontend Team • Last updated: 2025-11-12
 // =============================================================================
+
 
 /* Screen-reader only -------------------------------------------------------- */
 
+/* MDN/WAI recommended pattern: content is hidden visually but still read by SR */
+
 .sr-only {
-  /* Positioning -------------------------------------------------------------- */
+  /* Positioning */
   position: absolute;
 
-  /* Hiding mechanics --------------------------------------------------------- */
-  overflow: hidden;              /* ensure nothing leaks */
+  /* Hiding mechanics */
+  overflow: hidden;
   margin: -1px;
   padding: 0;
   border: 0;
+  line-height: 1;        /* avoid baseline artifacts */
 
-  /* Text handling ------------------------------------------------------------ */
-  white-space: nowrap;           /* avoid line breaks */
-  block-size: 1px;               /* logical height */
+  /* Text handling */
+  white-space: nowrap;   /* prevent wrapping */
+  block-size: 1px;
+  clip: rect(0 0 0 0);   /* legacy fallback */
 
-  clip-path: inset(50%);         /* modern, widely supported */
+  /* Modern + legacy clipping */
+  clip-path: inset(50%); /* modern, widely supported */
 
-  /* Box model --------------------------------------------------------------- */
-  inline-size: 1px;              /* logical width */
+  /* Box model (logical) */
+  inline-size: 1px;
 }
 
-/* SR-only but becomes visible when focused/active (for skip links) ---------- */
+/* SR-only that becomes visible when focused/active (generic helper) ---------- */
 
+/* Useful when you want to reveal hidden text on keyboard focus */
+
+.sr-only.focusable:focus,
 .sr-only.focusable:active,
-.sr-only.focusable:focus {
-  /* Positioning -------------------------------------------------------------- */
+.sr-only.focusable:focus-visible {
   position: static;
-
-  /* Hiding mechanics --------------------------------------------------------- */
   overflow: visible;
   margin: 0;
-  padding: 0;
-  border: 0;
-
-  /* Text handling ------------------------------------------------------------ */
   white-space: normal;
   block-size: auto;
-
+  clip: auto;
   clip-path: none;
-
-  /* Box model --------------------------------------------------------------- */
   inline-size: auto;
 }
 
-/* Optional convenience alias for skip links -------------------------------- */
+
+/* Skip link ------------------------------------------------------------------ */
+
+/* Add <a class="skip-link" href="#main-content">Skip to main content</a> as the
+   first focusable element in <body>. Ensure the target has tabindex="-1". */
 
 .skip-link {
   @extend .sr-only;
-  @extend .focusable;
+}
 
-  /* Optional: tokenized pad/radius/shadow if you want a visible chip on focus */
+/* On focus, reveal and style using tokens (Quality Gate compliant) */
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  position: fixed;                 /* keep visible even if page scrolls */
+  top: var(--s-2);
+  z-index: 1000;
+
+  overflow: visible;
+  margin: 0;
+  padding: var(--s-2) var(--s-3);
+  border: 1px solid var(--control-focus);
+  border-radius: var(--r-sm);
+  white-space: normal;
+  color: var(--ink-900);
+
+  background: var(--surface-1);
+  block-size: auto;
+  clip: auto;
+
+  clip-path: none;
+
+  inline-size: auto;
+  inset-inline-start: var(--s-2);  /* logical left */
 }

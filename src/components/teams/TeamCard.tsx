@@ -87,6 +87,7 @@ export default function TeamCard({
                 <span
                   key={index}
                   className={`team-card__form-dot team-card__form-dot--${modifier}`}
+                  aria-label={tooltip}         // use aria-label for AT
                   title={tooltip}
                 >
                   <span className="sr-only">{tooltip}</span>

@@ -1,24 +1,29 @@
 // =============================================================================
 // COMPONENT: LeagueFilter
 // Responsibility: Dropdown control for selecting the current league on /teams
-// Contracts: Controlled via value + onChange; options sourced from LEAGUE_OPTIONS
+// Contracts: Controlled via value + onChange; options provided by parent
 // A11y: Uses <select> with associated (sr-only) label; focus via CSS
-// Owner: Frontend Team • Last updated: 2025-11-10
+// Owner: Frontend Team • Last updated: 2025-11-11
 // =============================================================================
 
 import React from "react";
-import { LEAGUE_OPTIONS } from "@/lib/teams/leagues";
+import type { LeagueOption } from "@/app/teams/types";
 
 // -- PROPS --------------------------------------------------------------------
 
 export type LeagueFilterProps = {
   value: string;
   onChange: (leagueId: string) => void;
+  options: LeagueOption[];
 };
 
 // -- COMPONENT ----------------------------------------------------------------
 
-export default function LeagueFilter({ value, onChange }: LeagueFilterProps) {
+export default function LeagueFilter({
+  value,
+  onChange,
+  options,
+}: LeagueFilterProps) {
   return (
     <div className="teams-filter teams-filter--league">
       <label htmlFor="league-select" className="sr-only">
@@ -41,7 +46,7 @@ export default function LeagueFilter({ value, onChange }: LeagueFilterProps) {
           value={value}
           onChange={(event) => onChange(event.target.value)}
         >
-          {LEAGUE_OPTIONS.map((league) => (
+          {options.map((league) => (
             <option
               key={league.id}
               value={league.id}
