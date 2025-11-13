@@ -15,6 +15,9 @@ export type LeagueFilterProps = {
   value: string;
   onChange: (leagueId: string) => void;
   options: LeagueOption[];
+  // NEW:
+  isActive?: boolean;
+  onFocus?: () => void;
 };
 
 // -- COMPONENT ----------------------------------------------------------------
@@ -23,9 +26,16 @@ export default function LeagueFilter({
   value,
   onChange,
   options,
+  isActive = false,
+  onFocus,
 }: LeagueFilterProps) {
   return (
-    <div className="teams-filter teams-filter--league">
+    <div
+      className={
+        "teams-filter teams-filter--league" +
+        (isActive ? " teams-filter--active" : "")
+      }
+    >
       <label htmlFor="league-select" className="sr-only">
         Select league
       </label>
@@ -45,6 +55,7 @@ export default function LeagueFilter({
           className="teams-filter__control teams-filter__control--select"
           value={value}
           onChange={(event) => onChange(event.target.value)}
+          onFocus={onFocus}
         >
           {options.map((league) => (
             <option
@@ -60,3 +71,4 @@ export default function LeagueFilter({
     </div>
   );
 }
+

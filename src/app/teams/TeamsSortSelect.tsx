@@ -4,7 +4,7 @@
 // Contracts: Controlled via value/onChange from parent (/teams page header);
 //            emits stable sort mode keys used for derived ordering logic
 // A11y: Uses <label class="sr-only"> and focus state via .teams-filter__field
-// Owner: Frontend Team • Last updated: 2025-11-10
+// Owner: Frontend Team • Last updated: 2025-11-13
 // =============================================================================
 
 import React from "react";
@@ -18,6 +18,8 @@ export type TeamsSortOrder = "alpha-asc" | "alpha-desc";
 export type TeamsSortSelectProps = {
   value: TeamsSortOrder;
   onChange: (value: TeamsSortOrder) => void;
+  isActive?: boolean;
+  onFocus?: () => void;
 };
 
 // -- COMPONENT ----------------------------------------------------------------
@@ -25,9 +27,16 @@ export type TeamsSortSelectProps = {
 export default function TeamsSortSelect({
   value,
   onChange,
+  isActive = false,
+  onFocus,
 }: TeamsSortSelectProps) {
   return (
-    <div className="teams-filter teams-filter--sort">
+    <div
+      className={
+        "teams-filter teams-filter--sort" +
+        (isActive ? " teams-filter--active" : "")
+      }
+    >
       <label htmlFor="teams-sort" className="sr-only">
         Sort teams
       </label>
@@ -45,9 +54,8 @@ export default function TeamsSortSelect({
           name="sort"
           className="teams-filter__control teams-filter__control--select"
           value={value}
-          onChange={(event) =>
-            onChange(event.target.value as TeamsSortOrder)
-          }
+          onChange={(event) => onChange(event.target.value as TeamsSortOrder)}
+          onFocus={onFocus}
         >
           <option
             value="alpha-asc"

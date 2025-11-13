@@ -1,90 +1,87 @@
 // =============================================================================
 // COMPONENT: TeamsHeaderFiltersBorderBeam
-// Responsibility: GFE-style border beam animation around filter pills
-// Depends on: Base styles from _teams-filters.scss
-// Owner: Frontend Team • Last updated: 2025-11-04
+// Responsibility: Animated border beam around /teams header filters
+// Tokens: --surface-0, --teams-filters-beam-from, --teams-filters-beam-to
+// A11y: Decorative only (pointer-events: none); motion guarded by motion-safe
+// Owner: UI Systems • Last updated: 2025-11-13
 // =============================================================================
 
-@use "sass:map";
 @use "../../abstracts" as abstracts;
 
-/* Ensure the beam can position itself relative to the pill */
+.teams-header {
+  // Ensure the beam positions relative to each filter pill
 
-.teams-header .teams-filter__field {
-  position: relative;
-}
+  .teams-filter {
+    &__field {
+      position: relative;
+    }
 
-/* Overlay container = the empty div you inspected on GFE */
+    // Overlay container for the animated border beam
 
-.teams-header .teams-filter__beam {
-  /* Default values (can be overridden inline, like GFE does) */
-  --anchor: 90;
-  --border-width: 1.5;
-  --delay: 0s;
-  --duration: 5; // seconds
-  --size: 100;   // px
+    &__beam {
+      // NOTE: These CSS custom properties can be overridden per-instance
+      --anchor: 90;
+      --border-width: 1.5;
+      --delay: 0s;
+      --duration: 5; // seconds
+      --size: 100;   // px
 
-  position: absolute;
-  inset: 0;
-  z-index: 0;
+      position: absolute;
+      inset: 0;
+      z-index: 0;
 
-  /* [border:calc(var(--border-width)*1px)_solid_transparent] */
-  border: calc(var(--border-width) * 1px) solid transparent;
-  border-radius: inherit;
+      border: calc(var(--border-width) * 1px) solid transparent;
+      border-radius: inherit;
 
-  /* [mask:linear-gradient(transparent,transparent),linear-gradient(white,white)] */
-  mask: linear-gradient(transparent, transparent),
-    linear-gradient(var(--surface-0), var(--surface-0));
+      // Mask keeps the gradient constrained to the border box
+      mask: linear-gradient(transparent, transparent),
+        linear-gradient(var(--surface-0), var(--surface-0));
+      mask-clip: padding-box, border-box;
+      mask-composite: source-in, xor;
+      mask-composite: intersect;
 
-  /* ![mask-clip:padding-box,border-box] */
-  mask-clip: padding-box, border-box;
+      pointer-events: none;
 
-  /* ![mask-composite:intersect] (WebKit + generic) */
-  mask-composite: source-in, xor;
-  mask-composite: intersect;
-  pointer-events: none;
-}
+      // Base beam pseudo-element (hidden by default; activated via modifier)
 
-/* This corresponds to the Tailwind `after:*` utilities */
+      &::after {
+        position: absolute;
+        width: calc(var(--size) * 1px);
 
-.teams-header .teams-filter__beam::after {
-  position: absolute;
-  width: calc(var(--size) * 1px);
+        background: linear-gradient(
+          to left,
+          var(--teams-filters-beam-from),
+          var(--teams-filters-beam-to),
+          transparent
+        );
 
-  /* after:[background:linear-gradient(to_left,var(--color-from),var(--color-to),transparent)] */
-  background: linear-gradient(
-    to left,
-    var(--teams-filters-beam-from),
-    var(--teams-filters-beam-to),
-    transparent
-  );
-  opacity: 0;
-  aspect-ratio: 1 / 1;
-  content: "";
+        opacity: 0;
+        aspect-ratio: 1 / 1;
+        content: "";
 
-  /* after:[offset-anchor:calc(var(--anchor)*1%)_50%] */
-  offset-anchor: calc(var(--anchor) * 1%) 50%;
+        offset-anchor: calc(var(--anchor) * 1%) 50%;
+        offset-distance: 0%;
+        offset-path: rect(0 auto auto 0 round calc(var(--size) * 1px));
+      }
+    }
 
-  offset-distance: 0%;
+    // MODIFIER: Active filter pill shows the animated border beam
 
-  /* after:[offset-path:rect(0_auto_auto_0_round_calc(var(--size)*1px))] */
-  offset-path: rect(0 auto auto 0 round calc(var(--size) * 1px));
-}
+    &--active {
+      .teams-filter__beam::after {
+        opacity: 1;
 
-/* This replaces `after:animate-border-beam` */
-
-.teams-header
-  .teams-filter__field:focus-within
-  .teams-filter__beam::after {
-  opacity: 1;
-
-  @include abstracts.motion-safe {
-    animation: border-beam calc(var(--duration) * 1s) linear infinite;
-    animation-delay: var(--delay);
+        @include abstracts.motion-safe {
+          // A11Y: Animation disabled for users with reduced-motion preference
+          animation: border-beam calc(var(--duration) * 1s) linear infinite;
+          animation-delay: var(--delay);
+        }
+      }
+    }
   }
 }
 
-/* Keyframes: just like GFE, drive offset-distance 0 → 100% */
+// Keyframes: drive offset-distance 0 → 100% along the rect path
 
 @keyframes border-beam {
   to {

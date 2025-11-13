@@ -24,7 +24,7 @@
 
 :root {
   /* Max readable line length for main content areas */
-  --container-max: 1200px;
+  --container-max: 1320px; /* or 1280 */
 
   /* Page padding (logical inline axis); map to spacing scale */
   --page-pad-inline-min: var(--s-3); /* e.g., 12px */

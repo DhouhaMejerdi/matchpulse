@@ -37,6 +37,10 @@ export default function TeamsPageHeader({
   onSortChange,
   leagueOptions,
 }: TeamsPageHeaderProps) {
+  const [activeFilter, setActiveFilter] = React.useState<
+    "league" | "search" | "sort"
+  >("league"); // 👈 default highlight on LeagueFilter
+  
   return (
     <section
       className="teams-header container"
@@ -63,9 +67,21 @@ export default function TeamsPageHeader({
           value={league}
           onChange={onLeagueChange}
           options={leagueOptions}
+          isActive={activeFilter === "league"}
+          onFocus={() => setActiveFilter("league")}
         />
-        <TeamsSearchField value={search} onChange={onSearchChange} />
-        <TeamsSortSelect value={sort} onChange={onSortChange} />
+        <TeamsSearchField 
+          value={search} 
+          onChange={onSearchChange} 
+          isActive={activeFilter === "search"}
+          onFocus={() => setActiveFilter("search")}
+        />
+        <TeamsSortSelect 
+          value={sort} 
+          onChange={onSortChange} 
+          isActive={activeFilter === "sort"}
+          onFocus={() => setActiveFilter("sort")}
+        />
       </div>
     </section>
   );

@@ -45,10 +45,15 @@ export const LEAGUE_OPTIONS: LeagueOption[] = [
 ];
 
 // Default fallback for when no league is selected.
-export const DEFAULT_LEAGUE_ID =
-  LEAGUE_OPTIONS.find((league) => league.isDefault)?.id ??
-  LEAGUE_OPTIONS[1]?.id ?? // index 1 = first real league (premier-league)
-  "premier-league";
+// 1) Respect an explicit default (isDefault: true)
+// 2) Otherwise, pick the first real league (skip "all-leagues")
+// 3) Final ultra-safe fallback: "premier-league"
+const DEFAULT_LEAGUE_OPTION: LeagueOption | undefined =
+  LEAGUE_OPTIONS.find((league) => league.isDefault) ??
+  LEAGUE_OPTIONS.find((league) => league.id !== "all-leagues");
+
+export const DEFAULT_LEAGUE_ID: string =
+  DEFAULT_LEAGUE_OPTION?.id ?? "premier-league";
 
 // -----------------------------------------------------------------------------
 // EXTENDED META (used by LeagueInfoBanner and future API layer)
