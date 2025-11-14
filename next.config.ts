@@ -23,6 +23,16 @@ const nextConfig: NextConfig = {
     contentSecurityPolicy:
       "default-src 'self'; img-src 'self' data: blob https://crests.football-data.org;",
   },
+  
+  async redirects() {
+    return [
+      {
+        source: "/",
+        destination: "/teams",
+        permanent: false,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
