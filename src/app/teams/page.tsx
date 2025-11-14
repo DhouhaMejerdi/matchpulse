@@ -1,11 +1,11 @@
 // =============================================================================
-// PAGE: /teams
+// PAGE: /teams    
 // -----------------------------------------------------------------------------
 // Responsibility: Server entry for /teams; wraps client-side teams view.
 // Contracts: Renders <TeamsPageClient /> inside <Suspense> with skeleton
 //            fallback to satisfy Next.js requirement for useSearchParams.
 // A11y: Still lives inside <main id="main-content"> from RootLayout.
-// Owner: Frontend Team • Last updated: 2025-11-14
+// Owner: Frontend Team • Last updated: 2025-11-14 tiger
 // =============================================================================
 
 import * as React from "react";
