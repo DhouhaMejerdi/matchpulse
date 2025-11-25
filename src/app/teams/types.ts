@@ -34,6 +34,7 @@ export type LeagueOption = {
   name: string;        // Display name, e.g. "Premier League"
   countryCode: string; // ISO-like country code
   slug: string;        // URL / API slug, e.g. "england-premier-league"
+  crestUrl: string | null; // NEW: league logo URL
   isDefault?: boolean;
 };
 

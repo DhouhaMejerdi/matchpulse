@@ -29,7 +29,7 @@ export default function LeagueInfoBanner({ league }: Props) {
   const isEmptyLeague = teamCount === 0;
 
   const defaultTagline = isEmptyLeague
-    ? "No teams are available for this league yet. We’ll show clubs here as soon as the season data is available."
+    ? ""
     : "Select a team to view fixtures, stats, and top players.";
 
   const bannerTagline = tagline ?? defaultTagline;

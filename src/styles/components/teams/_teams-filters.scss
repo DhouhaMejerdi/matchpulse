@@ -1,93 +1,135 @@
-// =============================================================================
-// COMPONENT: TeamsHeaderFilters
-// Responsibility: Visual styling for /teams header filters
-// Tokens: --s-2, --s-3, --s-4, --r-md, 
-//         --surface-teams-filter, --surface-teams-filter-hover, --surface-teams-filter-active, 
-//         --border-subtle,
-//         --control-text, --control-text-muted, --text-primary, --brand-500
-// A11y: 44px tap targets; visible focus ring via mixin; motion-safe transitions
-// Owner: Frontend Team • Last updated: 2025-11-04
-// =============================================================================
+/* =============================================================================
+   COMPONENT: TeamsHeaderFilters
+   Responsibility: Visual styling for /teams header filter controls (league,
+                   search, sort). Capsule fields containing icon + input/select.
+   Tokens: --s-2, --s-3, --s-4, --r-md,
+           --surface-teams-filter, --surface-teams-filter-hover,
+           --surface-teams-filter-active,
+           --border-subtle,
+           --control-text, --control-text-muted, --text-primary, --brand-500
+   A11y: 44px tap targets; clear focus-visible ring; motion-safe transitions
+   Owner: Frontend Team • Last updated: 2025-11-17
+   ========================================================================== */
 
 @use "sass:map";
 @use "../../abstracts" as abstracts;
 
-/* Wrapper for each filter block */
+/* ---------------------------------------------------------------------------
+   BLOCK: Wrapper for each filter control
+   ------------------------------------------------------------------------- */
 
 .teams-filter {
   flex: 1 1 0;
-  min-inline-size: 0; // allow even shrinking in the row
+  min-inline-size: 0; // NOTE: allows items to shrink evenly across the row
+  position: relative; // for the dropdown menu positioning
 }
 
 .teams-filter--league,
 .teams-filter--search,
 .teams-filter--sort {
-  min-block-size: 44px;
+  min-block-size: 44px; // A11Y: minimum tap target size
 }
 
-/* Pill container: icon + control share the same capsule */
+/* ---------------------------------------------------------------------------
+   ELEMENT: Pill container (capsule containing icon + control)
+   ------------------------------------------------------------------------- */
 
 .teams-filter__field {
   position: relative;
   z-index: 0;
 
   display: inline-flex;
+  align-items: center;
+
+  inline-size: 100%;
+  min-block-size: 64px;
 
   padding-inline: var(--s-3);
   padding-block: var(--s-2);
-  border: 1px solid var(--border-subtle);
-
-  border-radius: var(--r-md);
   gap: var(--s-2);
-  background-color: var(--surface-teams-filter);
-  align-items: center;
-  inline-size: 100%;
-  min-block-size: 44px;
 
-  @include abstracts.motion-safe {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-md);
+
+  background-color: var(--surface-teams-filter);
+
+  @include abstracts.motion-safe() {
     transition-duration: 150ms;
     transition-property: border-color, background-color;
     transition-timing-function: ease-out;
   }
 }
 
+/* Hover feedback ----------------------------------------------------------- */
+
+.teams-filter__field:hover {
+  border-color: var(--brand-500);
+  background-color: var(--surface-teams-filter-hover);
+}
+
+/* Focus/active feedback ---------------------------------------------------- */
+
+.teams-filter__field:focus-within {
+  border-color: var(--brand-500);
+  background-color: var(--surface-teams-filter-active);
+
+  @include abstracts.focus-ring();
+}
+
+/* ---------------------------------------------------------------------------
+   ELEMENT: Icon (trophy emoji, magnifier, sort icon)
+   ------------------------------------------------------------------------- */
+
 .teams-filter__icon {
   display: inline-flex;
-  color: var(--control-text-muted);
   align-items: center;
   justify-content: center;
+  color: var(--control-text-muted);
+  flex-shrink: 0; // keep icon from squashing
 }
+
+/* League crest image inside the icon container */
+.teams-filter__icon-img {
+  inline-size: 40px;
+  block-size: 40px;
+
+  border-radius: 9999px; // soft circle
+  flex-shrink: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   ELEMENT: Control (input, select)
+   ------------------------------------------------------------------------- */
 
 .teams-filter__control {
   margin: 0;
   padding: 0;
   border: 0;
+
+  inline-size: 100%;
+
   font: inherit;
   color: var(--control-text);
-
   background-color: transparent;
-  inline-size: 100%;
-  min-block-size: 44px;
 
   &::placeholder {
     color: var(--control-text-muted);
   }
 
   &:focus {
-    outline: none;
+    outline: none; // NOTE: focus handled via parent :focus-within
   }
 }
 
-/* Select-specific modifier -------------------------------------------------- */
+/* Select variant ----------------------------------------------------------- */
 
 .teams-filter__control--select {
   cursor: pointer;
 }
 
-/* NOTE:
- * Styling <option> is browser-dependent; where supported, these classes
- * improve typography and contrast while remaining token-driven.
- */
+/* ---------------------------------------------------------------------------
+   ELEMENT: Option styles (best-effort; browser-limited)
+   ------------------------------------------------------------------------- */
 
 .teams-filter__option {
   font: inherit;
@@ -103,18 +145,94 @@
   color: var(--control-text-muted);
 }
 
-/* Hover = simple feedback */
+/* Trigger-specific tweaks (button) ----------------------------------------- */
 
-.teams-filter__field:hover {
-  border-color: var(--brand-500);
-  background-color: var(--surface-teams-filter-hover);
+.teams-filter__trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  inline-size: 100%;
+  block-size: 100%;     /* <-- THIS IS THE REAL FIX */
 }
 
-/* Focus/active = underline highlight + stronger border/bg */
 
-.teams-filter__field:focus-within {
-  border-color: var(--brand-500);
+/* Selected value + chevron inside the trigger ------------------------------ */
+
+.teams-filter__value {
+  flex: 1 1 auto;
+  color: var(--control-text);
+}
+
+.teams-filter__chevron {
+  margin-inline-start: var(--s-2);
+  font-size: 0.9rem;
+  color: var(--control-text-muted);
+
+  @include abstracts.motion-safe() {
+    transition: transform 150ms ease-out;
+  }
+}
+
+.teams-filter__value,
+.teams-filter__icon,
+.teams-filter__chevron {
+  display: inline-flex;
+  align-items: center;
+}
+
+
+.teams-filter--active .teams-filter__chevron {
+  transform: rotate(180deg);
+}
+
+/* Dropdown panel ----------------------------------------------------------- */
+
+.teams-filter__menu {
+  position: absolute;
+  inset-inline: 0;
+  top: calc(100% + var(--s-2));
+
+  margin: 0;
+  padding: var(--s-2) 0;
+  list-style: none;
+  z-index: 10;
+
+  border-radius: var(--r-md);
+  border: 1px solid var(--border-subtle);
+  background-color: var(--surface-teams-filter);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+
+  max-block-size: 18rem;
+  overflow-y: auto;
+}
+
+/* Option buttons (now real custom UI, not <option> element) ---------------- */
+
+.teams-filter__option {
+  display: block;
+  inline-size: 100%;
+  padding-block: var(--s-2);
+  padding-inline: var(--s-3);
+
+  border: 0;
+  background: transparent;
+
+  text-align: left;
+  font: inherit;
+  color: var(--control-text);
+  cursor: pointer;
+
+  @include abstracts.motion-safe() {
+    transition: background-color 120ms ease-out, color 120ms ease-out;
+  }
+
+  &:hover {
+    background-color: var(--surface-teams-filter-hover);
+  }
+}
+
+.teams-filter__option--selected {
+  font-weight: 600;
   background-color: var(--surface-teams-filter-active);
-
-  @include abstracts.focus-ring;
 }

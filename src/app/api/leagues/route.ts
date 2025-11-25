@@ -17,6 +17,7 @@ type FootballDataCompetition = {
   code: string | null;
   type: string; // "LEAGUE" | "CUP"
   plan: string; // "TIER_ONE", ...
+  emblem?: string | null; // NEW: league crest URL from API
   area: {
     name: string;
     code: string | null;
@@ -107,11 +108,13 @@ export async function GET() {
           .replace(/[^a-z0-9]+/g, "-")
           .replace(/(^-|-$)+/g, "");
 
+        const crestUrl = competition.emblem ?? null; // NEW
         return {
           id: internalId,    // matches LEAGUE_META keys
           name: displayName, // "Premier League", "La Liga", "Serie A"
           countryCode: rawCountryCode,
           slug,
+          crestUrl, // NEW
         };
       });
 

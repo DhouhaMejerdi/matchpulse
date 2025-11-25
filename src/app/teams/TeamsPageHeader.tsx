@@ -10,9 +10,9 @@
 import React from "react";
 import type { LeagueOption } from "./types";
 
-import LeagueFilter from "./LeagueFilter";
 import TeamsSearchField from "./TeamsSearchField";
 import TeamsSortSelect from "./TeamsSortSelect";
+import LeagueFilterCustom from "./LeagueFilterCustom";
 
 // -- PROPS --------------------------------------------------------------------
 
@@ -63,7 +63,8 @@ export default function TeamsPageHeader({
         role="group"
         aria-label="Team filters"
       >
-        <LeagueFilter
+
+        <LeagueFilterCustom
           value={league}
           onChange={onLeagueChange}
           options={leagueOptions}
