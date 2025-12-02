@@ -1,0 +1,11 @@
+// =============================================================================
+// MODULE: Standings Components Styles
+// Responsibility: Aggregate /Standings-related component styles
+// Owner: Frontend Team • Last updated: 2025-11-25
+// =============================================================================
+
+@forward "./standings-header";
+@forward "./standings-header-filters";
+@forward "./standings-league";
+@forward "./standings-zones-legend";
+@forward "./standings-table";

@@ -1,0 +1,87 @@
+/* =============================================================================
+   COMPONENT: StandingsPageHeader
+   Responsibility: Visual shell for /standings hero (title + future controls)
+   Tokens: --text-primary, --text-muted,
+           --s-1, --s-2, --s-3, --s-4
+   A11y: Clear hierarchy (h1 + subtitle); room for 44px+ controls
+   Owner: Frontend Team • Last updated: 2025-11-25
+   ========================================================================== */
+
+@use "sass:map";
+@use "../../abstracts" as abstracts;
+
+/* Root block
+   -------------------------------------------------------------------------- */
+
+.standings-header {
+  /* space below header before league banner / table */
+  margin-block-end: var(--s-3);
+
+  &__inner {
+    display: flex;
+    flex-direction: column; // MOBILE FIRST
+    align-items: flex-start;
+    gap: var(--s-3);
+
+    padding-block: var(--s-3);
+  }
+
+  /* Text cluster: title + subtitle
+     ----------------------------------------------------------------------- */
+
+  &__text {
+    min-inline-size: 0;
+  }
+
+  &__title {
+    margin: 0;
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: clamp(1.4rem, 1.2rem + 0.6vw, 1.9rem);
+    letter-spacing: 0.01em;
+  }
+
+  &__subtitle {
+    margin: 0;
+    margin-block-start: var(--s-1);
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  /* Controls slot: filters / actions
+     ----------------------------------------------------------------------- */
+
+  &__controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-2);
+    row-gap: var(--s-2);
+    margin-block-start: var(--s-2);
+    width: 100%;
+
+    /* children are typically buttons/selects; ensure comfy tap area */
+    > * {
+      min-block-size: 44px;
+    }
+  }
+
+  /* Tablet / desktop enhancements
+     ----------------------------------------------------------------------- */
+
+  @media (min-width: map.get(abstracts.$breakpoints, md)) {
+    &__inner {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--s-4);
+      padding-block: var(--s-4);
+    }
+
+    &__controls {
+      margin-block-start: 0;
+      width: auto;
+      justify-content: flex-end;
+    }
+  }
+}

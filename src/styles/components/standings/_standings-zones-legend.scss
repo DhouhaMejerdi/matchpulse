@@ -1,0 +1,85 @@
+@use "sass:map";
+@use "../../abstracts" as abstracts;
+
+/* =============================================================================
+   COMPONENT: StandingsZonesLegend
+   Responsibility: Horizontal legend for standings zone colors (CL / Europa /
+                   Relegation). Mobile-first, fluid typography and dot sizes.
+   Tokens: --s-*, --r-sm, --status-positive/negative/warning,
+           --text-muted
+   ========================================================================== */
+
+.standings-zones-legend {
+  /* Space away from banner + table (mobile-first) */
+  margin-block-start: var(--s-5);
+  margin-block-end: var(--s-5);
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--s-3);               /* tighter on small screens */
+    padding-inline: 0;
+    margin: 0;
+  }
+
+  &__item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-2);
+    white-space: nowrap;
+  }
+
+  &__label {
+    /* Fluid caption size: ~12–14px across breakpoints */
+    font-size: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+    line-height: 1.3;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+
+  &__swatch {
+    /* Fluid circle size: ~8–11px across breakpoints */
+    inline-size: clamp(0.5rem, 0.45rem + 0.3vw, 0.6875rem);
+    block-size: clamp(0.5rem, 0.45rem + 0.3vw, 0.6875rem);
+    border-radius: 999px;
+    flex-shrink: 0;
+    position: relative;
+    top: -1px; /* optical alignment with text baseline */
+  }
+
+  /* Zone modifiers ---------------------------------------------------------- */
+
+  &__item--cl .standings-zones-legend__swatch {
+    background-color: var(--status-positive);
+  }
+
+  &__item--eu .standings-zones-legend__swatch {
+    background-color: var(--status-warning);
+  }
+
+  &__item--rel .standings-zones-legend__swatch {
+    background-color: var(--status-negative);
+  }
+
+  /* ────────────────────────────────────────────────────────────────────────
+   * ≥ md: more breathing room, desktop-aligned spacing
+   * ────────────────────────────────────────────────────────────────────── */
+
+  @media (min-width: map.get(abstracts.$breakpoints, md)) {
+    margin-block-start: var(--s-6);
+    margin-block-end: var(--s-6);
+
+    &__list {
+      gap: var(--s-4);
+    }
+  }
+
+  /* ≥ lg: small bump in spacing to match wider table padding -------------- */
+
+  @media (min-width: map.get(abstracts.$breakpoints, lg)) {
+    &__list {
+      gap: var(--s-6);
+    }
+  }
+}

@@ -161,4 +161,82 @@ export default config;
 
 ---
 
+# 8) TypeScript Lessons (Hooks & URL Params)
+
+## 8.1 `URLSearchParams.set()` Rejecting `string | null | undefined`
+
+### **Issue**
+
+Inside several hooks (`useStandingsSeasonOptions`, `useStandingsMatchdayOptions`), TypeScript threw:
+
+```
+Argument of type 'string | null | undefined'
+is not assignable to parameter of type 'string'.
+
+```
+
+Even though runtime checks (`if (!leagueId) return`) existed, TS still treated the values as possibly `null` or `undefined`.
+
+### **Why It Happens**
+
+- `searchParams.get()` returns `string | null`.
+- React state initialised from searchParams inherits that union.
+- TS does **not** automatically trust branching conditions when values are then passed deeper (e.g. into URLSearchParams.set()).
+
+**Result:** TypeScript blocks any call like:
+
+```tsx
+params.set("leagueId", leagueId);
+
+```
+
+### **Fix**
+
+Use **explicit narrowing** after the guard:
+
+```tsx
+if (!leagueId || !seasonId) {
+  setOptions([]);
+  return;
+}
+
+const ensuredLeagueId: string = leagueId;
+const ensuredSeasonId: string = seasonId;
+
+params.set("leagueId", ensuredLeagueId);
+params.set("seasonId", ensuredSeasonId);
+
+```
+
+### **Golden Rule**
+
+> When a value comes from searchParams.get(), always narrow to plain string before passing it to functions that require a strict string.
+> 
+
+### **When to Apply**
+
+- Whenever calling `URLSearchParams.set(...)`
+- Whenever building objects with `{ leagueId }` or `{ seasonId }` used in fetch queries
+- Whenever a function expects `string`, not `string | null`
+
+### **Preventive Pattern**
+
+Use a reusable helper:
+
+```tsx
+function ensureString(value: string | null | undefined, fallback?: string): string {
+  if (value) return value;
+  if (fallback) return fallback;
+  throw new Error("Expected string but received null/undefined");
+}
+
+```
+
+Then:
+
+```tsx
+params.set("leagueId", ensureString(leagueId));
+
+```
+
 **End of Document — Match Pulse Engineering Post-Mortem & Lessons (v1.0)**

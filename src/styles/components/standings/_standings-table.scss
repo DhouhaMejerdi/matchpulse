@@ -1,0 +1,324 @@
+/* =============================================================================
+   COMPONENT: StandingsTable
+   Responsibility: Visual shell + table layout for league standings.
+   Tokens: --surface-1, --surface-2, --border-subtle,
+           --text-primary, --text-muted,
+           --status-win, --status-draw, --status-loss, --status-neutral,
+           --s-1, --s-2, --s-3, --s-4, --r-lg
+   A11y: Semantic table; horizontal scroll preserved on small screens.
+   Owner: Frontend Team • Last updated: 2025-11-26
+   ========================================================================== */
+
+@use "sass:map";
+@use "../../abstracts" as abstracts;
+
+/* Root block
+   -------------------------------------------------------------------------- */
+
+.standings-table {
+  margin-block-end: var(--s-4);
+  overflow-x: hidden;
+
+  /* Scroll shell (mobile-first: table can overflow horizontally) */
+  &__shell {
+    border-radius: var(--r-lg);
+    background-color: var(--surface-1);
+    border: 1px solid var(--border-subtle);
+
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+
+    padding-block: var(--s-2);
+    padding-inline: 0;
+
+    /* prevent ugly double-scrollbars inside container on mobile */
+    max-inline-size: 100%;
+
+    scrollbar-width: none; // Firefox
+
+    &::-webkit-scrollbar {
+      display: none; // Chrome/Safari
+    }
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+
+    /* Mobile-first: let the table shrink fully, no artificial min-width.
+       We rely on hiding columns to keep it readable. */
+    min-width: 0;
+
+    /* Keep column widths predictable so they don't jitter when columns toggle. */
+    table-layout: fixed;
+  }
+
+  /* Head / body
+     ----------------------------------------------------------------------- */
+
+  &__head {
+    background-color: var(--surface-2);
+  }
+
+  &__body {
+    background-color: var(--surface-1);
+  }
+
+  &__row {
+    /* Base row divider (unchanged) */
+    border-block-end: 1px solid
+      color-mix(in srgb, var(--border-subtle), black 4%);
+
+    /* NEW: base stripe – transparent until a zone modifier is applied */
+    border-inline-start: 3px solid transparent;
+    transition: border-color 0.18s ease;
+
+    &:last-of-type {
+      border-block-end-color: transparent;
+    }
+  }
+
+  /* Zone modifiers ---------------------------------------------------------- */
+
+  &__row--zone-cl {
+    border-inline-start-color: var(--status-positive); /* Champions League */
+  }
+
+  &__row--zone-eu {
+    border-inline-start-color: var(--status-warning);  /* Europa League    */
+  }
+
+  &__row--zone-rel {
+    border-inline-start-color: var(--status-negative); /* Relegation       */
+  }
+
+  @media (min-width: map.get(abstracts.$breakpoints, md)) {
+    &__row {
+      border-inline-start-width: 4px; /* slightly stronger stripe on md+ */
+    }
+  }
+
+  /* Cells
+     ----------------------------------------------------------------------- */
+
+  &__cell {
+    padding-block: var(--s-2);
+    padding-inline: var(--s-2);
+    text-align: left;
+    color: var(--text-primary);
+    white-space: nowrap;
+  }
+
+  /* Head cells */
+  thead &__cell {
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.7rem;
+  }
+
+  /* Position column */
+  &__cell--col-pos,
+  &__cell--pos {
+    text-align: right;
+    inline-size: 2.25rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Team column */
+  &__cell--col-team,
+  &__cell--team {
+    text-align: left;
+    padding-inline-end: var(--s-2);
+    /* Let it take remaining space between "#" and "PTS"/"FORM" */
+    inline-size: auto;
+    max-inline-size: none;
+  }
+
+  /* Numeric columns (P, W, D, L, GF, GA, GD)
+     MOBILE-FIRST: hidden by default. We selectively re-enable by breakpoint. */
+  &__cell--col-num,
+  &__cell--num {
+    display: none;
+    text-align: right;
+    inline-size: 2.5rem;
+    min-inline-size: 2.25rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Points column */
+  &__cell--col-points,
+  &__cell--points {
+    text-align: right;
+    inline-size: 3rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Form column */
+  &__cell--col-form,
+  &__cell--form {
+    text-align: right;
+  }
+
+  /* Team cluster
+     ----------------------------------------------------------------------- */
+
+  &__team {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-2);
+    min-inline-size: 0; /* prevents overflow */
+  }
+
+  &__team-crest,
+  &__team-crest-placeholder {
+    inline-size: 1.5rem;
+    block-size: 1.5rem;
+    border-radius: 999px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__team-crest {
+    background-color: color-mix(in srgb, var(--surface-1), black 4%);
+    object-fit: contain;
+  }
+
+  &__team-crest-placeholder {
+    background-color: color-mix(in srgb, var(--surface-1), black 8%);
+    font-size: 0.9rem;
+  }
+
+  &__team-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-inline-size: 0; /* allows ellipsis inside */
+    max-inline-size: 100%;
+    flex: 1 1 auto;       // take the remaining width in the cell
+  }
+
+  &__team-name {
+    display: block;       // needed for ellipsis in table cell
+    max-inline-size: 100%;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--text-primary);
+
+    /* Smaller minimum size, gentler scaling */
+    font-size: clamp(0.78rem, 0.72rem + 0.35vw, 0.95rem);
+
+    /* Prevent line breaks */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__team-code {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: var(--text-muted);
+  }
+
+  /* Form dots
+     ----------------------------------------------------------------------- */
+
+  &__form-list {
+    display: inline-flex;
+    /* Gap also scales a bit with viewport width for nicer breathing room */
+    gap: clamp(0.15rem, 0.1rem + 0.25vw, 0.35rem);
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  &__form-dot {
+    /* Mobile-first: small dots, then grow smoothly on wider screens */
+    inline-size: clamp(0.45rem, 0.35rem + 0.4vw, 0.8rem);
+    block-size: clamp(0.45rem, 0.35rem + 0.4vw, 0.8rem);
+    border-radius: 999px;
+    background-color: var(--status-neutral); // base / fallback
+    flex-shrink: 0;
+  }
+
+  &__form-dot--win {
+    background-color: var(--status-win);
+  }
+
+  &__form-dot--draw {
+    background-color: var(--status-draw);
+  }
+
+  &__form-dot--loss {
+    background-color: var(--status-loss);
+  }
+
+  &__form-empty {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--s-1);
+    color: var(--text-muted);
+    font-size: 0.75rem;
+  }
+
+  /* ------------------------------------------------------------------------
+     Responsive column visibility
+     - < sm:   #, TEAM, PTS, FORM
+     - ≥ sm:   add P, W, D, L
+     - ≥ md:   add GF, GA, GD (full table)
+     ---------------------------------------------------------------------- */
+
+  /* Small screens: show P, W, D, L (columns 3–6) */
+  @media (min-width: map.get(abstracts.$breakpoints, sm)) {
+    /* header row */
+    &__head tr > .standings-table__cell:nth-child(3),
+    &__head tr > .standings-table__cell:nth-child(4),
+    &__head tr > .standings-table__cell:nth-child(5),
+    &__head tr > .standings-table__cell:nth-child(6),
+    /* body rows */
+    &__body tr > .standings-table__cell:nth-child(3),
+    &__body tr > .standings-table__cell:nth-child(4),
+    &__body tr > .standings-table__cell:nth-child(5),
+    &__body tr > .standings-table__cell:nth-child(6) {
+      display: table-cell;
+    }
+  }
+
+  /* Medium+ screens: show full stats (GF, GA, GD = columns 7–9) */
+  @media (min-width: map.get(abstracts.$breakpoints, md)) {
+    &__shell {
+      padding-inline: var(--s-3);
+      padding-block: var(--s-3);
+    }
+
+    /* From md upwards we show all columns and can afford a wider table.
+       This won't cause a visual jump because the viewport is already wide. */
+    &__table {
+      min-width: 720px;
+    }
+
+    &__head tr > .standings-table__cell:nth-child(7),
+    &__head tr > .standings-table__cell:nth-child(8),
+    &__head tr > .standings-table__cell:nth-child(9),
+    &__body tr > .standings-table__cell:nth-child(7),
+    &__body tr > .standings-table__cell:nth-child(8),
+    &__body tr > .standings-table__cell:nth-child(9) {
+      display: table-cell;
+    }
+
+    /* Sticky header on taller screens */
+    &__head th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background-color: var(--surface-2);
+    }
+  }
+}

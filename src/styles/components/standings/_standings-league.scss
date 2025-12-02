@@ -1,0 +1,167 @@
+/* =============================================================================
+   COMPONENT: StandingsLeagueBanner
+   Responsibility: Visual shell for current league context on /standings
+   Tokens: --surface-2, --border-subtle, --shadow-soft,
+           --text-primary, --text-muted, --brand-500,
+           --s-1, --s-2, --s-3, --s-4, --r-lg
+   A11y: Clear hierarchy (h2, subtitle, meta list); 44px+ tap targets
+   Owner: Frontend Team • Last updated: 2025-11-25
+   ========================================================================== */
+
+@use "sass:map";
+@use "../../abstracts" as abstracts;
+
+/* Root block
+   -------------------------------------------------------------------------- */
+
+.standings-league {
+  margin-block-end: var(--s-4);
+
+  &__inner {
+    display: flex;
+    flex-direction: column; // MOBILE FIRST
+    align-items: stretch;
+    gap: var(--s-3);
+
+    padding: var(--s-3);
+    border-radius: var(--r-lg);
+    background-color: var(--surface-2);
+    border: 1px solid var(--border-subtle);
+    box-shadow: var(--shadow-soft);
+
+    // Enhance for tablet/desktop
+    @media (min-width: map.get(abstracts.$breakpoints, md)) {
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--s-4);
+      padding-inline: var(--s-4);
+    }
+  }
+
+  /* Identity cluster: crest + title
+     ----------------------------------------------------------------------- */
+
+  &__identity {
+    display: flex;
+    align-items: center;
+    gap: var(--s-3);
+    min-inline-size: 0; // allow text to wrap nicely on narrow screens
+  }
+
+  &__crest-wrapper,
+  &__crest-placeholder {
+    inline-size: 3rem;
+    block-size: 3rem;
+    border-radius: 999px;
+    flex-shrink: 0;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__crest-wrapper {
+    background: radial-gradient(
+      circle at 30% 20%,
+      color-mix(in srgb, var(--brand-500), white 16%),
+      color-mix(in srgb, var(--brand-500), black 10%)
+    );
+    overflow: hidden;
+  }
+
+  &__crest {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: contain;
+  }
+
+  &__crest-placeholder {
+    font-size: 1.4rem;
+    background-color: color-mix(in srgb, var(--surface-2), black 6%);
+  }
+
+  &__heading {
+    min-inline-size: 0;
+  }
+
+  &__title {
+    margin: 0;
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: clamp(1.2rem, 1.05rem + 0.4vw, 1.5rem);
+    letter-spacing: 0.01em;
+  }
+
+  &__subtitle {
+    margin: 0;
+    margin-block-start: var(--s-1);
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.4;
+
+    // Mobile: allow wrapping
+    white-space: normal;
+
+    @media (min-width: map.get(abstracts.$breakpoints, md)) {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
+
+  /* Meta row: matchday + last updated
+     ----------------------------------------------------------------------- */
+
+  &__meta {
+    display: flex;
+    flex-wrap: wrap; // MOBILE FIRST: wrap under each other if needed
+    row-gap: var(--s-2);
+    column-gap: var(--s-3);
+
+    margin: 0;
+    padding: 0;
+
+    font-size: 0.85rem;
+    color: var(--text-muted);
+
+    // Desktop: keep in a single line if space allows
+    @media (min-width: map.get(abstracts.$breakpoints, md)) {
+      justify-content: flex-end;
+    }
+  }
+
+  &__meta-item {
+    display: grid;
+    grid-auto-flow: column;
+    align-items: baseline;
+    column-gap: var(--s-1);
+    position: relative;
+  }
+
+  &__meta-label {
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: color-mix(in srgb, var(--text-muted), black 10%);
+  }
+
+  &__meta-value {
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+
+  /* MOBILE FIRST: no bullets between items by default */
+  &__meta-item + &__meta-item::before {
+    content: none;
+  }
+
+  /* Desktop enhancement: subtle bullet separator between meta items */
+  @media (min-width: map.get(abstracts.$breakpoints, md)) {
+    &__meta-item + &__meta-item::before {
+      content: "•";
+      margin-inline-end: var(--s-1);
+      color: color-mix(in srgb, var(--text-muted), black 12%);
+    }
+  }
+}

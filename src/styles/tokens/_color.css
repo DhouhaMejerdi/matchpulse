@@ -1,28 +1,37 @@
-/* Color tokens (light + dark) */
+/* =============================================================================
+   TOKENS: Color (light + dark)
+   Responsibility: Provide brand, semantic, and surface color tokens for all UI
+                   layers. Light mode defines the canonical palette; dark mode
+                   overrides semantic surfaces and ink values.
+   Contracts: No component-specific semantic here; only raw + high-level
+              semantic tokens consumed by abstracts and components.
+   Notes: All components must reference these semantic tokens (never raw hex).
+   Owner: UI Systems • Last updated: 2025-11-27
+   ========================================================================== */
+
+/* -----------------------------------------------------------------------------
+   LIGHT MODE – canonical palette
+   -------------------------------------------------------------------------- */
 
 :root {
-  /* Brand & accents */
+  /* BRAND & ACCENTS -------------------------------------------------------- */
   --brand-500: #ff4d4f;
   --brand-600: #d9363e;
   --accent-blue-500: #3b82f6;
 
-  /* Ink & neutrals */
+  /* INK & NEUTRALS --------------------------------------------------------- */
   --ink-900: #0b0f1a;
   --ink-700: #1e2430;
   --muted-600: #5b6475;
 
-  /* UI surfaces */
+  /* UI SURFACES ------------------------------------------------------------ */
   --ui-100: #f6f8fb;
   --ui-200: #e9edf5;
-  --surface-0: #fff;
-  --surface-1: #fbfcfe;
-  --surface-2: #f2f5fa;
+  --surface-0: #fff;      /* page background */
+  --surface-1: #fbfcfe;   /* cards, banners */
+  --surface-2: #f2f5fa;   /* elevated blocks */
 
-  /* ─────────────────────────────────────────────
-   * /teams semantic surfaces (v1.0)
-   * These are just aliases for now; we can tune
-   * them later without touching component SCSS.
-   * ───────────────────────────────────────────── */
+  /* TEAMS SEMANTIC SURFACES (v1.0) ----------------------------------------- */
   --surface-teams-header: var(--surface-1);
   --surface-teams-banner: var(--surface-2);
   --surface-teams-filter: var(--surface-2);
@@ -30,36 +39,49 @@
   --surface-teams-filter-active: var(--surface-1);
   --surface-teams-card: var(--surface-0);
 
-  /* State helpers */
+  /* RAW STATE COLOR HELPERS ------------------------------------------------ */
   --success-500: #17b26a;
   --warning-500: #f59e0b;
   --danger-500:  #ef4444;
 
-  /* Header semantics -------------------------------------------------------- */
+  /* STANDINGS — MATCH RESULT & NEUTRAL ------------------------------------ */
+  --status-win: var(--success-500);
+  --status-draw: var(--warning-500);
+  --status-loss: var(--danger-500);
+  --status-neutral: var(--muted-600);
 
-  /* Semantic aliases used by <SiteHeader /> */
-  --surface-header: var(--surface-0);   /* main header background */
-  --text-primary: var(--ink-900);       /* primary header text color */
-  --border-subtle: var(--ui-200);       /* subtle dividers (e.g., bottom border) */
+  /* STANDINGS — QUALIFICATION ZONES --------------------------------------- */
+  --status-positive: var(--success-500);  /* Champions League */
+  --status-warning:  var(--warning-500);  /* Europa League    */
+  --status-negative: var(--danger-500);   /* Relegation       */
 
-  /* Teams filters beam (semantic) */
-  --teams-filters-beam-from: var(--warning-500); /* or closest existing brand token */
+  /* HEADER SEMANTICS ------------------------------------------------------- */
+  --surface-header: var(--surface-0);
+  --text-primary: var(--ink-900);
+  --border-subtle: var(--ui-200);
+
+  /* TEAMS FILTERS BEAM ----------------------------------------------------- */
+  --teams-filters-beam-from: var(--warning-500);
   --teams-filters-beam-to: var(--accent-blue-500);
-  --teams-filters-beam-bg: var(--surface-1);   /* optional, for the path */
+  --teams-filters-beam-bg: var(--surface-1);
 }
 
-/* Dark-mode overrides (tokens-first) */
+/* -----------------------------------------------------------------------------
+   DARK MODE — semantic overrides
+   -------------------------------------------------------------------------- */
 
 @media (prefers-color-scheme: dark) {
   :root {
     --surface-0: #0b0f1a;
     --surface-1: #0f1422;
     --surface-2: #131a2a;
+
     --ink-900:   #f8fafc;
     --ink-700:   #e2e8f0;
+
     --ui-100:    #111827;
     --ui-200:    #1f2937;
-    
-    /* keep brand as accent */
+
+    /* NOTE: Brand colors remain unchanged for consistent identity. */
   }
 }
